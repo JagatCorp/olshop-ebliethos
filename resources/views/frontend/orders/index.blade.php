@@ -1,61 +1,88 @@
 @extends('frontend.layout')
-
+@section('title', 'Orders')
 @section('content')
-	<div class="breadcrumb-area pt-205 breadcrumb-padding pb-210" style="background-image: url({{ asset('themes/ezone/assets/img/bg/breadcrumb.jpg') }})">
-		<div class="container-fluid">
-			<div class="breadcrumb-content text-center">
-				<h2>My Order</h2>
-				<ul>
-					<li><a href="{{ url('/') }}">home</a></li>
-					<li>my order</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="shop-page-wrapper shop-page-padding ptb-100">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-3">
-					@include('frontend.partials.user_menu')
-				</div>
-				<div class="col-lg-9">
-					<div class="shop-product-wrapper res-xl">
-						<div class="table-content table-responsive">
-							<table class="table table-bordered table-striped">
-								<thead>
-									<th>Order ID</th>
-									<th>Grand Total</th>
-									<th>Nomer Resi</th>
-									<th>Status</th>
-									<th>Payment</th>
-									<th>Action</th>
-								</thead>
-								<tbody>
-									@forelse($orders as $order)
-										<tr>    
-											<td>
-												{{ $order->code }}<br>
-												<span style="font-size: 12px; font-weight: normal"> {{ date('d M Y', strtotime($order->order_date)) }}</span>
-											</td>
-											<td>Rp{{ number_format($order->grand_total, 0, ",", ".") }}</td>
-											<td>{{ $order->shipment->track_number }}</td>
-											<td>{{ $order->status }}</td>
-											<td>{{ $order->payment_status }}</td>
-											<td>
-												<a href="{{ url('orders/'. $order->id) }}" class="btn btn-info btn-sm">details</a>
-											</td>
-										</tr>
-									@empty
-										<tr>
-											<td colspan="5">No records found</td>
-										</tr>
-									@endforelse
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
+    <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Area Start -->
+                <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
+                    <div class="ec-sidebar-wrap ec-border-box">
+                        <!-- Sidebar Category Block -->
+                        <div class="ec-sidebar-block">
+                            <div class="ec-vendor-block">
+                                <div class="ec-vendor-block-items">
+                                    <ul>
+                                        <li><a href="{{ url('profile') }}">Profile</a></li>
+                                        <li><a href="{{ url('orders') }}">Orders</a></li>
+                                        <li><a href="{{ url('wishlists') }}">Wishlist</a></li>
+                                        <li><a href="{{ url('carts') }}">Cart</a></li>
+                                        <li><a href="{{ route('logout') }}" style="color: #c00d0d"><i
+                                                    class="fi-rr-exit"></i> Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ec-shop-rightside col-lg-9 col-md-12">
+                    <div class="ec-vendor-dashboard-card">
+                        <div class="ec-vendor-card-header">
+                            <h5>Order History</h5>
+                            <div class="ec-header-btn">
+                                <a class="btn btn-lg btn-primary" href="{{ url('products') }}">Shop Now</a>
+                            </div>
+                        </div>
+                        <div class="ec-vendor-card-body">
+                            <div class="ec-vendor-card-table">
+                                <table class="table ec-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Order ID</th>
+                                            <th scope="col">Grand Total</th>
+                                            {{-- <th scope="col">Nomor Resi</th> --}}
+                                            <th scope="col">Status</th>
+
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($orders as $order)
+                                            <tr>
+                                                <td>{{ $order->code }}<br>
+                                                    <span style="font-size: 12px; font-weight: normal; margin-top: -15px">
+                                                        {{ date('d M Y', strtotime($order->order_date)) }}</span>
+                                                </td>
+                                                <td><span>Rp {{ number_format($order->grand_total, 0, ',', '.') }}</span>
+                                                </td>
+                                                {{-- <td><span>{{ $order->shipment->track_number }}</span></td> --}}
+                                                <td>
+                                                    <span>{{ $order->status }}</span>
+                                                    @if ($order->status === 'cancelled')
+                                                        <p class="text-danger">{{ $order->cancellation_note }}</p>
+                                                    @endif
+                                                </td>
+
+
+                                                <td><span>{{ $order->payment_status }}</span></td>
+                                                <td><span class="tbl-btn"><a class="btn btn-lg btn-primary"
+                                                            href="{{ url('orders/' . $order->id) }}">View</a></span></td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="5">No records found</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 @endsection

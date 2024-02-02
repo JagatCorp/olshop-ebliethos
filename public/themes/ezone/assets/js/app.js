@@ -165,7 +165,7 @@ function getQuickView(product_slug) {
         getQuickView(product_slug);
     });
 
-    $(".add-to-card").on("click", function (e) {
+    $(".add-to-cart").on("click", function (e) {
         e.preventDefault();
 
         var product_type = $(this).attr("product-type");
@@ -183,6 +183,7 @@ function getQuickView(product_slug) {
                     product_id: product_id,
                     qty: 1,
                 },
+
                 success: function (response) {
                     location.reload(true);
                     Swal.fire({

@@ -2,31 +2,53 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
     public function show()
     {
-        return view('auth.profile');
+        return view('frontend.profile.index');
     }
 
-    public function update(ProfileUpdateRequest $request)
+    public function update(Request $request)
     {
-        if ($request->password) {
-            auth()->user()->update(['password' => Hash::make($request->password)]);
+        $user = Auth::user();
+
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            // Tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+
+        // Set nama file foto default
+        $defaultImageName = 'logo.png';
+
+        $imageName = $user->foto ?: $defaultImageName; // Jika foto tidak ada, gunakan foto default
+
+        if ($request->hasFile('foto')) {
+            $image = $request->file('foto');
+            $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+            $image->move(public_path('img/fotouser/'), $imageName);
         }
 
-        auth()->user()->update([
+        $user = User::where('id', $user->id)->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
+            'postcode' => $request->postcode,
+            'address1' => $request->address1,
+            'address2' => $request->address2,
+            'phone' => $request->phone,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'foto' => $imageName,
         ]);
 
-        return redirect()->route('admin.profile.show')->with([
-            'message' => 'berhasil di ubah !'
-        ]);
+        return redirect()->route('profile');
     }
 }

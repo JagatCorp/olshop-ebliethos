@@ -22,7 +22,7 @@ class ProductImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'path' => ['required','image','mimes:jpeg,png,jpg,gif','max:4096'],
+            'foto' => ['required'],
         ];
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Attribute;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AttributeRequest;
+use App\Models\Attribute;
 
 class AttributeController extends Controller
 {
@@ -39,8 +38,8 @@ class AttributeController extends Controller
         $attribute = Attribute::create($request->validated());
 
         return redirect()->route('admin.attributes.edit', $attribute)->with([
-            'message' => 'berhasil di buat !',
-            'alert-type' => 'success'
+            'toast_success' => 'berhasil di buat !',
+            'alert-type' => 'success',
         ]);
     }
 
@@ -61,7 +60,7 @@ class AttributeController extends Controller
         $booleanOptions = Attribute::booleanOptions();
         $validations = Attribute::validations();
 
-        return view('admin.attributes.edit', compact('attribute','types','booleanOptions','validations'));
+        return view('admin.attributes.edit', compact('attribute', 'types', 'booleanOptions', 'validations'));
     }
 
     /**
@@ -72,8 +71,8 @@ class AttributeController extends Controller
         $attribute->update($request->validated());
 
         return redirect()->route('admin.attributes.index')->with([
-            'message' => 'Berhasil di edit !',
-            'alert-type' => 'info'
+            'toast_success' => 'Berhasil di edit !',
+            'alert-type' => 'info',
         ]);
     }
 
@@ -85,8 +84,8 @@ class AttributeController extends Controller
         $attribute->delete();
 
         return redirect()->back()->with([
-            'message' => 'Berhasil di hapus',
-            'alert-type' => 'danger'
+            'toast_success' => 'Berhasil di hapus',
+            'alert-type' => 'danger',
         ]);
     }
 }

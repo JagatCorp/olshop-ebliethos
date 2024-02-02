@@ -8,23 +8,23 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     public function index()
-	{
-		$user = auth()->user();
-		
+    {
+        $user = auth()->user();
+
         $provinces = $this->getProvinces();
         $cities = isset($user->province_id) ? $this->getCities($user->province_id) : [];
-        
-		return view('frontend.auth.profile', compact('user','provinces','cities'));
+
+        return view('frontend.profile.index', compact('user', 'provinces', 'cities'));
     }
-    
+
     public function update(Request $request)
-	{
-		$params = $request->except('_token');
+    {
+        $params = $request->except('_token');
 
-		$user = auth()->user();
+        $user = auth()->user();
 
-		if ($user->update($params)) {
-			return redirect('profile');
-		}
-	}
+        if ($user->update($params)) {
+            return redirect('profile');
+        }
+    }
 }

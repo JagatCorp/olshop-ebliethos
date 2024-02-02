@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Category;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoryRequest;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -39,8 +36,8 @@ class CategoryController extends Controller
         Category::create($request->validated());
 
         return redirect()->route('admin.categories.index')->with([
-            'message' => 'berhasil dibuat !',
-            'alert-type' => 'success'
+            'toast_success' => 'berhasil dibuat !',
+            'alert-type' => 'success',
         ]);
     }
 
@@ -57,7 +54,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $main_categories = Category::whereNull('parent_id')->where('id','!=', $category->id)->get(['id', 'name']);
+        $main_categories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->get(['id', 'name']);
 
         return view('admin.categories.edit', compact('category', 'main_categories'));
     }
@@ -70,8 +67,8 @@ class CategoryController extends Controller
         $category->update($request->validated());
 
         return redirect()->route('admin.categories.index')->with([
-            'message' => 'berhasil di tambah !',
-            'alert-type' => 'success'
+            'toast_success' => 'berhasil di tambah !',
+            'alert-type' => 'success',
         ]);
     }
 
@@ -83,8 +80,8 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->back()->with([
-            'message' => 'berhasil di hapus !',
-            'alert-type' => 'danger'
+            'toast_success' => 'berhasil di hapus !',
+            'alert-type' => 'danger',
         ]);
     }
 }

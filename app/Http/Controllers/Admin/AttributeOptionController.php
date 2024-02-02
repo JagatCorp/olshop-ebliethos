@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Attribute;
-use Illuminate\Http\Request;
-use App\Models\AttributeOption;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AttributeOptionRequest;
+use App\Models\Attribute;
+use App\Models\AttributeOption;
 
 class AttributeOptionController extends Controller
 {
@@ -34,8 +33,8 @@ class AttributeOptionController extends Controller
         $attribute->attribute_options()->create($request->validated());
 
         return redirect()->route('admin.attributes.edit', $attribute)->with([
-            'message' => 'Berhasil di buat !',
-            'alert-type' => 'success'
+            'toast_success' => 'Berhasil di buat !',
+            'alert-type' => 'success',
         ]);
     }
 
@@ -52,32 +51,32 @@ class AttributeOptionController extends Controller
      */
     public function edit(Attribute $attribute, AttributeOption $attribute_option)
     {
-        return view('admin.attribute_options.edit',compact('attribute', 'attribute_option'));
+        return view('admin.attribute_options.edit', compact('attribute', 'attribute_option'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttributeOptionRequest $request, Attribute $attribute,AttributeOption $attribute_option)
+    public function update(AttributeOptionRequest $request, Attribute $attribute, AttributeOption $attribute_option)
     {
         $attribute_option->update($request->validated());
 
         return redirect()->route('admin.attributes.edit', $attribute)->with([
-            'message' => 'Berhasil di edit !',
-            'alert-type' => 'info'
+            'toast_success' => 'Berhasil di edit !',
+            'alert-type' => 'info',
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Attribute $attribute,AttributeOption $attribute_option)
+    public function destroy(Attribute $attribute, AttributeOption $attribute_option)
     {
         $attribute_option->delete();
 
         return redirect()->back()->with([
-            'message' => 'Berhasil di hapus !',
-            'alert-type' => 'danger'
+            'toast_success' => 'Berhasil di hapus !',
+            'alert-type' => 'danger',
         ]);
     }
 }

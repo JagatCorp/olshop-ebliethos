@@ -1,139 +1,163 @@
 @extends('frontend.layout')
-
+@section('title', 'Carts')
 @section('content')
-	<!-- header end -->
-	<div class="breadcrumb-area pt-205 breadcrumb-padding pb-210" style="background-image: url({{ asset('themes/ezone/assets/img/bg/breadcrumb.jpg') }})">
-		<div class="container">
-			<div class="breadcrumb-content text-center">
-				<h2>cart page</h2>
-				<ul>
-					<li><a href="{{ url('/') }}">home</a></li>
-					<li> cart page</li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- shopping-cart-area start -->
-	<div class="cart-main-area pt-95 pb-100">
-		<div class="container">
-			@if(session()->has('message'))
-				<div class="content-header mb-0 pb-0">
-					<div class="container-fluid">
-						<div class="mb-0 alert alert-{{ session()->get('alert-type') }} alert-dismissible fade show" role="alert">
-							<strong>{{ session()->get('message') }}</strong>
-							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div> 
-					</div><!-- /.container-fluid -->
-				</div>
-			@endif
-			<div class="row mt-3">
-				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<h1 class="cart-heading">Cart</h1>
-					<form action="">
-						<div class="table-content table-responsive">
-							<table>
-								<thead>
-									<tr>
-										<th>remove</th>
-										<th>images</th>
-										<th>Product</th>
-										<th>Price</th>
-										<th>Quantity</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									@forelse ($items as $item)
-										@php
-											$product = isset($item->model->parent) ? $item->model->parent : $item->model;
-											$image = !empty($product->productImages->first()) ? asset('storage/'.$product->productImages->first()->path) : asset('themes/ezone/assets/img/cart/3.jpg');
-										@endphp
-										<tr>
-											<td class="product-remove">
-												<a href="{{ url('carts/remove/'. $item->rowId)}}" class="delete"><i class="pe-7s-close"></i></a>
-											</td>
-											<td class="product-thumbnail">
-												<a href="{{ url('product/'. $product->slug) }}"><img src="{{ $image }}" alt="{{ $product->name }}" style="width:100px"></a>
-											</td>
-											<td class="product-name"><a href="{{ url('product/'. $product->slug) }}">{{ $item->name }}</a></td>
-											<td class="product-price-cart"><span class="amount">Rp{{ number_format($item->price, 0, ",", ".") }}</span></td>
-											<td class="product-quantity">
-											<select
-												className="form-control"
-												id="change-qty"
-												data-productId="{{ $item->rowId }}"
-                                                value="{{ $item->qty }}"
-                                            >
-												@foreach(range(1, $item->model->productInventory->qty) as $qty)
-													<option {{ $qty == $item->qty ? 'selected' : null }} value="{{ $qty }}">{{ $qty }}</option>
-												@endforeach
-                                            </select>
-											</td>
-											<td class="product-subtotal">Rp{{ number_format($item->price * $item->qty, 0, ",", ".")}}</td>
-										</tr>
-									@empty
-										<tr>
-											<td colspan="6">The cart is empty!</td>
-										</tr>
-									@endforelse
-								</tbody>
-							</table>
-						</div>
-						<!-- <div class="row">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<div class="coupon-all">
-									<div class="coupon2">
-										<input class="button" name="update_cart" value="Update cart" type="submit">
-									</div>
-								</div>
-							</div>
-						</div> -->
-						<div class="row">
-							<div class="col-md-5 ml-auto">
-								<div class="cart-page-total">
-									<h2>Cart totals</h2>
-									<ul>
-										<li>Total<span>Rp{{ Cart::subtotal(0, ",", ".") }}</span></li>
-										<!-- <li>Total<span>Rp{{ Cart::total(0, ",", ".") }}</span></li> -->
-									</ul>
-									<a href="{{ url('orders/checkout') }}">Proceed to checkout</a>
-								</div>
-							</div>
-						</div>
-                        </form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- shopping-cart-area end -->
+    <section class="ec-page-content ec-vendor-uploads ec-user-account wishlist-2 section-space-p">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Area Start -->
+                <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
+                    <div class="ec-sidebar-wrap">
+                        <!-- Sidebar Category Block -->
+                        <div class="ec-sidebar-block">
+                            <div class="ec-vendor-block">
+                                <div class="ec-vendor-block-items">
+                                    <ul>
+                                        <li><a href="{{ url('profile') }}">Profile</a></li>
+                                        <li><a href="{{ url('orders') }}">Orders</a></li>
+                                        <li><a href="{{ url('wishlists') }}">Wishlist</a></li>
+                                        <li><a href="{{ url('carts') }}">Cart</a></li>
+                                        <li><a href="/login" style="color: #c00d0d"><i class="fi-rr-exit"></i> Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ec-shop-rightside col-lg-9 col-md-12">
+                    <div class="ec-vendor-dashboard-card">
+                        <div class="ec-vendor-card-header">
+                            <h5>Keranjang</h5>
+
+                        </div>
+                        <div class="ec-vendor-card-body">
+                            <div class="ec-vendor-card-table">
+                                <table class="table ec-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Foto</th>
+                                            <th scope="col">Produk</th>
+                                            {{-- <th scope="col">Tanggal Ditambahkan</th> --}}
+                                            <th scope="col">Harga</th>
+                                            {{-- <th scope="col">Status</th> --}}
+                                            <th scope="col">Jumlah</th>
+                                            <th scope="col">Hapus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="wish-empt">
+                                        @forelse ($items as $item)
+                                            @php
+                                                $product = isset($item->model->parent) ? $item->model->parent : $item->model;
+
+                                            @endphp
+
+                                            <tr class="pro-gl-content">
+                                                <td>
+                                                    @if ($product->productImages->isNotEmpty())
+                                                        <div>
+                                                            <img class="prod-img"
+                                                                src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                alt="Product Image">
+
+                                                        </div>
+                                                    @endif
+                                                </td>
+                                                <td><span>{{ $product->name }}</span></td>
+                                                {{-- <td><span>{{ $item->created_at }}</span></td> --}}
+                                                <td><span>Rp.{{ number_format($item->price, 0, ',', '.') }}</span></td>
+                                                {{-- @if ($item->product->status_stock > 0)
+                                                    <td><span class="avl">Tersedia</span></td>
+                                                @else
+                                                    <td><span class="out">Stok Habis</span></td>
+                                                @endif --}}
+                                                <td class="product-quantity">
+                                                    <select class="form-select" id="change-qty"
+                                                        data-productId="{{ $item->rowId }}" value="{{ $item->qty }}">
+                                                        @foreach (range(1, $item->model->productInventory->qty) as $qty)
+                                                            <option {{ $qty == $item->qty ? 'selected' : null }}
+                                                                value="{{ $qty }}">
+                                                                <span>{{ $qty }}</span>
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><span class="tbl-btn">
+                                                        <a class="btn btn-lg btn-primary ec-com-remove "
+                                                            href="{{ url('carts/remove/' . $item->rowId) }}"
+                                                            title="Remove From List">×</a></span>
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6">The cart is empty!</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                                <div class="ec-vendor-card-header fw-bold col-lg-9 col-md-12 d-none d-md-block">
+                                    <div class="d-flex">
+                                        <h5 class="col-4">Total</h5>
+                                        <div class="ms-4 col-4"><span
+                                                id="selectedProductsCount">{{ $items->count() }}</span> Produk</div>
+                                        <div class="ms-4 col-4"><span
+                                                id="selectedProductsTotal">Rp.{{ Cart::subtotal(0, ',', '.') }}</span>
+                                        </div>
+                                        <div class="ec-header-btn col-4">
+                                            <a href="{{ url('orders/checkout') }}"
+                                                class="btn btn-lg btn-primary">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- mobile --}}
+                                <div class="ec-vendor-card-header fw-bold col-lg-9 col-md-12 d-block d-md-none">
+                                    <div class="d-flex">
+                                        <h5 class="col-4">Total</h5>
+                                        <div class="ms-4 col-4"><span id="selectedProductsCount">0</span> Produk</div>
+                                        <div class="ms-4 col-4"><span
+                                                id="selectedProductsTotal">Rp.{{ Cart::subtotal(0, ',', '.') }}</span>
+                                        </div>
+                                        <div class="ec-header-btn col-4">
+                                            <a href="{{ url('orders/checkout') }}"
+                                                class="btn btn-lg btn-primary">Checkout</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- end mobile --}}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @push('script-alt')
-<script>
-	$(document).on("change", function (e) {
-		var qty = e.target.value;
-		var productId = e.target.attributes['data-productid'].value;
+    <script>
+        $(document).on("change", function(e) {
+            var qty = e.target.value;
+            var productId = e.target.attributes['data-productid'].value;
 
-        $.ajax({
-            type: "POST",
-            url: "/carts/update",
-            data: {
-                _token: $('meta[name="csrf-token"]').attr("content"),
-                productId,
-                qty
-            },
-            success: function (response) {
-				location.reload(true);
-				Swal.fire({
+            $.ajax({
+                type: "POST",
+                url: "/carts/update",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                    productId,
+                    qty
+                },
+                success: function(response) {
+                    location.reload(true);
+                    Swal.fire({
                         title: "Jumlah Produk",
                         text: "Berhasil di ganti !",
                         icon: "success",
                         confirmButtonText: "Close",
                     });
-            },
+                },
+            });
         });
-    });
-</script>
+    </script>
 @endpush

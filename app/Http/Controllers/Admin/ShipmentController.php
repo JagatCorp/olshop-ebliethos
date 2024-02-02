@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ShipmentController extends Controller
 {
@@ -15,10 +17,10 @@ class ShipmentController extends Controller
     public function index()
     {
         $shipments = Shipment::join('orders', 'shipments.order_id', '=', 'orders.id')
-			->whereRaw('orders.deleted_at IS NULL')
-			->orderBy('shipments.created_at', 'DESC')->get();
+            ->whereRaw('orders.deleted_at IS NULL')
+            ->orderBy('shipments.created_at', 'DESC')->get();
 
-		return view('admin.shipments.index', compact('shipments'));
+        return view('admin.shipments.index', compact('shipments'));
     }
 
     /**
@@ -59,29 +61,29 @@ class ShipmentController extends Controller
     public function update(Request $request, Shipment $shipment)
     {
         $request->validate(
-			[
-				'track_number' => 'required|max:255',
-			]
-		);
+            [
+                'track_number' => 'required|max:255',
+            ]
+        );
 
-		$order = \DB::transaction(
-			function () use ($shipment, $request) {
-				$shipment->track_number = $request->input('track_number');
-				$shipment->status = Shipment::SHIPPED;
-				$shipment->shipped_at = now();
-				$shipment->shipped_by = auth()->id();
-				
-				if ($shipment->save()) {
-					$shipment->order->status = Order::DELIVERED;
-					$shipment->order->save();
-				}
+        $order = DB::transaction(
+            function () use ($shipment, $request) {
+                $shipment->track_number = $request->input('track_number');
+                $shipment->status = Shipment::SHIPPED;
+                $shipment->shipped_at = now();
+                $shipment->shipped_by = auth()->id();
 
-				return $shipment->order;
-			}
-		);
+                if ($shipment->save()) {
+                    $shipment->order->status = Order::DELIVERED;
+                    $shipment->order->save();
+                }
 
-		\Session::flash('success', 'The shipment has been updated');
-		return redirect('admin/orders/'. $order->id);
+                return $shipment->order;
+            }
+        );
+
+        Session::flash('success', 'The shipment has been updated');
+        return redirect('admin/orders/' . $order->id);
     }
 
     /**
