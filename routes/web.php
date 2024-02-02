@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;

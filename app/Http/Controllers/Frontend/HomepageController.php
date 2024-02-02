@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Slide;
 use App\Models\Slider;
+use App\Models\Testimoni;
 
 class HomepageController extends Controller
 {
@@ -22,7 +23,8 @@ class HomepageController extends Controller
         $productImages = ProductImage::get();
         $slider = Slider::get();
         $banner = Banner::get();
-        return view('frontend.homepage', compact('products', 'slides', 'productImages', 'slider', 'banner'));
+        $testimoni = Testimoni::get();
+        return view('frontend.homepage', compact('products', 'slides', 'productImages', 'slider', 'banner','testimoni'));
     }
     // about
     public function about()

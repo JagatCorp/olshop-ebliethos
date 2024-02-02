@@ -109,8 +109,10 @@
 
     <!-- Ekka Custom -->
     <script src="{{ asset('assets-admin') }}/js/ekka.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
 
     @stack('script-alt')
+    @yield('ckeditor')
 </body>
 
 </html>

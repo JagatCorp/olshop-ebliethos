@@ -63,6 +63,11 @@
                                     <span class="nav-text">Banner</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/testimoni') }}">
+                                    <span class="nav-text">Testimoni</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
