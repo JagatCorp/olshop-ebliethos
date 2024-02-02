@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;
@@ -91,6 +92,13 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('delete-konsultasi/{id}', [KonsultasiController::class, 'delete'])->name('delete-konsultasi');
 
     Route::get('customer', [KonsultasiController::class, 'customer'])->name('customer-index');
+
+    // testimoni
+    Route::get('testimoni', [TestimoniController::class, 'index'])->name('testimoni-index');
+    Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
+    Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
+    Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
+
 });
 // home
 Route::get('/', [HomepageController::class, 'index']);

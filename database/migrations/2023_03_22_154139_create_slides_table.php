@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('position')->default(0);
             $table->string('status');
             $table->text('body')->nullable();
-            $table->text('path')->nullabel();
+            $table->text('path')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

@@ -493,65 +493,27 @@
             <div class="row">
                 <div class="ec-test-outer">
                     <ul id="ec-testimonial-slider">
-                        <li class="ec-test-item">
-                            <div class="ec-test-inner">
-                                <div class="ec-test-img"><img alt="testimonial" title="testimonial"
-                                        src="/assets-user/images/testimonial/4.jpg" /></div>
-                                <div class="ec-test-content">
-                                    <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i> Lorem Ipsum is simply
-                                        dummy text of
-                                        the printing and typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                        of type and scrambled it to make a type specimen book. It has survived not only
-                                        five centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in <i
-                                            class="fi-rr-quote-right bottom"></i>
+                        @foreach ($testimoni as $item)
+                            <li class="ec-test-item">
+                                <div class="ec-test-inner">
+                                    <div class="ec-test-img"><img alt="testimonial" title="testimonial"
+                                        src="{{ asset('img/fototestimoni/' . $item->image) }}" /></div>
+                                    <div class="ec-test-content">
+                                        <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i>
+                                            {!! $item->testimoni !!} <i class="fi-rr-quote-right bottom"></i>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="ec-test-item">
-                            <div class="ec-test-inner">
-                                <div class="ec-test-img"><img alt="testimonial" title="testimonial"
-                                        src="/assets-user//images/testimonial/5.jpg" /></div>
-                                <div class="ec-test-content">
-                                    <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i> Lorem Ipsum is simply
-                                        dummy text of
-                                        the printing and typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                        of type and scrambled it to make a type specimen book. It has survived not only
-                                        five centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in <i
-                                            class="fi-rr-quote-right bottom"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="ec-test-item">
-                            <div class="ec-test-inner">
-                                <div class="ec-test-img"><img alt="testimonial" title="testimonial"
-                                        src="/assets-user//images/testimonial/6.jpg" /></div>
-                                <div class="ec-test-content">
-                                    <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i> Lorem Ipsum is simply
-                                        dummy text of
-                                        the printing and typesetting industry. Lorem Ipsum has been the industry's
-                                        standard dummy text ever since the 1500s, when an unknown printer took a galley
-                                        of type and scrambled it to make a type specimen book. It has survived not only
-                                        five centuries, but also the leap into electronic typesetting, remaining
-                                        essentially unchanged. It was popularised in <i
-                                            class="fi-rr-quote-right bottom"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
+
+
                     </ul>
                 </div>
             </div>
         </div>
     </section>
     <!-- ec testimonial end -->
-
-
 
 
     <!-- Main Js -->
