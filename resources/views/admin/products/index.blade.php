@@ -45,6 +45,9 @@
                                                 <td>{{ $product->statusLabel() }}</td>
 
                                                 <td>
+                                                    <a href="{{ route('admin.products.product_images.index', $product) }}"
+                                                        class="btn btn-sm btn-primary shadow-sm mr-2 float-right"> <i class="fa fa-image"></i> Kelola
+                                                        Gambar</a>
                                                     <div class="btn-group mb-1">
                                                         <button type="button"
                                                             class="btn btn-outline-primary">Action</button>

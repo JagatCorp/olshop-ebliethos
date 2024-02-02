@@ -145,7 +145,7 @@
                     <div class="details-price">
                         <span>{{ number_format($product->priceLabel()) }}</span>
                     </div>
-                    <p>{{ $product->short_description }}</p>
+                    <p>{!! $product->description !!}</p>
                     <form action="{{ route('carts.store') }}" method="post">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
