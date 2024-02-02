@@ -121,6 +121,8 @@ Route::post('carts/update', [CartController::class, 'update']);
 Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
 // reviews
 Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
+Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
+Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');

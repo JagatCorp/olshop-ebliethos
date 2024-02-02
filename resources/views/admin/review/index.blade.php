@@ -176,7 +176,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="firstName">Foto</label>
-                                            <input type="file" class="form-control" name="foto" required>
+                                            <input type="file" class="form-control" name="foto">
                                         </div>
                                     </div>
                                 </div>
