@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
@@ -41,10 +42,6 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::resource('attributes.attribute_options', \App\Http\Controllers\Admin\AttributeOptionController::class);
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::resource('products.product_images', \App\Http\Controllers\Admin\ProductImageController::class);
-
-    Route::resource('slides', \App\Http\Controllers\Admin\SlideController::class);
-    Route::get('slides/{slideId}/up', [\App\Http\Controllers\Admin\SlideController::class, 'moveUp']);
-    Route::get('slides/{slideId}/down', [\App\Http\Controllers\Admin\SlideController::class, 'moveDown']);
 
     Route::get('orders/trashed', [\App\Http\Controllers\Admin\OrderController::class, 'trashed'])->name('orders.trashed');
     Route::get('orders/restore/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'restore'])->name('orders.restore');
@@ -91,14 +88,14 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('edit-konsultasi', [KonsultasiController::class, 'update'])->name('edit-konsultasi');
     Route::get('delete-konsultasi/{id}', [KonsultasiController::class, 'delete'])->name('delete-konsultasi');
 
+    // get data customer
     Route::get('customer', [KonsultasiController::class, 'customer'])->name('customer-index');
 
-    // testimoni
-    Route::get('testimoni', [TestimoniController::class, 'index'])->name('testimoni-index');
-    Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
-    Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
-    Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
-
+    //review
+    Route::get('review', [ReviewController::class, 'index'])->name('review-index');
+    Route::post('create-review', [ReviewController::class, 'store'])->name('create-review');
+    Route::post('edit-review', [ReviewController::class, 'update'])->name('edit-review');
+    Route::get('delete-review/{id}', [ReviewController::class, 'delete'])->name('delete-review');
 });
 // home
 Route::get('/', [HomepageController::class, 'index']);
@@ -144,8 +141,3 @@ Route::post('payments/notification', [PaymentController::class, 'notification'])
 Route::get('payments/completed', [PaymentController::class, 'completed']);
 Route::get('payments/failed', [PaymentController::class, 'failed']);
 Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
-
-//Administrator
-Route::prefix("app-admin")->group(function () {
-
-});

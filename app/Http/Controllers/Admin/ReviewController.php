@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Product;
+use App\Models\Review;
+use App\Models\User;
+use Illuminate\Http\Request;
+
+class ReviewController extends Controller
+{
+    public function index()
+    {
+        $review = Review::all();
+        // $product = Review::with('product')->get();
+        // $user = Review::with('user')->get();
+        $product = Product::all();
+        $user = User::all();
+        return view('admin.review.index', compact('review', 'product', 'user'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
+        ]);
+        $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+        $request->foto->move(public_path('img/fotoreview/'), $imageName);
+
+        Review::create([
+            'product_id' => $request->product_id,
+            'user_id' => $request->user_id,
+            'review' => $request->review,
+            'rating' => $request->rating,
+            'foto' => $imageName,
+        ]);
+
+        return redirect()->route('admin.review-index')->with('toast_success', 'Review Berhasil Di Tambahkan');
+
+    }
+    public function update(Request $request)
+    {
+
+        $imageName = $request->gambarLama;
+        if ($request->hasFile('foto')) {
+            $image = $request->file('foto');
+            $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+            $image->move(public_path('img/fotoreview/'), $imageName);
+        }
+
+        Review::where('id', $request->id)->update([
+            'product_id' => $request->product_id,
+            'user_id' => $request->user_id,
+            'review' => $request->review,
+            'rating' => $request->rating,
+            'foto' => $imageName,
+
+        ]);
+        return redirect()->route('admin.review-index')->with('toast_success', 'Review Berhasil Di Ubah');
+    }
+
+    public function delete($id)
+    {
+        $review = Review::find($id);
+        $review->delete();
+        return redirect()->route('admin.review-index')->with('toast_success', 'Review Berhasil Di Hapus');
+    }
+}
