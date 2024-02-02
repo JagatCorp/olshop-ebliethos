@@ -2,7 +2,7 @@
 
 ## Screenshots
 
-![screen img](/img/screen.png)
+![screen img](public/screen.png)
 
 ## Donwload
 
