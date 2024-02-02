@@ -1,15 +1,15 @@
-# Laravel 10 - Toko Online
+# Laravel 10 - Toko Online Ebliethos
 
 ## Screenshots
 
-![preview img](/preview.png)
+![screen img](/img/screen.png)
 
 ## Donwload
 
 Clone Projek
 
 ```bash
-  git clone https://github.com/abdulaziz-m5u/toko-online-laravel.git nama_projek
+  git clone https://github.com/JagatCorp/olshop-ebliethos.git nama_projek
 ```
 
 Masuk ke folder dengan perintah
@@ -21,7 +21,7 @@ Masuk ke folder dengan perintah
 -   Copy .env.example menjadi .env kemudia edit database dan api key nya
 
 ```bash
-    composer install
+    composer update
 ```
 
 ```bash
@@ -32,11 +32,7 @@ Masuk ke folder dengan perintah
     php artisan artisan migrate:fresh --seed
 ```
 
-```bash
-    php artisan storage:link
-```
+#### Login Admin
 
-#### Login
-
--   email = admin@admin.com
+-   email = angga@gmail.com
 -   password = 123
