@@ -17,7 +17,6 @@
                                         <li><a href="{{ url('orders') }}">Orders</a></li>
                                         <li><a href="{{ url('wishlists') }}">Wishlist</a></li>
                                         <li><a href="{{ url('carts') }}">Cart</a></li>
-                                        <li><a href="{{ url('reviews') }}">Review</a></li>
                                         <li><a href="{{ route('logout') }}" style="color: #c00d0d"><i
                                                     class="fi-rr-exit"></i> Logout</a>
                                         </li>
@@ -30,7 +29,7 @@
                 <div class="ec-shop-rightside col-lg-9 col-md-12">
                     <div class="ec-vendor-dashboard-card">
                         <div class="ec-vendor-card-header">
-                            <h5>Order History</h5>
+                            <h5>Untuk Di Review</h5>
                             <div class="ec-header-btn">
                                 <a class="btn btn-lg btn-primary" href="{{ url('products') }}">Shop Now</a>
                             </div>
@@ -44,7 +43,6 @@
                                             <th scope="col">Grand Total</th>
                                             {{-- <th scope="col">Nomor Resi</th> --}}
                                             <th scope="col">Status</th>
-
                                             <th scope="col">Payment</th>
                                             <th scope="col">Actions</th>
                                         </tr>
@@ -67,7 +65,7 @@
                                                 </td>
 
 
-                                                <td><span>{{ $order->payment_status }}</span></td>
+                                                <td><span>{{ $order->product->name }}</span></td>
                                                 <td><span class="tbl-btn"><a class="btn btn-lg btn-primary"
                                                             href="{{ url('orders/' . $order->id) }}">View</a></span></td>
                                             </tr>

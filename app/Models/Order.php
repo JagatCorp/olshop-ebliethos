@@ -84,6 +84,11 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
+    public function product()
+    {
+        return $this->hasManyThrough(Product::class, OrderItem::class);
+    }
+
     public function shipment()
     {
         return $this->hasOne(Shipment::class);
@@ -123,4 +128,5 @@ class Order extends Model
     {
         return $query->where('user_id', $user->id);
     }
+
 }

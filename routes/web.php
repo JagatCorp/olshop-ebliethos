@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -113,11 +114,13 @@ Route::get('/artikel', [HomepageController::class, 'artikel']);
 Route::get('/detail-artikel/{slug}', [HomepageController::class, 'Detailartikel']);
 // keluar
 Route::get('/keluar', [HomepageController::class, 'keluar'])->name('logout');
-
+//carts
 Route::get('carts', [CartController::class, 'index'])->name('carts.index');
 Route::post('carts', [CartController::class, 'store'])->name('carts.store');
 Route::post('carts/update', [CartController::class, 'update']);
 Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
+// reviews
+Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
