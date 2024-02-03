@@ -22,7 +22,7 @@
                             </div>
                             <div class="ec-blog-detail">
                                 <h3 class="ec-blog-title">{{ $artikelSelengkapnya->judul }}</h3>
-                                <p>{{ $artikelSelengkapnya->isi }}</p>
+                                <p>{!! $artikelSelengkapnya->isi !!}</p>
 
                             </div>
 

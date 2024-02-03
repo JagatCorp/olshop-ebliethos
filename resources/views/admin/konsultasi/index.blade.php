@@ -162,7 +162,7 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Isi Konsultasi</label>
-                                                <textarea type="text" id="editor{{ $item->id }}" class="form-control" name="isi" rows="5" cols="5"
+                                                <textarea type="text" class="form-control" name="isi" rows="5" cols="5"
                                                     value="{{ $item->isi }}">{{ $item->isi }}
                                                 </textarea>
                                             </div>
@@ -208,47 +208,4 @@
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
-@endsection
-@section('ckeditor')
-<script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
-    <script>
-
-        function previewImage() {
-            const image = document.querySelector('#image');
-            const imgPreview = document.querySelector('#addImage');
-
-            imgPreview.style.display = 'block';
-
-            const ofReader = new FileReader();
-            ofReader.readAsDataURL(image.files[0]);
-
-            ofReader.onload = function(oFREvent) {
-                imgPreview.src = oFREvent.target.result;
-            }
-        }
-        $(document).ready(function() {
-            // Inisialisasi CKEditor pada modal tambah data
-            ClassicEditor
-                .create(document.querySelector('#editor'))
-
-                .catch(error => {
-                    console.error(error);
-                });
-                @foreach ($konsultasi as $row)
-                ClassicEditor
-                    .create(document.querySelector('#editor{{ $row->id }}'))
-                    .catch(error => {
-                        console.error(error);
-                    });
-            @endforeach
-
-
-        });
-        $(document).ready(function() {
-            $('#simpan').click(function() {
-                $('form').submit();
-            });
-        });
-
-    </script>
 @endsection
