@@ -102,11 +102,11 @@
                                     <span class="nav-text">User List</span>
                                 </a>
                             </li>
-                            <li class="">
+                            {{-- <li class="">
                                 <a class="sidenav-item-link" href="user-profile.html">
                                     <span class="nav-text">Users Profile</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                     <hr>
