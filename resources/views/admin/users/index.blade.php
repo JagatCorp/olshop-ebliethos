@@ -1,6 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Users')
-@section('ActiveUsers', 'active')
+@section('ActiveUser', 'active')
 @section('content')
 
     <!-- CONTENT WRAPPER -->

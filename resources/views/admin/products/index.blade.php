@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Data Produk')
+@section('ActiveProduct', 'active')
 @section('content')
     <!-- Main content -->
     <section class="ec-content-wrapper">
@@ -46,7 +47,8 @@
 
                                                 <td>
                                                     <a href="{{ route('admin.products.product_images.index', $product) }}"
-                                                        class="btn btn-sm btn-primary shadow-sm mr-2 float-right"> <i class="fa fa-image"></i> Kelola
+                                                        class="btn btn-sm btn-primary shadow-sm mr-2 float-right"> <i
+                                                            class="fa fa-image"></i> Kelola
                                                         Gambar</a>
                                                     <div class="btn-group mb-1">
                                                         <button type="button"

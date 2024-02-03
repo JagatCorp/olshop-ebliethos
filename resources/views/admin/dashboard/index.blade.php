@@ -1,6 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'dashboard')
-
+@section('ActiveDashboard', 'active')
 @section('content')
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">

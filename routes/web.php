@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
@@ -100,6 +101,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
     Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
     Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
+
+    //review
+    Route::get('review', [ReviewController::class, 'index'])->name('review-index');
+    Route::post('create-review', [ReviewController::class, 'store'])->name('create-review');
+    Route::post('edit-review', [ReviewController::class, 'update'])->name('edit-review');
+    Route::get('delete-review/{id}', [ReviewController::class, 'delete'])->name('delete-review');
 
 });
 // home

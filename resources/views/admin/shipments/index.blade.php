@@ -1,5 +1,5 @@
 @extends('admin.layout.dashboard')
-
+@section('ActiveOrder', 'active')
 @section('content')
     <!-- Main content -->
     <section class="ec-content-wrapper">

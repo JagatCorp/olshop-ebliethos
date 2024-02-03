@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->bigInteger('qty')->nullable();
             $table->string('category_id')->nullable();
+            $table->decimal('old_price', 15, 2)->nullable();
             $table->decimal('price', 15, 2)->nullable();
             $table->decimal('weight', 10, 2)->nullable();
             $table->decimal('length', 10, 2)->nullable();

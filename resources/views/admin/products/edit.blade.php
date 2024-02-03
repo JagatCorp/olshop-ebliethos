@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Data Produk')
+@section('ActiveProduct', 'active')
 @section('content')
 
     <!-- Main content -->

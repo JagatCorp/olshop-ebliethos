@@ -202,6 +202,7 @@ class ProductController extends Controller
                 return true;
             }
         );
+        // dd($request->all());
 
         return redirect()->route('admin.products.index')->with([
             'toast_success' => 'Berhasil di ganti !',

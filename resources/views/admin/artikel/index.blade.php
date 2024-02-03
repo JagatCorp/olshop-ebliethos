@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Artikel')
+@section('MasterData', 'active')
 @section('ActiveArtikel', 'active')
 @section('content')
 
@@ -46,7 +47,7 @@
                                                         alt="foto artikel" />
                                                 </td>
                                                 <td>{{ $item->judul }}</td>
-                                                <td>{{ $item->isi }}</td>
+                                                <td>{!! $item->isi !!}</td>
 
                                                 <td>
                                                     <div class="btn-group mb-1">
@@ -108,7 +109,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group mb-4">
                                             <label for="userName">Isi Artikel</label>
-                                            <textarea type="text" class="form-control" name="isi" rows="5" cols="5" id="userName" required>
+                                            <textarea type="text" class="form-control" name="isi" rows="5" cols="5" id="editor" required>
                                                 </textarea>
                                         </div>
                                     </div>
@@ -160,8 +161,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Isi Artikel</label>
-                                                <textarea type="text" class="form-control" name="isi" rows="5" cols="5"
-                                                    value="{{ $item->isi }}">{{ $item->isi }}
+                                                <textarea type="text" class="form-control" id="editor{{ $item->id }}" name="isi" rows="5"
+                                                    cols="5" value="{{ $item->isi }}">{{ $item->isi }}
                                                 </textarea>
                                             </div>
                                         </div>
@@ -208,4 +209,46 @@
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+@endsection
+
+@section('ckeditor')
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('#addImage');
+
+            imgPreview.style.display = 'block';
+
+            const ofReader = new FileReader();
+            ofReader.readAsDataURL(image.files[0]);
+
+            ofReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+        $(document).ready(function() {
+            // Inisialisasi CKEditor pada modal tambah data
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+
+                .catch(error => {
+                    console.error(error);
+                });
+            @foreach ($artikel as $row)
+                ClassicEditor
+                    .create(document.querySelector('#editor{{ $row->id }}'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            @endforeach
+
+
+        });
+        $(document).ready(function() {
+            $('#simpan').click(function() {
+                $('form').submit();
+            });
+        });
+    </script>
 @endsection

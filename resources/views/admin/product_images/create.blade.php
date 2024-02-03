@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Data Gambar Produk')
+@section('ActiveProduct', 'active')
 @section('content')
     <!-- Main content -->
     <section class="ec-content-wrapper">

@@ -98,9 +98,10 @@
                                                     the
                                                     1500s, when an unknown printer took a galley.</div>
                                                 <span class="ec-price">
-                                                    <span class="old-price">$27.00</span>
-                                                    <span
-                                                        class="new-price">{{ number_format($product->priceLabel()) }}</span>
+                                                    <span class="old-price">IDR
+                                                        {{ number_format($product->priceOld()) }}</span>
+                                                    <span class="new-price">IDR
+                                                        {{ number_format($product->priceLabel()) }}</span>
                                                 </span>
 
                                             </div>
