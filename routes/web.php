@@ -5,8 +5,8 @@ use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;
@@ -95,17 +95,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     // get data customer
     Route::get('customer', [KonsultasiController::class, 'customer'])->name('customer-index');
 
-    //review
+    // testimoni
     Route::get('testimoni', [TestimoniController::class, 'index'])->name('testimoni-index');
     Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
     Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
     Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
 
-    // testimoni
-    Route::get('slider', [SliderController::class, 'index'])->name('slider-index');
-    Route::post('create-slider', [SliderController::class, 'store'])->name('create-slider');
-    Route::post('edit-slider', [SliderController::class, 'update'])->name('edit-slider');
-    Route::get('delete-slider/{id}', [SliderController::class, 'delete'])->name('delete-slider');
 });
 // home
 Route::get('/', [HomepageController::class, 'index']);
