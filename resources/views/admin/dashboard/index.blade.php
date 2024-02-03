@@ -10,36 +10,36 @@
                 <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                     <div class="card card-mini dash-card card-1">
                         <div class="card-body">
-                            <h2 class="mb-1">1,503</h2>
+                            <h2 class="mb-1">{{ $orderToday }}</h2>
                             <p>Order Harian</p>
-                            <span class="mdi mdi-account-arrow-left"></span>
+                            <span class="mdi mdi-calendar-today"></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                     <div class="card card-mini dash-card card-2">
                         <div class="card-body">
-                            <h2 class="mb-1">79,503</h2>
-                            <p>Daily Visitors</p>
-                            <span class="mdi mdi-account-clock"></span>
+                            <h2 class="mb-1">{{ $productTerjual }}</h2>
+                            <p>Product Terjual</p>
+                            <span class="mdi mdi-cash-multiple"></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                     <div class="card card-mini dash-card card-3">
                         <div class="card-body">
-                            <h2 class="mb-1">15,503</h2>
-                            <p>Daily Order</p>
-                            <span class="mdi mdi-package-variant"></span>
+                            <h2 class="mb-1">Rp. {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
+                            <p>Total Penjualan</p>
+                            <span class="mdi mdi-cart"></span>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                     <div class="card card-mini dash-card card-4">
                         <div class="card-body">
-                            <h2 class="mb-1">$98,503</h2>
-                            <p>Daily Revenue</p>
-                            <span class="mdi mdi-currency-usd"></span>
+                            <h2 class="mb-1">{{ $customers }} </h2>
+                            <p>Pelanggan</p>
+                            <span class="mdi mdi-account-group"></span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                         <div class="card-header justify-content-between">
-                            <h2>Recent Orders</h2>
+                            <h2>Transaksi Terbaru</h2>
                             <div class="date-range-report">
                                 <span></span>
                             </div>
@@ -59,32 +59,45 @@
                             <table class="table card-table table-responsive table-responsive-large" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>Tanggal</th>
                                         <th>Order ID</th>
-                                        <th>Product Name</th>
-                                        <th class="d-none d-lg-table-cell">Units</th>
-                                        <th class="d-none d-lg-table-cell">Order Date</th>
-                                        <th class="d-none d-lg-table-cell">Order Cost</th>
+                                        <th>Nama Pengguna</th>
+                                        <th>Produk</th>
+                                        <th class="d-none d-lg-table-cell">QTY</th>
+                                        <th class="d-none d-lg-table-cell">Total Pembayaran</th>
                                         <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>24541</td>
+                                        @foreach ($newestTransaction as $items)
+                                        <td>{{ $items->order_date }}</td>
                                         <td>
-                                            <a class="text-dark" href=""> Coach Swagger</a>
+                                            <a class="text-dark" href="">{{ $items->code }}</a>
                                         </td>
-                                        <td class="d-none d-lg-table-cell">1 Unit</td>
-                                        <td class="d-none d-lg-table-cell">Oct 20, 2018</td>
-                                        <td class="d-none d-lg-table-cell">$230</td>
+                                        <td>{{ $items->customer_first_name }}</td>
+                                        <td class="d-none d-lg-table-cell">
+                                            @foreach ($items->orderItems as $orderItem)
+                                                {{ $orderItem->product->name }}<br>
+                                            @endforeach
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">
+                                            @foreach ($items->orderItems as $orderItem)
+                                                {{ $orderItem->qty }}<br>
+                                            @endforeach
+                                        </td>
+                                        <td class="d-none d-lg-table-cell">                                        Rp. {{ number_format($items->grand_total, 0, ',', '.') }}
+                                        </td>
                                         <td>
-                                            <span class="badge badge-success">Completed</span>
+                                            <span class="badge badge-success">{{ $items->status }}</span>
                                         </td>
                                         <td class="text-right">
                                             <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href="" role="button"
-                                                    id="dropdown-recent-order1" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                                <a class="dropdown-toggle icon-burger-mini" href=""
+                                                    role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false"
+                                                    data-display="static"></a>
                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                     <li class="dropdown-item">
                                                         <a href="#">View</a>
@@ -95,114 +108,7 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>24541</td>
-                                        <td>
-                                            <a class="text-dark" href=""> Toddler Shoes, Gucci Watch</a>
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">2 Units</td>
-                                        <td class="d-none d-lg-table-cell">Nov 15, 2018</td>
-                                        <td class="d-none d-lg-table-cell">$550</td>
-                                        <td>
-                                            <span class="badge badge-primary">Delayed</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                                    id="dropdown-recent-order2" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>24541</td>
-                                        <td>
-                                            <a class="text-dark" href=""> Hat Black Suits</a>
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">1 Unit</td>
-                                        <td class="d-none d-lg-table-cell">Nov 18, 2018</td>
-                                        <td class="d-none d-lg-table-cell">$325</td>
-                                        <td>
-                                            <span class="badge badge-warning">On Hold</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                                    id="dropdown-recent-order3" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>24541</td>
-                                        <td>
-                                            <a class="text-dark" href=""> Backpack Gents, Swimming Cap Slin</a>
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">5 Units</td>
-                                        <td class="d-none d-lg-table-cell">Dec 13, 2018</td>
-                                        <td class="d-none d-lg-table-cell">$200</td>
-                                        <td>
-                                            <span class="badge badge-success">Completed</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                                    id="dropdown-recent-order4" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>24541</td>
-                                        <td>
-                                            <a class="text-dark" href=""> Speed 500 Ignite</a>
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">1 Unit</td>
-                                        <td class="d-none d-lg-table-cell">Dec 23, 2018</td>
-                                        <td class="d-none d-lg-table-cell">$150</td>
-                                        <td>
-                                            <span class="badge badge-danger">Cancelled</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                                    id="dropdown-recent-order5" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
+                                    @endforeach
                                     </tr>
                                 </tbody>
                             </table>
