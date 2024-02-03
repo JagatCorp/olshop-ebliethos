@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Data Order')
+@section('ActiveOrder', 'active')
 @section('content')
     <!-- Main content -->
     <section class="ec-content-wrapper">

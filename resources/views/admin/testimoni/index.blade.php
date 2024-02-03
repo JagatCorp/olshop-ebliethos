@@ -1,8 +1,9 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Testimoni ')
-@section('ActiveSlider', 'active')
+@section('ActiveTestimoni', 'active')
+@section('MasterData', 'active')
 @section('content')
-<script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
 
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">
@@ -41,7 +42,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img width="200px" src="{{ asset('img/fototestimoni/' . $item->image) }}"
+                                                    <img width="200px"
+                                                        src="{{ asset('img/fototestimoni/' . $item->image) }}"
                                                         alt="foto testimoni" />
                                                 </td>
                                                 <td>{!! $item->testimoni !!}</td>
@@ -92,8 +94,10 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label for="firstName">Foto</label>
-                                            <input type="file" class="form-control" name="image"    id="image" onchange="previewImage()" required>
-                                            <img id="addImage" class="img-preview mb-3 mt-2 img-fluid" style="max-height: 300px; width: auto;">
+                                            <input type="file" class="form-control" name="image" id="image"
+                                                onchange="previewImage()" required>
+                                            <img id="addImage" class="img-preview mb-3 mt-2 img-fluid"
+                                                style="max-height: 300px; width: auto;">
                                         </div>
                                         <div class="form-group">
                                             <label for="testimoni">Isi Testimoni</label>
@@ -141,7 +145,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label for="firstName">Isi Testimoni</label>
-                                                <textarea id="editor{{ $item->id }}" name="testimoni" placeholder="Masukkan Kontent . . ." rows="10" class="form-control" value="" required>{!! $item->testimoni !!}</textarea>
+                                                <textarea id="editor{{ $item->id }}" name="testimoni" placeholder="Masukkan Kontent . . ." rows="10"
+                                                    class="form-control" value="" required>{!! $item->testimoni !!}</textarea>
 
 
                                             </div>
@@ -192,9 +197,8 @@
     </div> <!-- End Content Wrapper -->
 
 @section('ckeditor')
-<script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
     <script>
-
         function previewImage() {
             const image = document.querySelector('#image');
             const imgPreview = document.querySelector('#addImage');
@@ -216,7 +220,7 @@
                 .catch(error => {
                     console.error(error);
                 });
-                @foreach ($testimoni as $row)
+            @foreach ($testimoni as $row)
                 ClassicEditor
                     .create(document.querySelector('#editor{{ $row->id }}'))
                     .catch(error => {
@@ -231,7 +235,6 @@
                 $('form').submit();
             });
         });
-
-    </script>
+    </script>
 @endsection
 @endsection

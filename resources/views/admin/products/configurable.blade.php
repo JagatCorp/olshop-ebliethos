@@ -24,6 +24,7 @@
                     value="{{ old('price', $variant->price) }}" id="price">
             </div>
         </div>
+
         <div class="col-md-2">
             <div class="form-group border-bottom pb-4">
                 <label for="qty" class="form-label">Jumlah Produk</label>

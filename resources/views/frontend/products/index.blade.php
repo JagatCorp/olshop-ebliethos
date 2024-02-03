@@ -86,9 +86,10 @@
                                                 <div class="ec-pro-list-desc">{{ $product->description }}
                                                 </div>
                                                 <span class="ec-price">
-                                                    <span class="old-price">$27.00</span>
-                                                    <span
-                                                        class="new-price">{{ number_format($product->priceLabel()) }}</span>
+                                                    <span class="old-price">IDR
+                                                        {{ number_format($product->priceOld()) }}</span>
+                                                    <span class="new-price">IDR
+                                                        {{ number_format($product->priceLabel()) }}</span>
                                                 </span>
                                             </div>
                                         </div>
@@ -241,7 +242,8 @@
 
                                     <div class="ec-quickview-desc">{{ $product->short_description }}</div>
                                     <div class="ec-quickview-price">
-                                        <span class="old-price">IDR 9999</span>
+                                        <span class="old-price">IDR
+                                            {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                         <span class="new-price">IDR
                                             {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                     </div>

@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Artikel')
+@section('MasterData', 'active')
 @section('ActiveArtikel', 'active')
 @section('content')
 

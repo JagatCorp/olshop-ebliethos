@@ -143,6 +143,7 @@
                 <div class="product-details-content">
                     <h3>{{ $product->name }}</h3>
                     <div class="details-price">
+
                         <span>{{ number_format($product->priceLabel()) }}</span>
                     </div>
                     <p>{!! $product->description !!}</p>

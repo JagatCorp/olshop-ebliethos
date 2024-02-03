@@ -15,7 +15,7 @@
             <!-- sidebar menu -->
             <ul class="nav sidebar-inner" id="sidebar-menu">
                 <!-- Dashboard -->
-                <li class="active">
+                <li class="@yield('ActiveDashboard')">
                     <a class="sidenav-item-link" href="{{ url('admin/dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="nav-text">Dashboard</span>
@@ -24,25 +24,25 @@
                 </li>
 
                 <!-- Vendors -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)">
+                <li class="has-sub @yield('MasterData')">
+                    <a class="sidenav-item-link " href="javascript:void(0)">
                         <i class="mdi mdi-atom"></i>
                         <span class="nav-text">Master Data</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
                         <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
-                            <li class="">
-                                <a class="sidenav-item-link @yield('ActiveArtikel')" href="{{ url('admin/artikel') }}">
+                            <li class="@yield('ActiveArtikel')">
+                                <a class="sidenav-item-link " href="{{ url('admin/artikel') }}">
                                     <span class="nav-text">Artikel</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="@yield('ActiveAbout')">
                                 <a class="sidenav-item-link" href="{{ url('admin/about') }}">
                                     <span class="nav-text">About</span>
                                 </a>
                             </li>
 
-                            <li class="">
+                            <li class="@yield('ActiveKonsultasi')">
                                 <a class="sidenav-item-link" href="{{ url('admin/konsultasi') }}">
                                     <span class="nav-text">Konsultasi</span>
                                 </a>
@@ -53,17 +53,17 @@
                                     <span class="nav-text">Iklan</span>
                                 </a>
                             </li> --}}
-                            <li class="">
+                            <li class="@yield('ActiveSlider')">
                                 <a class="sidenav-item-link" href="{{ url('admin/slider') }}">
                                     <span class="nav-text">Slider</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="@yield('ActiveBanner')">
                                 <a class="sidenav-item-link" href="{{ url('admin/banner') }}">
                                     <span class="nav-text">Banner</span>
                                 </a>
                             </li>
-                            <li class="">
+                            <li class="@yield('ActiveTestimoni')">
                                 <a class="sidenav-item-link" href="{{ url('admin/testimoni') }}">
                                     <span class="nav-text">Testimoni</span>
                                 </a>
@@ -72,7 +72,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="has-sub">
+                <li class="has-sub @yield('ActiveCustomer')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-account-group-outline"></i>
                         <span class="nav-text">Customer</span> <b class="caret"></b>
@@ -88,7 +88,7 @@
                     </div>
                 </li>
                 <!-- Users -->
-                <li class="has-sub">
+                <li class="has-sub @yield('ActiveUser')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-account-group"></i>
                         <span class="nav-text">Users</span> <b class="caret"></b>
@@ -115,7 +115,7 @@
 
 
                 <!-- Products -->
-                <li class="has-sub">
+                <li class="has-sub @yield('ActiveProduct')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-package-variant"></i>
                         <span class="nav-text">Products</span> <b class="caret"></b>
@@ -142,7 +142,7 @@
                 </li>
 
                 <!-- Orders -->
-                <li class="has-sub">
+                <li class="has-sub @yield('ActiveOrder')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-cart"></i>
                         <span class="nav-text">Orders</span> <b class="caret"></b>
@@ -164,7 +164,7 @@
                 </li>
 
                 <!-- Reviews -->
-                <li>
+                <li class="@yield('ActiveReview')">
                     <a class="sidenav-item-link" href="{{ url('admin/review') }}">
                         <i class="mdi mdi-star-half"></i>
                         <span class="nav-text">Reviews</span>

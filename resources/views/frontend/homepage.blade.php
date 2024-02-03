@@ -252,7 +252,7 @@
                                                     </div>
                                                     <span class="ec-price">
                                                         <span class="old-price">IDR
-                                                            old price</span>
+                                                            {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                                         <span class="new-price">IDR
                                                             {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                                     </span>
@@ -358,7 +358,7 @@
                                                 </div>
                                                 <span class="ec-price">
                                                     <span class="old-price">IDR
-                                                        old price</span>
+                                                        {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                                     <span class="new-price">IDR
                                                         {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                                 </span>
@@ -497,7 +497,7 @@
                             <li class="ec-test-item">
                                 <div class="ec-test-inner">
                                     <div class="ec-test-img"><img alt="testimonial" title="testimonial"
-                                        src="{{ asset('img/fototestimoni/' . $item->image) }}" /></div>
+                                            src="{{ asset('img/fototestimoni/' . $item->image) }}" /></div>
                                     <div class="ec-test-content">
                                         <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i>
                                             {!! $item->testimoni !!} <i class="fi-rr-quote-right bottom"></i>

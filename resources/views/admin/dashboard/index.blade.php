@@ -1,6 +1,6 @@
 @extends('admin.layout.dashboard')
 @section('title', 'dashboard')
-
+@section('ActiveDashboard', 'active')
 @section('content')
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">
@@ -72,43 +72,44 @@
                                 <tbody>
                                     <tr>
                                         @foreach ($newestTransaction as $items)
-                                        <td>{{ $items->order_date }}</td>
-                                        <td>
-                                            <a class="text-dark" href="">{{ $items->code }}</a>
-                                        </td>
-                                        <td>{{ $items->customer_first_name }}</td>
-                                        <td class="d-none d-lg-table-cell">
-                                            @foreach ($items->orderItems as $orderItem)
-                                                {{ $orderItem->product->name }}<br>
-                                            @endforeach
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">
-                                            @foreach ($items->orderItems as $orderItem)
-                                                {{ $orderItem->qty }}<br>
-                                            @endforeach
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">                                        Rp. {{ number_format($items->grand_total, 0, ',', '.') }}
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">{{ $items->status }}</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href=""
-                                                    role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false"
-                                                    data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    @endforeach
+                                            <td>{{ $items->order_date }}</td>
+                                            <td>
+                                                <a class="text-dark" href="">{{ $items->code }}</a>
+                                            </td>
+                                            <td>{{ $items->customer_first_name }}</td>
+                                            <td class="d-none d-lg-table-cell">
+                                                @foreach ($items->orderItems as $orderItem)
+                                                    {{ $orderItem->product->name }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="d-none d-lg-table-cell">
+                                                @foreach ($items->orderItems as $orderItem)
+                                                    {{ $orderItem->qty }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="d-none d-lg-table-cell"> Rp.
+                                                {{ number_format($items->grand_total, 0, ',', '.') }}
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-success">{{ $items->status }}</span>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown show d-inline-block widget-dropdown">
+                                                    <a class="dropdown-toggle icon-burger-mini" href=""
+                                                        role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false"
+                                                        data-display="static"></a>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li class="dropdown-item">
+                                                            <a href="#">View</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#">Remove</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        @endforeach
                                     </tr>
                                 </tbody>
                             </table>

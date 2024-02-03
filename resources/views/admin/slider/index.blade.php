@@ -1,6 +1,7 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Slider')
 @section('ActiveSlider', 'active')
+@section('MasterData', 'active')
 @section('content')
 
     <!-- CONTENT WRAPPER -->

@@ -1,6 +1,7 @@
 @extends('admin.layout.dashboard')
 @section('title', 'Konsultasi')
 @section('ActiveKonsultasi', 'active')
+@section('MasterData', 'active')
 @section('content')
 
     <!-- CONTENT WRAPPER -->
