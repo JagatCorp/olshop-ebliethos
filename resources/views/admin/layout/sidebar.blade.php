@@ -16,7 +16,7 @@
             <ul class="nav sidebar-inner" id="sidebar-menu">
                 <!-- Dashboard -->
                 <li class="active">
-                    <a class="sidenav-item-link" href="{{ url('app-admin/dashboard') }}">
+                    <a class="sidenav-item-link" href="{{ url('admin/dashboard') }}">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="nav-text">Dashboard</span>
                     </a>

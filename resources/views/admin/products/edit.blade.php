@@ -102,7 +102,7 @@
                                     <div class="form-group row border-bottom pb-4">
                                         <label for="description" class="col-sm-2 col-form-label">Deskripsi Produk</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" name="description" id="description" cols="30" rows="5">{{ old('description', $product->description) }}</textarea>
+                                            <textarea class="form-control" id="editor" name="description" id="description" cols="30" rows="5">{{ old('description', $product->description) }}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row border-bottom pb-4">
@@ -146,3 +146,17 @@
         $('.select-multiple').select2();
     </script>
 @endpush
+@section('ckeditor')
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi CKEditor pada modal tambah data
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+@endsection

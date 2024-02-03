@@ -11,7 +11,7 @@
                     <div class="card card-mini dash-card card-1">
                         <div class="card-body">
                             <h2 class="mb-1">1,503</h2>
-                            <p>Daily Signups</p>
+                            <p>Order Harian</p>
                             <span class="mdi mdi-account-arrow-left"></span>
                         </div>
                     </div>
@@ -44,12 +44,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
 
             <div class="row">
                 <div class="col-12 p-b-15">

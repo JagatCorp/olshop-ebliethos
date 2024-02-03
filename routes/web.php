@@ -96,10 +96,16 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('customer', [KonsultasiController::class, 'customer'])->name('customer-index');
 
     //review
-    Route::get('review', [ReviewController::class, 'index'])->name('review-index');
-    Route::post('create-review', [ReviewController::class, 'store'])->name('create-review');
-    Route::post('edit-review', [ReviewController::class, 'update'])->name('edit-review');
-    Route::get('delete-review/{id}', [ReviewController::class, 'delete'])->name('delete-review');
+    Route::get('testimoni', [TestimoniController::class, 'index'])->name('testimoni-index');
+    Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
+    Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
+    Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
+
+    // testimoni
+    Route::get('slider', [SliderController::class, 'index'])->name('slider-index');
+    Route::post('create-slider', [SliderController::class, 'store'])->name('create-slider');
+    Route::post('edit-slider', [SliderController::class, 'update'])->name('edit-slider');
+    Route::get('delete-slider/{id}', [SliderController::class, 'delete'])->name('delete-slider');
 });
 // home
 Route::get('/', [HomepageController::class, 'index']);
