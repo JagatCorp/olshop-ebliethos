@@ -99,6 +99,10 @@
                                                             <button class="btn btn-sm btn-danger" type="submit"><i
                                                                     class="fa fa-trash"></i></button>
                                                         </form> --}}
+                                                        <a class="btn btn-sm btn-warning mr-1 rounded-circle "
+                                                            style="cursor:pointer" data-bs-toggle="modal"
+                                                            data-bs-target="#ModalEdit{{ $order->id }}"><i
+                                                                class="fa fa-edit"></i></a>
                                                         <a class="btn btn-sm btn-danger rounded-circle "
                                                             style="cursor:pointer" data-bs-toggle="modal"
                                                             data-bs-target="#ModalDelete{{ $order->id }}"><i
@@ -128,6 +132,56 @@
     </section>
     <!-- /.content -->
 
+    @foreach ($orders as $order)
+        <div class="modal fade modal-add-contact" id="ModalEdit{{ $order->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('admin.orders.status.edit') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header px-4">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Ubah Status Order</h5>
+                        </div>
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <div class="modal-body px-4">
+                            <div class="row mb-2">
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-4">
+                                        <label for="userName">Ubah Status Order</label>
+                                        <select name="status" id="" class="form-select">
+                                            <option value="">pilih</option>
+                                            <option value="created">
+                                                Created
+                                            </option>
+                                            <option value="confirmed">
+                                                Confirmed
+                                            </option>
+                                            <option value="delivered">
+                                                Delivered
+                                            </option>
+                                            <option value="completed">
+                                                Completed
+                                            </option>
+                                            <option value="cancelled">
+                                                Cancelled
+                                            </option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer px-4">
+                            <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
     {{-- Delete Modal --}}
     @foreach ($orders as $order)
         <div class="modal fade" id="ModalDelete{{ $order->id }}" tabindex="-1" role="dialog"
@@ -139,7 +193,8 @@
                         @method('DELETE')
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             Apakah anda yakin ingin menghapus data ini?

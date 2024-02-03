@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,8 +33,11 @@ Auth::routes();
 Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     // admin
     Route::get('users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
-    Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('create-users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('create-users');
+    Route::post('edit-users', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('edit-users');
+    Route::get('delete-users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('delete-users');
+    // Route::get('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'show'])->name('profile.show');
+    // Route::put('profile', [\App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
 
     Route::get('dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
@@ -49,6 +52,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('orders/complete/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'doComplete'])->name('orders.complete');
     Route::get('orders/{order:id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
     Route::put('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'doCancel'])->name('orders.cancel');
+    Route::post('orders/edit-status', [\App\Http\Controllers\Admin\OrderController::class, 'update'])->name('orders.status.edit');
     Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);
 
     Route::get('reports/revenue', [\App\Http\Controllers\Admin\ReportController::class, 'revenue'])->name('reports.revenue');
@@ -91,17 +95,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     // get data customer
     Route::get('customer', [KonsultasiController::class, 'customer'])->name('customer-index');
 
-    //review
+    // testimoni
     Route::get('testimoni', [TestimoniController::class, 'index'])->name('testimoni-index');
     Route::post('create-testimoni', [TestimoniController::class, 'store'])->name('create-testimoni');
     Route::post('edit-testimoni', [TestimoniController::class, 'update'])->name('edit-testimoni');
     Route::get('delete-testimoni/{id}', [TestimoniController::class, 'delete'])->name('delete-testimoni');
 
-    // testimoni
-    Route::get('slider', [SliderController::class, 'index'])->name('slider-index');
-    Route::post('create-slider', [SliderController::class, 'store'])->name('create-slider');
-    Route::post('edit-slider', [SliderController::class, 'update'])->name('edit-slider');
-    Route::get('delete-slider/{id}', [SliderController::class, 'delete'])->name('delete-slider');
 });
 // home
 Route::get('/', [HomepageController::class, 'index']);
@@ -120,11 +119,15 @@ Route::get('/artikel', [HomepageController::class, 'artikel']);
 Route::get('/detail-artikel/{slug}', [HomepageController::class, 'Detailartikel']);
 // keluar
 Route::get('/keluar', [HomepageController::class, 'keluar'])->name('logout');
-
+//carts
 Route::get('carts', [CartController::class, 'index'])->name('carts.index');
 Route::post('carts', [CartController::class, 'store'])->name('carts.store');
 Route::post('carts/update', [CartController::class, 'update']);
 Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
+// reviews
+Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
+Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
+Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');

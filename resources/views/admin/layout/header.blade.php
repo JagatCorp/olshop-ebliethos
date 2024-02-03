@@ -22,13 +22,14 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('assets-admin') }}/img/user/user.png" class="user-image" alt="User Image" />
+                        <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="user-image"
+                            alt="" />
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
                         <!-- User image -->
                         <li class="dropdown-header">
-                            <img src="{{ asset('assets-admin') }}/img/user/user.png" class="img-circle"
-                                alt="User Image" />
+                            <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="img-circle"
+                                alt="" />
                             <div class="d-inline-block">
                                 {{ auth()->user()->first_name }} <small
                                     class="pt-1">{{ auth()->user()->email }}</small>
@@ -41,9 +42,9 @@
                         </li> --}}
 
 
-                        <li class="right-sidebar-in">
+                        {{-- <li class="right-sidebar-in">
                             <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> Setting </a>
-                        </li>
+                        </li> --}}
                         <li class="dropdown-footer">
                             <a href="{{ route('logout') }}"> <i class="mdi mdi-logout"></i> Log Out </a>
                         </li>

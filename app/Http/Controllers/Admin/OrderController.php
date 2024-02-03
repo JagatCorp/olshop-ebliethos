@@ -98,9 +98,13 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        Order::where('id', $request->id)->update([
+            'status' => $request->status,
+        ]);
+
+        return redirect('admin/orders')->with('toast_success', 'Status Order Berhasil di Ubah');
     }
 
     /**
