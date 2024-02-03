@@ -12,16 +12,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $now = date('d-m-Y');
-        $orderToday = Order::whereDate('created_at', '=', $now)
-        ->where([
-            ['status', 'created'],
+        $now = now()->format('Y-m-d');
+        $orderToday = Order::whereDate('created_at', $now)
+            ->where('status', 'created')
+            ->count();
 
-        ])->count();
 
-        $productTerjual = OrderItem::whereHas('order', function ($query) {
-            $query->where('status', 'created');
-        })->where('qty', '>', 0)->count();
+            $productTerjual = OrderItem::whereHas('order', function ($query) {
+                $query->where('status', 'created')->orWhere('status', 'completed');
+            })->where('qty', '>', 0)->count();
 
         $totalPenjualan = Order::sum('grand_total');
 
