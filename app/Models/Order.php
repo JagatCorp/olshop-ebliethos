@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
@@ -48,28 +49,43 @@ class Order extends Model
         return $result;
     }
 
+    // public static function generateCode()
+    // {
+    //     $dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' . self::integerToRoman(date('m')) . '/' . self::integerToRoman(date('d')) . '/';
+
+    //     $lastOrder = self::select([\DB::raw('MAX(orders.code) AS last_code')])
+    //         ->where('code', 'like', $dateCode . '%')
+    //         ->first();
+
+    //     $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
+
+    //     $orderCode = $dateCode . '00001';
+    //     if ($lastOrderCode) {
+    //         $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
+
+    //         $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber + 1);
+
+    //         $orderCode = $dateCode . $nextOrderNumber;
+    //     }
+
+    //     if (self::_isOrderCodeExists($orderCode)) {
+    //         return generateOrderCode();
+    //     }
+
+    //     return $orderCode;
+    // }
+    // generate super random unique code
     public static function generateCode()
     {
         $dateCode = self::ORDERCODE . '/' . date('Ymd') . '/' . self::integerToRoman(date('m')) . '/' . self::integerToRoman(date('d')) . '/';
 
-        $lastOrder = self::select([\DB::raw('MAX(orders.code) AS last_code')])
-            ->where('code', 'like', $dateCode . '%')
-            ->first();
+        do {
+            // Generate random string
+            $randomString = strtoupper(Str::random(5)); // Ubah panjang sesuai kebutuhan
 
-        $lastOrderCode = !empty($lastOrder) ? $lastOrder['last_code'] : null;
-
-        $orderCode = $dateCode . '00001';
-        if ($lastOrderCode) {
-            $lastOrderNumber = str_replace($dateCode, '', $lastOrderCode);
-
-            $nextOrderNumber = sprintf('%05d', (int) $lastOrderNumber + 1);
-
-            $orderCode = $dateCode . $nextOrderNumber;
-        }
-
-        if (self::_isOrderCodeExists($orderCode)) {
-            return generateOrderCode();
-        }
+            // Generate order code
+            $orderCode = $dateCode . $randomString;
+        } while (self::_isOrderCodeExists($orderCode));
 
         return $orderCode;
     }

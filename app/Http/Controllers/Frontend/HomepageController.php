@@ -9,6 +9,7 @@ use App\Models\Banner;
 use App\Models\Konsultasi;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\Review;
 use App\Models\Slide;
 use App\Models\Slider;
 use App\Models\Testimoni;
@@ -24,7 +25,12 @@ class HomepageController extends Controller
         $slider = Slider::get();
         $banner = Banner::get();
         $testimoni = Testimoni::get();
-        return view('frontend.homepage', compact('products', 'slides', 'productImages', 'slider', 'banner','testimoni'));
+        // Ambil rata-rata nilai ulasan untuk setiap produk
+        foreach ($products as $product) {
+            $product->average_rating = Review::where('product_id', $product->id)->avg('rating');
+        }
+
+        return view('frontend.homepage', compact('products', 'slides', 'productImages', 'slider', 'banner', 'testimoni'));
     }
     // about
     public function about()

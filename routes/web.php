@@ -131,9 +131,13 @@ Route::get('carts', [CartController::class, 'index'])->name('carts.index');
 Route::post('carts', [CartController::class, 'store'])->name('carts.store');
 Route::post('carts/update', [CartController::class, 'update']);
 Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
+
 // reviews
 Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
-Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
+// Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
+
+Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
+
 Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
 
 Route::group(['middleware' => 'auth'], function () {

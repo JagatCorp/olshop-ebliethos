@@ -231,6 +231,8 @@
                                             <div class="form-group">
                                                 <label for="firstName">Product</label>
                                                 <select class="form-select" name="product_id" id="">
+                                                    <option value="{{ $item->product_id }}">{{ $item->product->name }}
+                                                    </option>
                                                     @foreach ($product as $items)
                                                         <option value="{{ $items->id }}">{{ $items->name }}</option>
                                                     @endforeach

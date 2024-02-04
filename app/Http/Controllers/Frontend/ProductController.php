@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductImage;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -58,6 +59,11 @@ class ProductController extends Controller
 
         $productImages = ProductImage::get();
 
+        // Ambil rata-rata nilai ulasan untuk setiap produk
+        foreach ($products as $product) {
+            $product->average_rating = Review::where('product_id', $product->id)->avg('rating');
+        }
+
         return view('frontend.products.index', compact('products', 'colors', 'sizes', 'minPrice', 'maxPrice', 'categories', 'sorts', 'selectedSort', 'productImages'));
     }
     public function specialDeal(Request $request)
@@ -101,7 +107,10 @@ class ProductController extends Controller
         $selectedSort = $this->selectedSort;
         $products = $products->paginate(10);
         $productImages = ProductImage::get();
-
+        // Ambil rata-rata nilai ulasan untuk setiap produk
+        foreach ($products as $product) {
+            $product->average_rating = Review::where('product_id', $product->id)->avg('rating');
+        }
         return view('frontend.products.specialdeal', compact('products', 'colors', 'sizes', 'minPrice', 'maxPrice', 'categories', 'sorts', 'selectedSort', 'productImages'));
     }
     private function _filterProductsByPriceRange($products, $request)
@@ -198,12 +207,15 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         if (!$product->configurable()) {
-            return view('frontend.products.show', compact('product'));
+            $reviews = Review::where('product_id', $product->id)->paginate(3);
+
+            return view('frontend.products.show', compact('product', 'reviews'));
         }
 
         $colors = ProductAttributeValue::getAttributeOptions($product, 'color')->pluck('text_value', 'text_value');
         $sizes = ProductAttributeValue::getAttributeOptions($product, 'size')->pluck('text_value', 'text_value');
-        return view('frontend.products.show', compact('product', 'sizes', 'colors'));
+        $reviews = Review::where('product_id', $product->id)->paginate(3);
+        return view('frontend.products.show', compact('product', 'sizes', 'colors', 'reviews'));
     }
 
     public function quickView(Product $product)

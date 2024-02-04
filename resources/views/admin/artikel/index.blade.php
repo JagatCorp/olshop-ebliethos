@@ -42,9 +42,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img class="vendor-thumb"
-                                                        src="{{ asset('img/fotoartikel/' . $item->foto) }}"
-                                                        alt="foto artikel" />
+                                                    <img src="{{ asset('img/fotoartikel/' . $item->foto) }}" width="120"
+                                                        height="70" />
                                                 </td>
                                                 <td>{{ $item->judul }}</td>
                                                 <td>{!! $item->isi !!}</td>

@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
 
-                                                <td>{{ $item->isi }}</td>
+                                                <td>{!! $item->isi !!}</td>
 
                                                 <td>
                                                     <div class="btn-group mb-1">
@@ -87,13 +87,10 @@
 
                             <div class="modal-body px-4">
                                 <div class="row mb-2">
-
-
-
                                     <div class="col-lg-12">
                                         <div class="form-group mb-4">
                                             <label for="userName">Isi About</label>
-                                            <textarea type="text" class="form-control" name="isi" rows="5" cols="5" required>
+                                            <textarea type="text" class="form-control" id="editor" name="isi" rows="5" cols="5" required>
                                                 </textarea>
                                         </div>
                                     </div>
@@ -127,7 +124,8 @@
                                         <div class="col-lg-12">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Isi About</label>
-                                                <textarea type="text" class="form-control" name="isi" rows="5" cols="5" value="{{ $item->isi }}">{{ $item->isi }}
+                                                <textarea type="text" class="form-control" name="isi" id="editor{{ $item->id }}" rows="5"
+                                                    cols="5" value="{{ $item->isi }}">{{ $item->isi }}
                                                 </textarea>
                                             </div>
                                         </div>
@@ -173,4 +171,34 @@
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+@endsection
+
+
+@section('ckeditor')
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi CKEditor pada modal tambah data
+            ClassicEditor
+                .create(document.querySelector('#editor'))
+
+                .catch(error => {
+                    console.error(error);
+                });
+            @foreach ($about as $row)
+                ClassicEditor
+                    .create(document.querySelector('#editor{{ $row->id }}'))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            @endforeach
+
+
+        });
+        $(document).ready(function() {
+            $('#simpan').click(function() {
+                $('form').submit();
+            });
+        });
+    </script>
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\OrderItem;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
@@ -14,93 +14,46 @@ class ReviewController extends Controller
 {
     public function reviews()
     {
-        $review = Review::all();
-        // $product = Review::with('product')->get();
-        // $user = Review::with('user')->get();
-        $product = Product::first();
-        $user = User::all();
-        // $orders = OrderItem::forUser(auth()->user())->with('product')
-        //     ->orderBy('created_at', 'DESC')->where('status', 'completed')
-        //     ->get();
-        $orders = OrderItem::get();
-        return view('frontend.review.index', compact('review', 'product', 'user', 'orders'));
+
+        $orders = Order::where('status', 'delivered')->latest()->limit(2)->get();
+        return view('frontend.review.index', compact('orders'));
     }
-    public function index(Product $product)
+    public function index($product_id)
     {
-        $review = Review::all();
-        // $product = Review::with('product')->get();
-        // $user = Review::with('user')->get();
-        $product = Product::all();
-        $user = User::all();
-        // $orders = OrderItem::forUser(auth()->user())->with('product')
-        //     ->orderBy('created_at', 'DESC')->where('status', 'completed')
-        //     ->get();
-        $orders = OrderItem::get();
-        return view('frontend.review.create', compact('review', 'product', 'user', 'orders'));
+
+        $value = Product::find($product_id);
+        return view('frontend.review.create', compact('value'));
     }
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
-        // ]);
+        $request->validate([
+            'rating' => 'required',
+        ]);
+        // $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+        // $request->foto->move(public_path('img/fotoreview/'), $imageName);
 
-        // Temukan OrderItem yang sesuai dengan ID yang diberikan
-        $orderItem = OrderItem::get()->find($request->order_item_id);
-
-        // Pastikan OrderItem ditemukan
-        if (!$orderItem) {
-            return redirect()->back()->with('toast_error', 'OrderItem tidak ditemukan');
-        }
-
-        // Pastikan pengguna yang sedang masuk adalah pemilik Order yang terkait
-        $user = Auth::user();
-        if ($orderItem->order->user_id !== $user->id) {
-            return redirect()->back()->with('toast_error', 'Anda tidak diizinkan untuk menambahkan review untuk OrderItem ini');
-        }
-
-        // Simpan foto jika diminta dalam validasi
-        $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
-        $request->foto->move(public_path('img/fotoreview/'), $imageName);
-
-        // Buat dan simpan ulasan
         Review::create([
-            'product_id' => $request->$orderItem->product_id,
-            'user_id' => $request->$user->id,
-            'rating' => $request->rating,
-            'review' => $request->review,
-            'foto' => $imageName,
-        ]);
-
-        // dd($request->all());
-        return redirect()->route('reviews')->with('toast_success', 'Review Berhasil Di Tambahkan');
-    }
-
-    public function update(Request $request)
-    {
-
-        $imageName = $request->gambarLama;
-        if ($request->hasFile('foto')) {
-            $image = $request->file('foto');
-            $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
-            $image->move(public_path('img/fotoreview/'), $imageName);
-        }
-
-        Review::where('id', $request->id)->update([
             'product_id' => $request->product_id,
-            'user_id' => $request->user_id,
+            'user_id' => Auth::user()->id,
             'review' => $request->review,
             'rating' => $request->rating,
-            'foto' => $imageName,
-
+            // 'foto' => $imageName,
         ]);
-        return redirect()->route('admin.review-index')->with('toast_success', 'Review Berhasil Di Ubah');
-    }
 
-    public function delete($id)
-    {
-        $review = Review::find($id);
-        $review->delete();
-        return redirect()->route('admin.review-index')->with('toast_success', 'Review Berhasil Di Hapus');
+        return redirect()->route('reviews');
+
     }
+    // public function store(Request $request)
+    // {
+    //     $review = new Review();
+    //     $review->booking_id = $request->booking_id;
+    //     $review->comments = $request->comment;
+    //     $review->star_rating = $request->rating;
+    //     $review->user_id = Auth::user()->id;
+    //     $review->service_id = $request->service_id;
+    //     $review->save();
+    //     return redirect()->back()->with('flash_msg_success', 'Your review has been submitted Successfully,');
+    // }
+
 }

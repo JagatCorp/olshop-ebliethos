@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('product_id');
             $table->bigInteger('user_id');
-            $table->text('review');
+            $table->text('review')->nullable();
             $table->enum('rating', [1, 2, 3, 4, 5]);
             $table->string('foto')->nullable();
             $table->string('video')->nullable();

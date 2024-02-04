@@ -86,17 +86,19 @@
                                                         href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
                                                 </h5>
                                                 <div class="ec-pro-rating">
-                                                    <i class="ecicon eci-star fill"></i>
-                                                    <i class="ecicon eci-star fill"></i>
-                                                    <i class="ecicon eci-star fill"></i>
-                                                    <i class="ecicon eci-star fill"></i>
-                                                    <i class="ecicon eci-star"></i>
+                                                    @php
+                                                        $averageRating = $product->average_rating ?? 0;
+                                                        $filledStars = floor($averageRating);
+                                                        $emptyStars = 5 - $filledStars;
+                                                    @endphp
+                                                    @for ($i = 0; $i < $filledStars; $i++)
+                                                        <i class="ecicon eci-star fill"></i>
+                                                    @endfor
+                                                    @for ($i = 0; $i < $emptyStars; $i++)
+                                                        <i class="ecicon eci-star"></i>
+                                                    @endfor
                                                 </div>
-                                                <div class="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the
-                                                    printing
-                                                    and typesetting industry. Lorem Ipsum is simply dutmmy text ever since
-                                                    the
-                                                    1500s, when an unknown printer took a galley.</div>
+                                                <div class="ec-pro-list-desc">{{ $product->short_description }}</div>
                                                 <span class="ec-price">
                                                     <span class="old-price">IDR
                                                         {{ number_format($product->priceOld()) }}</span>
@@ -221,12 +223,19 @@
                                             href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
                                     </h5>
                                     <div class="ec-quickview-rating">
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
+                                        @php
+                                            $averageRating = $product->average_rating ?? 0;
+                                            $filledStars = floor($averageRating);
+                                            $emptyStars = 5 - $filledStars;
+                                        @endphp
+                                        @for ($i = 0; $i < $filledStars; $i++)
+                                            <i class="ecicon eci-star fill"></i>
+                                        @endfor
+                                        @for ($i = 0; $i < $emptyStars; $i++)
+                                            <i class="ecicon eci-star"></i>
+                                        @endfor
                                     </div>
+
 
                                     <div class="ec-quickview-desc">{{ $product->short_description }}</div>
                                     <div class="ec-quickview-price">

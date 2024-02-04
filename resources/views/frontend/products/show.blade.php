@@ -219,23 +219,69 @@
         </div>
     </div>
 </div>
-<div class="product-description-review-area pb-90">
+<div class="ec-single-pro-tab" style="margin-top: -50px">
     <div class="container">
-        <div class="product-description-review text-center">
-            <div class="description-review-title nav" role=tablist>
-                <a class="active" href="#pro-dec" data-toggle="tab" role="tab" aria-selected="true">
-                    Description
-                </a>
-                <a href="#pro-review" data-toggle="tab" role="tab" aria-selected="false">
-                    Reviews (0)
-                </a>
+        <div class="ec-single-pro-tab-wrapper">
+            <div class="ec-single-pro-tab-nav">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item ">
+                        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-review"
+                            role="tablist">Reviews</a>
+                    </li>
+                </ul>
             </div>
-            <div class="description-review-text tab-content">
-                <div class="tab-pane active show fade" id="pro-dec" role="tabpanel">
-                    <p>{{ $product->description }} </p>
-                </div>
-                <div class="tab-pane fade" id="pro-review" role="tabpanel">
-                    <a href="#">Be the first to write your review!</a>
+            <div class="tab-content  ec-single-pro-tab-content">
+
+
+
+                <div id="ec-spt-nav-review" class="tab-pane fade active ">
+                    <div class="row">
+                        <div class="ec-t-review-wrapper">
+
+                            @foreach ($reviews as $review)
+                                <div class="ec-t-review-item">
+                                    <div class="ec-t-review-avtar">
+                                        <!-- Gambar Profil Pengguna (opsional) -->
+                                        <img src="{{ asset('img/fotouser/' . $review->user->foto) }}">
+                                    </div>
+                                    <div class="ec-t-review-content">
+                                        <div class="ec-t-review-top">
+                                            <!-- Nama Pengguna -->
+                                            <div class="ec-t-review-name">{{ $review->user->first_name }}
+                                                {{ $review->user->last_name }}</div>
+                                            <!-- Rating/Ulasan Pengguna -->
+                                            <div class="ec-t-review-rating">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= $review->rating)
+                                                        <i class="ecicon eci-star fill"></i>
+                                                    @else
+                                                        <i class="ecicon eci-star-o"></i>
+                                                    @endif
+                                                @endfor
+                                            </div>
+                                        </div>
+                                        <!-- Konten Ulasan Pengguna -->
+                                        <div class="ec-t-review-bottom">
+                                            <p>{{ $review->review }}</p>
+                                        </div>
+
+                                        <!-- Gambar Produk -->
+                                        <img src="{{ asset('img/fotoreview/' . $review->foto) }}" width="150px"
+                                            height="130px">
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="text-center mt-3 mb-4">
+                                <nav>
+                                    <ul class="pagination justify-content-center">
+                                        {{ $reviews->links() }}
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

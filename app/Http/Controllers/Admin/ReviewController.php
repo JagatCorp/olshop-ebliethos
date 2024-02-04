@@ -23,7 +23,8 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
+            'rating' => 'required',
+            'review' => 'required',
             'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp',
         ]);
         $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();

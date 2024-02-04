@@ -1,105 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('frontend.layout')
+@section('title', 'Review')
+@section('content')
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ekka - Admin Dashboard HTML Template.">
+        .rate:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
 
-    <title>Ekka - Admin Dashboard HTML Template.</title>
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
 
-    <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&display=swap"
-        rel="stylesheet">
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
 
-    <link href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" rel="stylesheet" />
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
 
-    <!-- Ekka CSS -->
-    <link id="ekka-css" rel="stylesheet" href="assets-admin/css/ekka.css" />
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
 
-    <!-- FAVICON -->
-    <link href="assets/img/favicon.png" rel="shortcut icon" />
-</head>
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
 
-<body class="sign-inup" id="body">
-    <div class="container d-flex align-items-center justify-content-center form-height pt-24px pb-24px">
-        <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-10">
-                <div class="card">
-                    <div class="card-header bg-primary">
-                        <div class="ec-brand">
-                            <a href="index.html" title="Ekka">
-                                <img class="ec-brand-icon" src="assets/img/logo/logo-login.png" alt="" />
-                            </a>
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
+        .star-rating-complete {
+            color: #c59b08;
+        }
+
+        .rating-container .form-control:hover,
+        .rating-container .form-control:focus {
+            background: #fff;
+            border: 1px solid #ced4da;
+        }
+
+        .rating-container textarea:focus,
+        .rating-container input:focus {
+            color: #000;
+        }
+
+        .rated {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rated:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
+
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ffc700;
+        }
+
+        .rated:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rated>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rated:not(:checked)>label:hover,
+        .rated:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rated>input:checked+label:hover,
+        .rated>input:checked+label:hover~label,
+        .rated>input:checked~label:hover,
+        .rated>input:checked~label:hover~label,
+        .rated>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+    </style>
+    @if (!empty($value->star_rating))
+        <div class="container">
+            <div class="row">
+                <div class="col mt-4">
+                    <p class="font-weight-bold ">Review</p>
+                    <div class="form-group row">
+                        <input type="hidden" name="product_id" value="{{ $value->id }}">
+                        <div class="col">
+                            <div class="rated">
+                                @for ($i = 1; $i <= $value->star_rating; $i++)
+                                    {{-- <input type="radio" id="star{{$i}}" class="rate" name="rating" value="5"/> --}}
+                                    <label class="star-rating-complete" title="text">{{ $i }} stars</label>
+                                @endfor
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body p-5">
-                        <h4 class="text-dark mb-5">Sign Up</h4>
-
-                        <form action="{{ route('reviews-create') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="product_id" id="product_id">
-                            <input type="hidden" name="user_id" id="user_id">
-                            <div class="row">
-                                {{-- <div class="form-group col-md-12 mb-4">
-                                    <input type="text" class="form-control" id="name" placeholder="Name">
-                                </div> --}}
-
-                                <div class="form-group col-md-12 mb-4">
-                                    <label for="firstName">Rating</label>
-                                    <select class="form-select" name="rating" id="">
-                                        <option value="">pilih</option>
-                                        <option value="1">⭐</option>
-                                        <option value="2">⭐⭐</option>
-                                        <option value="3">⭐⭐⭐</option>
-                                        <option value="4">⭐⭐⭐⭐</option>
-                                        <option value="5">⭐⭐⭐⭐⭐</option>
-                                    </select>
-                                </div>
-
-                                {{-- <div class="form-group col-md-12 mb-4">
-                                    <input type="email" class="form-control" id="email" placeholder="Username">
-                                </div> --}}
-                                <div class="form-group col-md-12  mb-4">
-                                    <label for="review">Review</label>
-                                    <textarea type="text" class="form-control" name="review" rows="5" cols="5" id="review" required>
-                                                </textarea>
-                                </div>
-
-                                {{-- <div class="form-group col-md-12 ">
-                                    <input type="password" class="form-control" id="password" placeholder="Password">
-                                </div>
-
-                                <div class="form-group col-md-12 ">
-                                    <input type="password" class="form-control" id="cpassword"
-                                        placeholder="Confirm Password">
-                                </div> --}}
-
-                                <div class="col-md-12">
-
-
-                                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign Up</button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="form-group row mt-4">
+                        <div class="col">
+                            <p>{{ $value->comments }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Javascript -->
-    <script src="assets/plugins/jquery/jquery-3.5.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
-    <script src="assets/plugins/slick/slick.min.js"></script>
-
-    <!-- Ekka Custom -->
-    <script src="assets/js/ekka.js"></script>
-</body>
-
-</html>
+    @else
+        <div class="container">
+            <div class="row">
+                <div class="col mt-4">
+                    <form class="py-2 px-4" action="{{ route('reviews-create') }}" style="box-shadow: 0 0 10px 0 #ddd;"
+                        method="POST" autocomplete="off">
+                        @csrf
+                        <p class="font-weight-bold ">Review</p>
+                        <div class="form-group row">
+                            <input type="hidden" name="product_id" value="{{ $value->id }}">
+                            <div class="col">
+                                <div class="rate">
+                                    <input type="radio" id="star5" class="rate" name="rating" value="5" />
+                                    <label for="star5" title="text">5 stars</label>
+                                    <input type="radio" checked id="star4" class="rate" name="rating"
+                                        value="4" />
+                                    <label for="star4" title="text">4 stars</label>
+                                    <input type="radio" id="star3" class="rate" name="rating" value="3" />
+                                    <label for="star3" title="text">3 stars</label>
+                                    <input type="radio" id="star2" class="rate" name="rating" value="2">
+                                    <label for="star2" title="text">2 stars</label>
+                                    <input type="radio" id="star1" class="rate" name="rating" value="1" />
+                                    <label for="star1" title="text">1 star</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                            <div class="col">
+                                <textarea class="form-control" name="review" rows="6 " placeholder="Comment" maxlength="200"></textarea>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-right">
+                            <button class="btn btn-sm py-2 px-3 btn-info">Submit
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+@endsection
