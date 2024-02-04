@@ -30,18 +30,25 @@ class ReviewController extends Controller
         $request->validate([
             'rating' => 'required',
         ]);
-        // $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
-        // $request->foto->move(public_path('img/fotoreview/'), $imageName);
+        // Check if a file was uploaded
+        if ($request->hasFile('foto')) {
+            // Validate and store the uploaded file
+            $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+            $request->file('foto')->move(public_path('img/fotoreview/'), $imageName);
+        } else {
+            // If no file was uploaded, set the image name to null or any default value you prefer
+            $imageName = null;
+        }
 
         Review::create([
             'product_id' => $request->product_id,
             'user_id' => Auth::user()->id,
             'review' => $request->review,
             'rating' => $request->rating,
-            // 'foto' => $imageName,
+            'foto' => $imageName,
         ]);
 
-        return redirect()->route('reviews');
+        return redirect()->route('reviews')->with('toast_success', 'Ulasan Anda telah berhasil dikirimkan,');
 
     }
     // public function store(Request $request)

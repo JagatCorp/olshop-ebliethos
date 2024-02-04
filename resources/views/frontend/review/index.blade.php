@@ -1,6 +1,8 @@
 @extends('frontend.layout')
 @section('title', 'Orders')
 @section('content')
+    @include('sweetalert::alert')
+
 
     <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
         <div class="container">
@@ -32,7 +34,8 @@
                                                     <div class="ec-blog-comment-content">
                                                         <h5>{{ $order->orderItems->first()->product->name }}</h5>
                                                         <td>
-                                                            <span>{{ number_format($order->orderItems->first()->product->price, 0, ',', '.') }}</span>
+                                                            <span>IDR
+                                                                {{ number_format($order->orderItems->first()->product->price, 0, ',', '.') }}</span>
                                                         </td>
 
                                                         <p>{{ $order->orderItems->first()->product->short_description }}</p>

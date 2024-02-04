@@ -143,7 +143,7 @@
             <div class="row">
                 <div class="col mt-4">
                     <form class="py-2 px-4" action="{{ route('reviews-create') }}" style="box-shadow: 0 0 10px 0 #ddd;"
-                        method="POST" autocomplete="off">
+                        method="POST" autocomplete="off" enctype="multipart/form-data">
                         @csrf
                         <p class="font-weight-bold ">Review</p>
                         <div class="form-group row">
@@ -162,6 +162,11 @@
                                     <input type="radio" id="star1" class="rate" name="rating" value="1" />
                                     <label for="star1" title="text">1 star</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-4">
+                            <div class="col">
+                                <input type="file" name="foto" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row mt-4">
