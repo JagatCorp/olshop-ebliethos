@@ -32,16 +32,19 @@
                                             </div> --}}
                                             <div class="ec-vendor-block-detail">
                                                 <div class="d-flex align-items-center ">
-                                                    <img class="v-img mt-2"
-                                                        src="{{ asset('img/fotouser/' . Auth()->user()->foto) }}">
-
-                                                    <h5 class="name"><?= Auth()->user()->name ?></h5>
-
+                                                    @if (Auth()->user()->foto)
+                                                        {{-- Tampilkan foto pengguna jika tersedia --}}
+                                                        <img class="v-img mt-2"
+                                                            src="{{ asset('img/fotouser/' . Auth()->user()->foto) }}">
+                                                    @else
+                                                        {{-- Tampilkan gambar default jika foto pengguna kosong --}}
+                                                        <img class="v-img mt-2" src="/img/avatar.jpg">
+                                                    @endif
                                                 </div>
                                             </div>
 
 
-                                            <p>Hai <span><?= Auth()->user()->name ?></span></p>
+                                            <p>Hai <span><?= Auth()->user()->first_name ?></span></p>
                                             <p>Anda dapat dengan mudah melihat dan melacak pesanan pada akun Anda. Juga
                                                 dapat mengelola dan mengubah informasi akun Anda seperti alamat, informasi
                                                 kontak, dan riwayat pesanan.</p>
@@ -155,8 +158,16 @@
                                         </div>
                                         <div class="thumb-preview ec-preview ">
                                             <div class="image-thumb-preview avatar ">
-                                                <img class="image-thumb-preview ec-image-preview v-img mt-3"
-                                                    src="{{ asset('img/fotouser/' . Auth()->user()->foto) }}" />
+
+                                                @if (Auth()->user()->foto)
+                                                    {{-- Tampilkan foto pengguna jika tersedia --}}
+                                                    <img class="image-thumb-preview ec-image-preview v-img mt-3"
+                                                        src="{{ asset('img/fotouser/' . Auth()->user()->foto) }}" />
+                                                @else
+                                                    {{-- Tampilkan gambar default jika foto pengguna kosong --}}
+                                                    <img class="image-thumb-preview ec-image-preview v-img mt-3"
+                                                        src="/img/avatar.jpg">
+                                                @endif
                                                 <label for="fileInput" class="file-input-label">
                                                     <input type="file" name="foto" id="fileInput"
                                                         class="visually-hidden">

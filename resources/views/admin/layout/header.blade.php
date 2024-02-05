@@ -22,14 +22,23 @@
                 <!-- User Account -->
                 <li class="dropdown user-menu">
                     <button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="user-image"
-                            alt="" />
+                        @if (Auth()->user()->foto)
+                            <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="user-image"
+                                alt="" />
+                        @else
+                            <img class="user-image" src="/img/avatar.jpg">
+                        @endif
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right ec-dropdown-menu">
                         <!-- User image -->
                         <li class="dropdown-header">
-                            <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="img-circle"
-                                alt="" />
+
+                            @if (Auth()->user()->foto)
+                                <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="img-circle"
+                                    alt="" />
+                            @else
+                                <img class="img-circle" src="/img/avatar.jpg">
+                            @endif
                             <div class="d-inline-block">
                                 {{ auth()->user()->first_name }} <small
                                     class="pt-1">{{ auth()->user()->email }}</small>

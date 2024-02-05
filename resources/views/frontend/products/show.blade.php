@@ -242,7 +242,11 @@
                                 <div class="ec-t-review-item">
                                     <div class="ec-t-review-avtar">
                                         <!-- Gambar Profil Pengguna (opsional) -->
-                                        <img src="{{ asset('img/fotouser/' . $review->user->foto) }}">
+                                        @if ($review->user->foto)
+                                            <img src="{{ asset('img/fotouser/' . $review->user->foto) }}">
+                                        @else
+                                            <img src="/img/avatar.jpg">
+                                        @endif
                                     </div>
                                     <div class="ec-t-review-content">
                                         <div class="ec-t-review-top">

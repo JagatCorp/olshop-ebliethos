@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -17,10 +17,9 @@ class DashboardController extends Controller
             ->where('status', 'created')->orWhere('status', 'completed')->orWhere('status', 'created')
             ->count();
 
-
-            $productTerjual = OrderItem::whereHas('order', function ($query) {
-                $query->where('status', 'created')->orWhere('status', 'completed');
-            })->where('qty', '>', 0)->count();
+        $productTerjual = OrderItem::whereHas('order', function ($query) {
+            $query->where('status', 'created')->orWhere('status', 'completed');
+        })->where('qty', '>', 0)->count();
 
         $totalPenjualan = Order::sum('grand_total');
 
@@ -31,7 +30,19 @@ class DashboardController extends Controller
             $query->where('code', 'order_id');
         })->get();
 
-        return view('admin.dashboard.index', compact('orderToday','productTerjual', 'totalPenjualan','customers','newestTransaction','product','totalPenjualan'));
+        $statusCounts = Order::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        $statuses = $statusCounts->pluck('total', 'status')->toArray();
+        $paidOrders = Order::where('payment_status', 'PAID')->get();
+        $salesData = $paidOrders->groupBy(function ($order) {
+            return $order->created_at->format('D M Y');
+        })->map(function ($groupedOrders) {
+            return $groupedOrders->sum('grand_total');
+        });
+
+        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData'));
 
     }
 }
