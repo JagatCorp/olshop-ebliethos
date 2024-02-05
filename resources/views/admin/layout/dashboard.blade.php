@@ -26,7 +26,9 @@
     <link id="ekka-css" href="{{ asset('assets-admin') }}/css/ekka.css" rel="stylesheet" />
 
     <!-- FAVICON -->
-    <link href="{{ asset('assets-admin') }}/img/favicon.png" rel="shortcut icon" />
+    <link rel="icon" href="{{ asset('/images/ebli2.png') }}" sizes="32x32" />
+    <link rel="apple-touch-icon" href="{{ asset('/images/ebli2.png') }}" />
+    <meta name="msapplication-TileImage" content="{{ asset('/images/ebli2.png') }}" />
 
 
 
