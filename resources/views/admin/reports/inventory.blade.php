@@ -1,4 +1,6 @@
 @extends('admin.layout.dashboard')
+@section('title', 'Inventory Report')
+@section('ActiveReport', 'active')
 @section('content')
     <div class="content">
         <div class="row">
@@ -48,7 +50,7 @@
     </div>
 @endsection
 
-@push('style-alt')
+{{-- @push('style-alt')
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
 @endpush
@@ -60,4 +62,4 @@
     <script>
         $("#data-table").DataTable();
     </script>
-@endpush
+@endpush --}}

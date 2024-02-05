@@ -1,4 +1,6 @@
 @extends('admin.layout.dashboard')
+@section('title', 'Payment Report')
+@section('ActiveReport', 'active')
 @section('content')
     <div class="content">
         <div class="row">

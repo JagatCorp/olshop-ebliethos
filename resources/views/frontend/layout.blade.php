@@ -17,9 +17,9 @@
     <meta name="author" content="ashishmaraviya">
 
     <!-- site Favicon -->
-    <link rel="icon" href="{{ asset('assets-user/images/favicon/favicon.png') }}" sizes="32x32" />
-    <link rel="apple-touch-icon" href="{{ asset('assets-user/images/favicon/favicon.png') }}" />
-    <meta name="msapplication-TileImage" content="{{ asset('assets-user/images/favicon/favicon.png') }}" />
+    <link rel="icon" href="{{ asset('/images/ebli2.png') }}" sizes="32x32" />
+    <link rel="apple-touch-icon" href="{{ asset('/images/ebli2.png') }}" />
+    <meta name="msapplication-TileImage" content="{{ asset('/images/ebli2.png') }}" />
 
     <!-- css Icon Font -->
     <link rel="stylesheet" href="{{ asset('assets-user/css/vendor/ecicons.min.css') }}" />
@@ -464,7 +464,7 @@
                                 <h4 class="ec-footer-heading">TENTANG KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link">{!! $about->isi  ?? 'No Data' !!}</li>
+                                        <li class="ec-footer-link">{!! $about->isi ?? 'No Data' !!}</li>
                                     </ul>
                                 </div>
                             </div>

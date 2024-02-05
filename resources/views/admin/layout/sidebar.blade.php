@@ -170,7 +170,7 @@
                         <span class="nav-text">Reviews</span>
                     </a>
                 </li>
-                <li class="has-sub">
+                <li class="has-sub @yield('ActiveReport')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-file"></i>
                         <span class="nav-text">Laporan</span> <b class="caret"></b>

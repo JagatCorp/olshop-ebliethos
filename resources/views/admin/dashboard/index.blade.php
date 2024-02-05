@@ -2,6 +2,8 @@
 @section('title', 'dashboard')
 @section('ActiveDashboard', 'active')
 @section('content')
+    {{-- cdn apex chart --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">
         <div class="content">
@@ -71,44 +73,45 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($newestTransaction->take(5) as $items)
-                                    <tr>
-                                        <td>{{ $items->order_date }}</td>
-                                        <td>
-                                            <a class="text-dark" href="">{{ $items->code }}</a>
-                                        </td>
-                                        <td>{{ $items->customer_first_name }}</td>
-                                        <td class="d-none d-lg-table-cell">
-                                            @foreach ($items->orderItems as $orderItem)
-                                                {{ $orderItem->product->name }}<br>
-                                            @endforeach
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">
-                                            @foreach ($items->orderItems as $orderItem)
-                                                {{ $orderItem->qty }}<br>
-                                            @endforeach
-                                        </td>
-                                        <td class="d-none d-lg-table-cell">                                        Rp. {{ number_format($items->grand_total, 0, ',', '.') }}
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-success">{{ $items->status }}</span>
-                                        </td>
-                                        <td class="text-right">
-                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                <a class="dropdown-toggle icon-burger-mini" href=""
-                                                    role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false"
-                                                    data-display="static"></a>
-                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                    <li class="dropdown-item">
-                                                        <a href="#">View</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#">Remove</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $items->order_date }}</td>
+                                            <td>
+                                                <a class="text-dark" href="">{{ $items->code }}</a>
+                                            </td>
+                                            <td>{{ $items->customer_first_name }}</td>
+                                            <td class="d-none d-lg-table-cell">
+                                                @foreach ($items->orderItems as $orderItem)
+                                                    {{ $orderItem->product->name }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="d-none d-lg-table-cell">
+                                                @foreach ($items->orderItems as $orderItem)
+                                                    {{ $orderItem->qty }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="d-none d-lg-table-cell"> Rp.
+                                                {{ number_format($items->grand_total, 0, ',', '.') }}
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-success">{{ $items->status }}</span>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown show d-inline-block widget-dropdown">
+                                                    <a class="dropdown-toggle icon-burger-mini" href=""
+                                                        role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false"
+                                                        data-display="static"></a>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li class="dropdown-item">
+                                                            <a href="#">View</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#">Remove</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -119,109 +122,119 @@
 
             <div class="row">
                 <div class="col-xl-8 col-md-12 p-b-15">
-                    <!-- User activity statistics -->
-                    <div class="card card-default" id="user-activity">
-                        <div class="no-gutters">
-                            <div>
-                                <div class="card-header justify-content-between">
-                                    <h2>User Activity</h2>
-                                    <div class="date-range-report ">
-                                        <span></span>
+                    <!-- Sales Graph -->
+                    <div id="user-acquisition" class="card card-default">
+                        <div class="card-header">
+                            <h2>Report Penjualan</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content pt-4" id="salesReport">
+                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
+                                    <div class="mb-6" style="max-height:247px">
+                                        <div id="ReportPenjualan" class="chartjs2"></div>
+                                        <div id="acqLegend" class="customLegend mb-2"></div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <div class="tab-content" id="userActivityContent">
-                                        <div class="tab-pane fade show active" id="user" role="tabpanel">
-                                            <canvas id="activity" class="chartjs"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex flex-wrap bg-white border-top">
-                                    <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xl-7">
-                    <!-- Top Products -->
-                    <div class="card card-default ec-card-top-prod">
-                        <div class="card-header justify-content-between">
-                            <h2>Top Products</h2>
-                            <div>
-                                <button class="text-black-50 mr-2 font-size-20"><i class="mdi mdi-cached"></i></button>
-                                <div class="dropdown show d-inline-block widget-dropdown">
-                                    <a class="dropdown-toggle icon-burger-mini" href="#" role="button"
-                                        id="dropdown-product" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false" data-display="static">
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li class="dropdown-item"><a href="#">Update Data</a></li>
-                                        <li class="dropdown-item"><a href="#">Detailed Log</a></li>
-                                        <li class="dropdown-item"><a href="#">Statistics</a></li>
-                                        <li class="dropdown-item"><a href="#">Clear Data</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                <div class="col-xl-4 col-md-12 p-b-15">
+                    <!-- Doughnut Chart -->
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Orders Overview</h2>
                         </div>
-                        <div class="card-body mt-10px mb-10px py-0">
-                            <div class="row media d-flex pt-15px pb-15px">
-                                <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                    <a href="#"><img src="assets/img/products/p1.jpg" alt="customer image"></a>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                    <a href="#">
-                                        <h6 class="mb-10px text-dark font-weight-medium">Baby cotton shoes</h6>
-                                    </a>
-                                    <p class="float-md-right sale"><span class="mr-2">58</span>Sales</p>
-                                    <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                        adds “swagger” to a simple.</p>
-                                    <p class="mb-0 ec-price">
-                                        <span class="text-dark">$520</span>
-                                        <del>$580</del>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row media d-flex pt-15px pb-15px">
-                                <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                    <a href="#"><img src="assets/img/products/p2.jpg" alt="customer image"></a>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                    <a href="#">
-                                        <h6 class="mb-10px text-dark font-weight-medium">Hoodies for men</h6>
-                                    </a>
-                                    <p class="float-md-right sale"><span class="mr-2">20</span>Sales</p>
-                                    <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                        adds “swagger” to a simple.</p>
-                                    <p class="mb-0 ec-price">
-                                        <span class="text-dark">$250</span>
-                                        <del>$300</del>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row media d-flex pt-15px pb-15px">
-                                <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                    <a href="#"><img src="assets/img/products/p3.jpg" alt="customer image"></a>
-                                </div>
-                                <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                    <a href="#">
-                                        <h6 class="mb-10px text-dark font-weight-medium">Long slive t-shirt</h6>
-                                    </a>
-                                    <p class="float-md-right sale"><span class="mr-2">10</span>Sales</p>
-                                    <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                        adds “swagger” to a simple.</p>
-                                    <p class="mb-0 ec-price">
-                                        <span class="text-dark">$480</span>
-                                        <del>$654</del>
-                                    </p>
-                                </div>
-                            </div>
+                        <div class="card-body">
+                            <div id="OrdersOverview"></div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+    {{-- chart report penjualan --}}
+    <script>
+        var options = {
+            series: [{
+                name: 'Net Profit',
+                data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+            }, {
+                name: 'Revenue',
+                data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+            }, {
+                name: 'Free Cash Flow',
+                data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+            },
+            yaxis: {
+                title: {
+                    text: '$ (thousands)'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return "$ " + val + " thousands"
+                    }
+                }
+            }
+        };
 
+        var chart = new ApexCharts(document.querySelector("#ReportPenjualan"), options);
+        chart.render();
+    </script>
+    {{-- end chart Penjualan --}}
+
+    {{-- chart order overview --}}
+    <script>
+        var options = {
+            series: [44, 55, 41, 17, 15],
+            chart: {
+                type: 'donut',
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#OrdersOverview"), options);
+        chart.render();
+    </script>
+    {{-- end chart --}}
 @endsection
