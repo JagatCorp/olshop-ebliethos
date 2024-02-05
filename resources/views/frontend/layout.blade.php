@@ -459,29 +459,12 @@
             <div class="footer-top section-space-footer-p">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12 col-lg-5 ec-footer-info">
+                        <div class="col-sm-12 col-lg-5 ec-footer-info m-auto">
                             <div class="ec-footer-widget">
                                 <h4 class="ec-footer-heading">TENTANG KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
                                         <li class="ec-footer-link">{!! $about->isi  ?? 'No Data' !!}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-lg-2 ec-footer-info">
-                            <div class="ec-footer-widget">
-                                <h4 class="ec-footer-heading">INFO</h4>
-                                <div class="ec-footer-links">
-                                    <ul class="align-items-center">
-                                        <li class="ec-footer-link"><a href="about">About us</a></li>
-                                        <li class="ec-footer-link"><a href="#">Contact Us</a></li>
-                                        <li class="ec-footer-link"><a href="#">How to Pay</a></li>
-                                        <li class="ec-footer-link"><a href="#">Shipping</a></li>
-                                        <li class="ec-footer-link"><a href="#">FAQ</a></li>
-                                        <li class="ec-footer-link"><a href="#">Terms and Conditions</a></li>
-                                        <li class="ec-footer-link"><a href="#">Terms of Use</a></li>
-                                        <li class="ec-footer-link"><a href="#">Privacy Policy</a></li>
                                     </ul>
                                 </div>
                             </div>

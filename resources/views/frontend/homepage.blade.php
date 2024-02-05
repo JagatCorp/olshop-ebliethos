@@ -88,11 +88,11 @@
                 <div class="ec_ser_content ec_ser_content_1 col-sm-12 col-md-6 col-lg-3 mb-lg-0" data-animation="fadeIn">
                     <div class="ec_ser_inner">
                         <div class="ec-service-image">
-                            <i class="fi fi-ts-truck-moving"></i>
+                            <i class="fi fi-rr-location-alt"></i>
                         </div>
                         <div class="ec-service-desc">
-                            <h2>Free Shipping</h2>
-                            <p>Free shipping on all US order or order above $200</p>
+                            <h2>Produk Asli</h2>
+                            <p>Jaminan produk langsung dari pabriknya</p>
                         </div>
                         {{-- <a href="#" class="btn btn-primary mt-2 rounded-5 ">Join Now</a> --}}
                     </div>
@@ -101,11 +101,11 @@
                 <div class="ec_ser_content ec_ser_content_2 col-sm-12 col-md-6 col-lg-3" data-animation="fadeIn">
                     <div class="ec_ser_inner">
                         <div class="ec-service-image">
-                            <i class="fi fi-ts-hand-holding-seeding"></i>
+                            <i class="fi fi-rr-headset"></i>
                         </div>
                         <div class="ec-service-desc">
                             <h2>24X7 Support</h2>
-                            <p>Contact us 24 hours a day, 7 days a week</p>
+                            <p>Customer Service kami 24 jam aktif melayani anda</p>
                         </div>
                         {{-- <a href="#" class="btn btn-primary mt-2 rounded-5 ">Join Now</a> --}}
                     </div>
@@ -113,11 +113,11 @@
                 <div class="ec_ser_content ec_ser_content_3 col-sm-12 col-md-6 col-lg-3" data-animation="fadeIn">
                     <div class="ec_ser_inner">
                         <div class="ec-service-image">
-                            <i class="fi fi-ts-badge-percent"></i>
+                            <i class="fi fi-rr-badge-percent"></i>
                         </div>
                         <div class="ec-service-desc">
-                            <h2>30 Days Return</h2>
-                            <p>Simply return it within 30 days for an exchange</p>
+                            <h2>Potongan Ongkir</h2>
+                            <p>Dapatkan Potongan Ongkir seluruh Indonesia</p>
                         </div>
                         {{-- <a href="#" class="btn btn-primary mt-2 rounded-5 ">Join Now</a> --}}
                     </div>
@@ -125,11 +125,11 @@
                 <div class="ec_ser_content ec_ser_content_4 col-sm-12 col-md-6 col-lg-3" data-animation="fadeIn">
                     <div class="ec_ser_inner">
                         <div class="ec-service-image">
-                            <i class="fi fi-ts-donate"></i>
+                            <i class="fi fi-rr-hand-holding-seeding"></i>
                         </div>
                         <div class="ec-service-desc">
-                            <h2>Payment Secure</h2>
-                            <p>Contact us 24 hours a day, 7 days a week</p>
+                            <h2>Bebas Konsultasi</h2>
+                            <p>Konsultasikan keluhan anda bersama ahli kami GRATIS!!</p>
                         </div>
                         {{-- <a href="#" class="btn btn-primary mt-2 rounded-5 ">Join Now</a> --}}
                     </div>
