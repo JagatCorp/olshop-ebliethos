@@ -39,10 +39,6 @@
     <!-- Background css -->
     <link rel="stylesheet" id="bg-switcher-css" href="{{ asset('assets-user/css/backgrounds/bg-4.css') }}">
 
-    {{-- asste tambahan --}}
-    <!-- Bootstrap CSS -->
-    {{-- <link rel="stylesheet" href="/assets-tambahan/css/bootstrap.min.css"> --}}
-
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="/assets-tambahan/css/font-awesome.min.css">
     <!-- icofont CSS -->
@@ -50,14 +46,6 @@
 
     <!-- Animate CSS -->
     <link rel="stylesheet" href="/assets-tambahan/css/animate.min.css">
-
-
-    <!-- Medipro CSS -->
-    {{-- <link rel="stylesheet" href="/assets-tambahan/css/normalize.css"> --}}
-    <link rel="stylesheet" href="/assets-tambahan/style.css">
-    <link rel="stylesheet" href="/assets-tambahan/css/responsive.css">
-
-
 
     <!-- CSRF Token Penting  BuatAdd Cart -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -623,7 +611,7 @@
         <div class="ec-right-bottom">
             <div class="">
                 <div class="ec-button rotateBackward">
-                    <img class="" src="{{ asset('/assets-user/icon/chat.png') }}" alt="whatsapp icon"
+                    <img class="" src="{{ asset('/assets-user/images/chat.png') }}" alt="whatsapp icon"
                         style="max-width: 200%; margin-right: 50px;">
                 </div>
             </div>
