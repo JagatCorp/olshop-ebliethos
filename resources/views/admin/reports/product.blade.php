@@ -1,5 +1,6 @@
 @extends('admin.layout.dashboard')
-
+@section('title', 'Product Report')
+@section('ActiveReport', 'active')
 @section('content')
     <div class="content">
         <div class="row">
