@@ -608,7 +608,7 @@
         </div>
         <!--/ End Floating Panel Container -->
         <!-- Start Right Floating Button-->
-        <div class="ec-right-bottom">
+        <div class="ec-right-bottom me-4">
             <div class="">
                 <div class="ec-button rotateBackward">
                     <img class="" src="{{ asset('/assets-user/images/chat.png') }}" alt="whatsapp icon"
