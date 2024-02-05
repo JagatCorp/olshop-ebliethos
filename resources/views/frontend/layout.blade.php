@@ -464,10 +464,7 @@
                                 <h4 class="ec-footer-heading">TENTANG KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link">Lorem ipsum dolor, sit amet consectetur adipisicing
-                                            elit. Commodi eius cupiditate voluptatibus minus natus vitae nulla eaque
-                                            eos, repudiandae neque officia aut deserunt beatae. Optio exercitationem quo
-                                            accusamus excepturi omnis.</li>
+                                        <li class="ec-footer-link">{!! $about->isi  ?? 'No Data' !!}</li>
                                     </ul>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-md-9 mx-auto">
                     <div class="container">
-                        <p class="text-center">{!! $about->isi !!}</p>
+                        <p class="text-center">{!! $about->isi  ?? 'No Data' !!}</p>
 
                     </div>
                 </div>

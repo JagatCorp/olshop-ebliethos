@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $now = now()->format('Y-m-d');
         $orderToday = Order::whereDate('created_at', $now)
-            ->where('status', 'created')
+            ->where('status', 'created')->orWhere('status', 'completed')->orWhere('status', 'created')
             ->count();
 
 
