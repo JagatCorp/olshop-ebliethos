@@ -42,6 +42,7 @@ class UserController extends Controller
             'is_admin' => $request->is_admin,
 
         ]);
+        return redirect('/admin/users')->with('toast_success', 'User berhasil di tambahkan');
     }
     public function update(Request $request)
     {

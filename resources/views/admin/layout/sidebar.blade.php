@@ -201,21 +201,21 @@
                     </div>
                 </li>
                 <!-- Authentication -->
-                {{-- <li class="has-sub">
+                <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-login"></i>
-                        <span class="nav-text">Authentication</span> <b class="caret"></b>
+                        <i class="fa fa-database"></i>
+                        <span class="nav-text">Basis Data</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
                         <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
                             <li class="">
-                                <a href="{{ route('logout') }}">
-                                    <span class="nav-text" style="color: rgb(195, 24, 24)">Logout</span>
+                                <a href="{{ url('admin/database') }}">
+                                    <span class="nav-text">Basis Data</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                </li> --}}
+                </li>
             </ul>
         </div>
     </div>

@@ -133,9 +133,9 @@
                             </div>
                             <!-- Ec Header Search End -->
                             <!-- Header User Start -->
-                            <a href="/account" class="ec-header-btn ec-side-toggle">
+                            {{-- <a href="{{ url('profile') }}" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon"><i class="fi-rr-user"></i></div>
-                            </a>
+                            </a> --}}
                             <!-- Header User End -->
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
@@ -519,13 +519,13 @@
                             class="ec-cart-noti ec-header-count cart-count-lable">{{ Cart::count() }}</span></a>
                 </div>
                 <div class="ec-nav-panel-icons">
-                    <a href="index.html" class="ec-header-btn"><i class="fi-rr-home"></i></a>
+                    <a href="{{ url('/') }}" class="ec-header-btn"><i class="fi-rr-home"></i></a>
                 </div>
                 {{-- <div class="ec-nav-panel-icons">
                     <a href="wishlist.html" class="ec-header-btn"><i class="fi-rr-search"></i></a>
                 </div> --}}
                 <div class="ec-nav-panel-icons">
-                    <a href="account" class="ec-header-btn"><i class="fi-rr-user"></i></a>
+                    <a href="{{ url('/profile') }}" class="ec-header-btn"><i class="fi-rr-user"></i></a>
                 </div>
 
             </div>

@@ -45,8 +45,15 @@
                                                 <td>
                                                     <div class="d-flex px-2 py-1 align-items-center  ">
                                                         <div>
-                                                            <img src="{{ asset('/img/fotouser') }}/{{ $item->foto }}"
-                                                                class="rounded-circle mr-2" width="50" height="50">
+                                                            @if ($item->foto)
+                                                                <img src="{{ asset('/img/fotouser') }}/{{ $item->foto }}"
+                                                                    class="rounded-circle mr-2" width="50"
+                                                                    height="50">
+                                                            @else
+                                                                <img src="/img/avatar.jpg" class="rounded-circle mr-2"
+                                                                    width="50" height="50">
+                                                            @endif
+
                                                         </div>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">{{ $item->first_name }}

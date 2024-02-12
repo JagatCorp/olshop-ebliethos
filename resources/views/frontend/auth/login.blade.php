@@ -85,6 +85,11 @@
                                         style="background-color: #B42225; color: white; border-radius: 0; font-size: x-large"
                                         value="login">Masuk</button>
                                 </div>
+                                @if (Route::has('password.request'))
+                                    <p class="mb-1 text-right">
+                                        <a href="{{ route('password.request') }}">{{ __('Lupa Password?') }}</a>
+                                    </p>
+                                @endif
                                 <a href="register">
                                     <p class="mb-4 text-center font-weight-bold text-decoration-underline"
                                         style="color: #B42225;">Daftar</p>

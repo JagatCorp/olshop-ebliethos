@@ -16,6 +16,7 @@ class WishListController extends Controller
     {
         $wishlists = WishList::where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')->get();
+        // Ambil rata-rata nilai ulasan untuk setiap produk
 
         return view('frontend.wishlists.index', compact('wishlists'));
     }

@@ -9,12 +9,12 @@
                     <div class="card">
                         <div class="card-header">
                             <h2 class="text-dark font-weight-medium">Order ID #{{ $order->code }}</h2>
-                            <div class="btn-group float-right">
+                            {{-- <div class="btn-group float-right">
                                 <button class="btn btn-sm btn-secondary">
                                     <i class="mdi mdi-content-save"></i> Save</button>
                                 <button class="btn btn-sm btn-secondary">
                                     <i class="mdi mdi-printer"></i> Print</button>
-                            </div>
+                            </div> --}}
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

@@ -18,26 +18,7 @@
     <div class="shop-page-wrapper shop-page-padding ptb-100">
         <div class="container-fluid">
             <div class="row">
-                <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
-                    <div class="ec-sidebar-wrap ec-border-box">
-                        <!-- Sidebar Category Block -->
-                        <div class="ec-sidebar-block">
-                            <div class="ec-vendor-block">
-                                <div class="ec-vendor-block-items">
-                                    <ul>
-                                        <li><a href="{{ url('profile') }}">Profile</a></li>
-                                        <li><a href="{{ url('orders') }}">Orders</a></li>
-                                        {{-- <li><a href="{{ url('wishlist') }}">Wishlist</a></li> --}}
-                                        <li><a href="{{ url('carts') }}">Cart</a></li>
-                                        <li><a href="{{ route('logout') }}" style="color: #c00d0d"><i
-                                                    class="fi-rr-exit"></i> Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @include('frontend.partials.user_menu')
                 <div class="col-lg-9">
                     <div class="d-flex justify-content-between">
                         <h2 class="text-dark font-weight-medium">Order ID #{{ $order->code }}</h2>

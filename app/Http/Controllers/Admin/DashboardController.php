@@ -35,7 +35,8 @@ class DashboardController extends Controller
             ->get();
 
         $statuses = $statusCounts->pluck('total', 'status')->toArray();
-        $paidOrders = Order::where('payment_status', 'PAID')->get();
+        // $paidOrders = Order::where('payment_status', 'PAID')->get();
+        $paidOrders = Order::where('status', 'created')->orWhere('status', 'completed')->get();
         $salesData = $paidOrders->groupBy(function ($order) {
             return $order->created_at->format('D M Y');
         })->map(function ($groupedOrders) {

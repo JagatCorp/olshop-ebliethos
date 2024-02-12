@@ -103,9 +103,14 @@
                                                 <a href="/admin/orders/{{ $item->id }}"
                                                     class="media media-message media-notification">
                                                     <div class="position-relative mr-3">
-                                                        <img class="rounded-circle"
-                                                            src="{{ asset('/img/fotouser/' . $item->user->foto) }}"
-                                                            alt="Image">
+                                                        @if ($item->user->foto)
+                                                            <img class="rounded-circle"
+                                                                src="{{ asset('/img/fotouser/' . $item->user->foto) }}"
+                                                                alt="Image">
+                                                        @else
+                                                            <img class="rounded-circle" src="/img/avatar.jpg">
+                                                        @endif
+
                                                         <span class="status away"></span>
                                                     </div>
                                                     <div class="media-body d-flex justify-content-between">
