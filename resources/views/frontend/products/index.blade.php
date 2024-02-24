@@ -51,7 +51,7 @@
                                                             </div>
                                                         @endif
                                                     </a>
-                                                    <span class="percentage">Terlaris</span>
+                                                    <span class="percentage">{{ $product->label }}</span>
                                                     <a href="#" class="quickview" data-link-action="quickview"
                                                         title="Quick view" data-bs-toggle="modal"
                                                         data-bs-target="#modal_detail{{ $product->id }}"><i

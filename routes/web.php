@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DatabaseController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
@@ -108,6 +109,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-review', [ReviewController::class, 'store'])->name('create-review');
     Route::post('edit-review', [ReviewController::class, 'update'])->name('edit-review');
     Route::get('delete-review/{id}', [ReviewController::class, 'delete'])->name('delete-review');
+
+    //settings
+    Route::get('settings', [SettingsController::class, 'index'])->name('settings-index');
+    Route::post('create-settings', [SettingsController::class, 'store'])->name('create-settings');
+    Route::post('edit-settings', [SettingsController::class, 'update'])->name('edit-settings');
+    Route::get('delete-settings/{id}', [SettingsController::class, 'delete'])->name('delete-settings');
 
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');

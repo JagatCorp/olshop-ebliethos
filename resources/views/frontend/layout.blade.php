@@ -183,13 +183,23 @@
                                 </ul>
                             </div>
                         </div>
+                        @php
+                            $settings = App\Models\Settings::first();
+                        @endphp
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center col-3 " style="margin-left: -100px">
                             <div class="header-logo">
-                                <a href="/"><img
-                                        src="{{ asset('assets-user/images/logo/text-black.png') }}" /></a>
+                                <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
+                                        class="main-logo" alt="" /></a>
                             </div>
                         </div>
+                        <style>
+                            .main-logo {
+                                width: 200px !important;
+                                height: 50px;
+
+                            }
+                        </style>
                         <!-- Ec Header Logo End -->
 
                         <!-- Ec Header Button Start -->
@@ -260,8 +270,8 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="/"><img src="{{ asset('assets-user/images/logo/text-black.png') }}"
-                                    alt="Site Logo" /></a>
+                            <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
+                                    alt="Site Logo" class="main-logo" /></a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -462,9 +472,12 @@
                                 <h4 class="ec-footer-heading">TOKO KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link"><a href="#">Shopee</a></li>
-                                        <li class="ec-footer-link"><a href="#">Tokopedia</a></li>
-                                        <li class="ec-footer-link"><a href="#">TikTok Shop</a></li>
+                                        <li class="ec-footer-link"><a href="{{ $settings->link_shopee }}">Shopee</a>
+                                        </li>
+                                        <li class="ec-footer-link"><a
+                                                href="{{ $settings->link_tokped }}">Tokopedia</a></li>
+                                        <li class="ec-footer-link"><a href="{{ $settings->link_tiktokshop }}">TikTok
+                                                Shop</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -474,8 +487,8 @@
                                 <h4 class="ec-footer-heading">KONTAK KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link">ebliethos@gmail.com</li>
-                                        <li class="ec-footer-link">Monday - Friday, 9am - 5pm</a></li>
+                                        <li class="ec-footer-link">{{ $settings->email }}</li>
+                                        <li class="ec-footer-link">{{ $settings->waktu_buka }}</a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -41,6 +41,7 @@ class ProductRequest extends FormRequest
                     if ($this->get('type') == 'simple') {
                         return [
                             'type' => 'required',
+                            'label' => 'nullable',
                             'old_price' => ['required', 'numeric'],
                             'price' => ['required', 'numeric'],
                             'qty' => ['required', 'numeric'],

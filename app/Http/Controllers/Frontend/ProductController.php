@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\AttributeOption;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductImage;
@@ -42,8 +43,24 @@ class ProductController extends Controller
             ->get();
 
         $selectedSort = url('products');
+        // Jika query parameter sort adalah popularity-desc, maka sort by produk terlaris
+        if ($request->query('sort') === 'popularity-desc') {
+            // Ambil ID produk yang paling sering dipesan dari model Order
+            $popularProductIds = Order::where('payment_status', 'PAID')
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->select('order_items.product_id')
+                ->groupBy('order_items.product_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(10) // Ambil 10 produk teratas
+                ->pluck('order_items.product_id');
+
+            // Urutkan produk berdasarkan popularitas (penjualan terlaris)
+            $products->orderByRaw('FIELD(id, ' . $popularProductIds->implode(',') . ') DESC');
+        }
+
         $sorts = [
             url('products') => 'Bawaan',
+            url('products?sort=popularity-desc') => 'Produk Terlaris',
             url('products?sort=price-asc') => 'Harga - Rendah Ke Tinggi',
             url('products?sort=price-desc') => 'Harga - Tinggi Ke Rendah',
             url('products?sort=created_at-desc') => 'Terbaru hingga Terlama',
@@ -51,11 +68,12 @@ class ProductController extends Controller
         ];
 
         $products = $this->_searchProducts($products, $request);
+
         $products = $this->_filterProductsByPriceRange($products, $request);
         $products = $this->_filterProductsByAttribute($products, $request);
         $products = $this->_sortProducts($products, $request);
         $selectedSort = $this->selectedSort;
-        $products = $products->paginate(10);
+        $products = $products->get();
 
         $productImages = ProductImage::get();
 
@@ -92,8 +110,23 @@ class ProductController extends Controller
             ->get();
 
         $selectedSort = url('products');
+        if ($request->query('sort') === 'popularity-desc') {
+            // Ambil ID produk yang paling sering dipesan dari model Order
+            $popularProductIds = Order::where('payment_status', 'PAID')
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->select('order_items.product_id')
+                ->groupBy('order_items.product_id')
+                ->orderByRaw('COUNT(*) DESC')
+                ->limit(10) // Ambil 10 produk teratas
+                ->pluck('order_items.product_id');
+
+            // Urutkan produk berdasarkan popularitas (penjualan terlaris)
+            $products->orderByRaw('FIELD(id, ' . $popularProductIds->implode(',') . ') DESC');
+        }
+
         $sorts = [
             url('products') => 'Bawaan',
+            url('products?sort=popularity-desc') => 'Produk Terlaris',
             url('products?sort=price-asc') => 'Harga - Rendah Ke Tinggi',
             url('products?sort=price-desc') => 'Harga - Tinggi Ke Rendah',
             url('products?sort=created_at-desc') => 'Terbaru hingga Terlama',
@@ -105,7 +138,7 @@ class ProductController extends Controller
         $products = $this->_filterProductsByAttribute($products, $request);
         $products = $this->_sortProducts($products, $request);
         $selectedSort = $this->selectedSort;
-        $products = $products->paginate(10);
+        $products = $products->get();
         $productImages = ProductImage::get();
         // Ambil rata-rata nilai ulasan untuk setiap produk
         foreach ($products as $product) {

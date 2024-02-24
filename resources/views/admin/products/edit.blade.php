@@ -65,6 +65,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="form-group row border-bottom pb-4">
+                                    <label for="name" class="col-sm-2 col-form-label">Label Produk</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="label"
+                                            value="{{ old('label', $product->label) }}" id="label">
+                                    </div>
+                                </div>
                                 @if (!empty($configurable_attributes) && empty($product))
                                     <p class="text-primary mt-4">Konfigurasi Attribute Produk</p>
                                     <hr />

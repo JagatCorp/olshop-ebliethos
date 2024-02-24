@@ -52,10 +52,10 @@
                                                             </div>
                                                         @endif
                                                     </a>
-                                                    <span class="percentage">Terlaris</span>
-                                                    <span class="flags">
+                                                    <span class="percentage">{{ $product->label }}</span>
+                                                    {{-- <span class="flags">
                                                         <span class="sale">Diskon</span>
-                                                    </span>
+                                                    </span> --}}
                                                     <a href="#" class="quickview" data-link-action="quickview"
                                                         title="Quick view" data-bs-toggle="modal"
                                                         data-bs-target="#modal_detail{{ $product->id }}"><i
@@ -239,7 +239,8 @@
 
                                     <div class="ec-quickview-desc">{{ $product->short_description }}</div>
                                     <div class="ec-quickview-price">
-                                        <span class="old-price">IDR 9999</span>
+                                        <span class="old-price">IDR
+                                            {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                         <span class="new-price">IDR
                                             {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                     </div>

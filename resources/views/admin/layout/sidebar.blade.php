@@ -1,13 +1,16 @@
 <div class="ec-left-sidebar ec-bg-sidebar">
     <div id="sidebar" class="sidebar ec-sidebar-footer">
-
+        @php
+            $settings = App\Models\Settings::first();
+        @endphp
         <div class="ec-brand">
-            <img class="ec-brand-icon" src="/images/logoebli.png" alt=""
-                style="width: 300px; height: 100px; margin-left: -60px" />
+            <img class="ec-brand-icon" src="{{ asset('img/logotoko/' . $settings->logo) }}" alt=""
+                style="width: auto; height: 40px; margin-left: 30px" />
             {{-- <a href="index.html" title="Ekka">
 
                 <span class="ec-brand-name text-truncate">Ekka</span>
             </a> --}}
+
         </div>
 
         <!-- begin sidebar scrollbar -->

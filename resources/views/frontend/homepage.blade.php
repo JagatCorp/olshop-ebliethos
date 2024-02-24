@@ -216,7 +216,7 @@
                                                                 </div>
                                                             @endif
                                                         </a>
-                                                        <span class="percentage">Terlaris</span>
+                                                        <span class="percentage">{{ $product->label }}</span>
 
                                                         <a href="#" class="quickview" data-link-action="quickview"
                                                             title="Quick view" data-bs-toggle="modal"
@@ -328,7 +328,7 @@
                                                     @endif
 
                                                 </a>
-                                                <span class="percentage">Terlaris</span>
+                                                <span class="percentage">{{ $product->label }}</span>
 
                                                 <a href="#" class="quickview" data-link-action="quickview"
                                                     title="Quick view" data-bs-toggle="modal"
@@ -449,7 +449,8 @@
 
                                     <div class="ec-quickview-desc">{{ $product->short_description }}</div>
                                     <div class="ec-quickview-price">
-                                        <span class="old-price">IDR 9999</span>
+                                        <span class="old-price">IDR
+                                            {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                         <span class="new-price">IDR
                                             {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                     </div>
@@ -514,8 +515,8 @@
                         @foreach ($testimoni as $item)
                             <li class="ec-test-item">
                                 <div class="ec-test-inner">
-                                    <div class="ec-test-img"><img alt="testimonial" title="testimonial"
-                                            src="{{ asset('img/fototestimoni/' . $item->image) }}" /></div>
+                                    <img src="{{ asset('img/fototestimoni/' . $item->image) }}"
+                                        style="border-radius: 100%; width:100px;" class="mx-auto" />
                                     <div class="ec-test-content">
                                         <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i>
                                             {!! $item->testimoni !!} <i class="fi-rr-quote-right bottom"></i>
