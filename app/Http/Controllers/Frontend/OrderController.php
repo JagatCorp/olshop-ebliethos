@@ -166,6 +166,16 @@ class OrderController extends Controller
 
     public function doCheckout(Request $request)
     {
+        $request->validate([
+
+            'customer_address1' => 'required',
+            'customer_phone' => 'required',
+            'customer_email' => 'required',
+            'customer_postcode' => 'required',
+            'customer_city_id' => 'required',
+            'customer_province_id' => 'required',
+
+        ]);
         $params = $request->except('_token');
 
         $order = DB::transaction(

@@ -183,6 +183,7 @@
                                         <input type="text" name="note" value="{{ old('note') }}">
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -224,23 +225,38 @@
                                             <td><span class="amount">Rp{{ Cart::subtotal(0, ',', '.') }}</span></td>
                                         </tr>
                                         <!-- <tr class="cart-subtotal">
-                                                                                  <th>Tax</th>
-                                                                                  <td><span class="amount">jnfjk</span></td>
-                                                                                 </tr> -->
+                                                                                                                                                  <th>Tax</th>
+                                                                                                                                                  <td><span class="amount">jnfjk</span></td>
+                                                                                                                                                 </tr> -->
                                         <tr class="cart-subtotal">
                                             <th>Biaya Ongkir</th>
                                             <td><select id="shipping-cost-option" required name="shipping_service">
 
                                                 </select></td>
                                         </tr>
+
                                         <tr class="order-total">
                                             <th>Order Total</th>
                                             <td><strong>Rp<span
                                                         class="total-amount">{{ Cart::subtotal(0, ',', '.') }}</span></strong>
                                             </td>
                                         </tr>
+                                        <div>
+
+                                            <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span>
+                                        </div>
+                                        <div class="ec-checkout-coupan-content hidden ">
+                                            <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form"
+                                                method="post" action="#">
+                                                <input class="ec-coupan" type="text" required=""
+                                                    placeholder="Enter Your Coupan Code" name="ec-coupan" value="">
+                                                <button class="ec-coupan-btn button btn-primary mt-1" type="submit"
+                                                    name="subscribe" value="">Apply</button>
+                                            </form>
+                                        </div>
                                     </tfoot>
                                 </table>
+
                             </div>
                             <div class="payment-method">
                                 <div class="payment-accordion">

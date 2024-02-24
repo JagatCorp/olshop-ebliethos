@@ -26,7 +26,68 @@
 
                             </div>
 
-
+                            <div class="ec-blog-comments">
+                                <div class="ec-blog-cmt-preview">
+                                    <div class="ec-blog-comment-wrapper mt-55">
+                                        <h4 class="ec-blog-dec-title">Comments : 05</h4>
+                                        <div class="ec-single-comment-wrapper mt-35">
+                                            <div class="ec-blog-user-img">
+                                                <img src="assets/images/blog-image/9.jpg" alt="blog image">
+                                            </div>
+                                            <div class="ec-blog-comment-content">
+                                                <h5>John Deo</h5>
+                                                <span>October 14, 2018 </span>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                    eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
+                                                    ad minim veniam, </p>
+                                                <div class="ec-blog-details-btn">
+                                                    <a href="javascript:void(0)">Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ec-single-comment-wrapper mt-50 ml-150">
+                                            <div class="ec-blog-user-img">
+                                                <img src="assets/images/blog-image/10.jpg" alt="blog image">
+                                            </div>
+                                            <div class="ec-blog-comment-content">
+                                                <h5>Jenifer lowes</h5>
+                                                <span>October 14, 2018 </span>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                    eiusmod tempor incididunt ut labore et dolor magna aliqua. Ut enim
+                                                    ad minim veniam, </p>
+                                                <div class="ec-blog-details-btn">
+                                                    <a href="javascript:void(0)">Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ec-blog-cmt-form">
+                                    <div class="ec-blog-reply-wrapper mt-50">
+                                        <h4 class="ec-blog-dec-title">Leave A Reply</h4>
+                                        <form class="ec-blog-form" action="#">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="ec-leave-form">
+                                                        <input type="text" placeholder="Full Name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="ec-leave-form">
+                                                        <input type="email" placeholder="Email Address ">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="ec-text-leave">
+                                                        <textarea placeholder="Message"></textarea>
+                                                        <a href="#" class="btn btn-lg btn-secondary">Order Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
