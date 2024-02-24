@@ -51,9 +51,9 @@
                                 @csrf
                                 <div class="form-group first mb-4">
                                     <label class="text-muted" style="margin-bottom: -5px">First Name</label>
-                                    <input type="text" class="form-control  @error('first_name') is-invalid @enderror"
-                                        id="register-form-name" name="first_name" value="{{ old('first_name') }}">
-                                    @error('first_name')
+                                    <input type="text" class="form-control  @error('name') is-invalid @enderror"
+                                        id="register-form-name" name="name" value="{{ old('name') }}">
+                                    @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
