@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('themes/ezone/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('themes/ezone/assets/css/responsive.css') }}">
     <script src="{{ asset('themes/ezone/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
-
+    @include('sweetalert::alert')
     <!-- checkout-area start -->
     <div class="checkout-area ptb-100">
         <div class="container">
@@ -56,7 +56,7 @@
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Provinsi<span class="required">*</span></label>
-                                        <select name="province_id" id="shipping-province">
+                                        <select name="province_id" id="shipping-province" required>
                                             <option value="">-- Pilih Provinsi --</option>
                                             @foreach ($provinces as $id => $province)
                                                 <option {{ auth()->user()->province_id == $id ? 'selected' : null }}
@@ -68,7 +68,7 @@
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kota/Kab<span class="required">*</span></label>
-                                        <select name="shipping_city_id" id="shipping-city">
+                                        <select name="shipping_city_id" id="shipping-city" required>
                                             <option value="">-- Pilih Kota --</option>
                                             @if ($cities)
                                                 @foreach ($cities as $id => $city)
@@ -225,9 +225,9 @@
                                             <td><span class="amount">Rp{{ Cart::subtotal(0, ',', '.') }}</span></td>
                                         </tr>
                                         <!-- <tr class="cart-subtotal">
-                                                                                                                                                  <th>Tax</th>
-                                                                                                                                                  <td><span class="amount">jnfjk</span></td>
-                                                                                                                                                 </tr> -->
+                                                                                                                                                                          <th>Tax</th>
+                                                                                                                                                                          <td><span class="amount">jnfjk</span></td>
+                                                                                                                                                                         </tr> -->
                                         <tr class="cart-subtotal">
                                             <th>Biaya Ongkir</th>
                                             <td><select id="shipping-cost-option" required name="shipping_service">
@@ -248,7 +248,7 @@
                                         <div class="ec-checkout-coupan-content hidden ">
                                             <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form"
                                                 method="post" action="#">
-                                                <input class="ec-coupan" type="text" required=""
+                                                <input class="ec-coupan" type="text"
                                                     placeholder="Enter Your Coupan Code" name="ec-coupan" value="">
                                                 <button class="ec-coupan-btn button btn-primary mt-1" type="submit"
                                                     name="subscribe" value="">Apply</button>

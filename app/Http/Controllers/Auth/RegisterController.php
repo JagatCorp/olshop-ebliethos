@@ -50,15 +50,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ], [
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
             'required' => ':attribute harus diisi',
             'email.unique' => 'Email sudah terdaftar',
-            'password.min' => 'Password minimal 8 karakter',
+            'password.min' => 'Password minimal 6 karakter',
         ]);
     }
 
@@ -68,28 +68,30 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-  protected function create(array $data)
-{
-    // Membuat pengguna pada koneksi pertama
-    $user1 = User::create([
-        'name' => $data['name'],
-        'last_name' => $data['last_name'],
-        'email' => $data['email'],
-        'password' => Hash::make($data['password']),
-    ]);
+    protected function create(array $data)
+    {
+        // Membuat pengguna pada koneksi pertama
+        $user1 = User::create([
+            'first_name' => $data['first_name'],
+            'name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
 
-    // Membuat pengguna pada koneksi kedua
-    $user2 = new User;
-    $user2->setConnection('mysql_second');
-    $user2->name = $data['name'];
-    $user2->email = $data['email'];
-    $user2->password = Hash::make($data['password']);
-    $user2->save();
+            'password' => Hash::make($data['password']),
 
-    // Mengembalikan salah satu pengguna (atau keduanya) sesuai kebutuhan Anda
-    return $user1; // atau bisa juga return $user2; atau kedua-duanya jika perlu
-}
+        ]);
 
+        // Membuat pengguna pada koneksi kedua
+        $user2 = new User;
+        $user2->setConnection('mysql_second');
+        $user2->name = $data['first_name'];
+        $user2->email = $data['email'];
+        $user2->password = Hash::make($data['password']);
+        $user2->save();
+
+        // Mengembalikan salah satu pengguna (atau keduanya) sesuai kebutuhan Anda
+        return $user1; // atau bisa juga return $user2; atau kedua-duanya jika perlu
+    }
 
     public function showRegistrationForm()
     {

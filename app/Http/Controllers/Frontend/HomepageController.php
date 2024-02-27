@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\About;
 use App\Models\Artikel;
 use App\Models\Banner;
+use App\Models\Comments;
 use App\Models\Konsultasi;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -51,7 +52,9 @@ class HomepageController extends Controller
         $artikelSelengkapnya->update(['dilihat' => $artikelSelengkapnya->dilihat + 1]);
 
         $artikelLainnya = Artikel::limit(5)->get();
-        return view('frontend.artikel.detail', compact('artikelSelengkapnya', 'artikelLainnya'));
+        $comments = $artikelSelengkapnya->comments()->count();
+
+        return view('frontend.artikel.detail', compact('artikelSelengkapnya', 'artikelLainnya', 'comments'));
     }
     // konsultasi
     public function konsultasi()

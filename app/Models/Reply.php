@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Artikel extends Model
+class Reply extends Model
 {
     use HasFactory;
-    protected $table = 'artikels';
+    protected $table = 'replies';
     protected $guarded = ['id'];
 
     public function user()
@@ -16,10 +16,9 @@ class Artikel extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments()
+    public function comment()
     {
-        return $this->hasMany(Comments::class);
+        return $this->belongsTo(Comments::class);
     }
-
 
 }

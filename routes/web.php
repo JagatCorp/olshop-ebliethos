@@ -11,10 +11,12 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CommentsController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\PaymentController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ReplyController;
 use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Support\Facades\Auth;
@@ -167,6 +169,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('delete-wishlist/{id}', [WishListController::class, 'delete'])->name('delete-wishlist');
     Route::get('profile', [ProfileController::class, 'show'])->name('profile');
     Route::post('profile-update', [ProfileController::class, 'update'])->name('profile.update');
+
+    // comentar
+    Route::post('/comments', [CommentsController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentsController::class, 'destroy'])->name('comments.destroy');
+    // reply
+    Route::post('/reply', [ReplyController::class, 'store'])->name('reply.store');
+    Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
 
 });
 

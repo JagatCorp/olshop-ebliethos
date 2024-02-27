@@ -11,6 +11,8 @@ use App\Models\Shipment;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -166,16 +168,16 @@ class OrderController extends Controller
 
     public function doCheckout(Request $request)
     {
-        $request->validate([
+        // $request->validate([
 
-            'customer_address1' => 'required',
-            'customer_phone' => 'required',
-            'customer_email' => 'required',
-            'customer_postcode' => 'required',
-            'customer_city_id' => 'required',
-            'customer_province_id' => 'required',
+        //     'customer_address1' => 'required',
+        //     'customer_phone' => 'required',
+        //     'customer_email' => 'required',
+        //     'customer_postcode' => 'required',
+        //     'customer_city_id' => 'required',
+        //     'customer_province_id' => 'required',
 
-        ]);
+        // ]);
         $params = $request->except('_token');
 
         $order = DB::transaction(
@@ -360,10 +362,36 @@ class OrderController extends Controller
 
     }
 
+    // public function successOrder(Order $orderId)
+    // {
+    //     $orderId->payment_status = 'PAID';
+    //     $orderId->save();
+    //     return view('frontend.orders.ordersucces', compact('orderId'));
+    // }
+
     public function successOrder(Order $orderId)
     {
+        // Ubah status pembayaran menjadi 'PAID'
         $orderId->payment_status = 'PAID';
         $orderId->save();
+
+        // URL untuk melihat detail pesanan
+        $orderUrl = url('orders/' . $orderId->id);
+
+        // Kirim pesan WhatsApp jika pembayaran berhasil
+        $response = Http::post('http://localhost:8000/send-message', [
+            'number' => $orderId->customer_phone,
+            'message' => 'Halo ' . $orderId->customer_first_name . '! Invoice Anda dengan nomor ' . $orderId->code . ' telah berhasil dibayar. Detail pesanan dapat dilihat di sini: ' . $orderUrl,
+        ]);
+
+        // Lakukan penanganan respons API WhatsApp di sini, misalnya log atau lainnya
+        if ($response->successful()) {
+            Log::info('Pesan WhatsApp berhasil dikirim.');
+        } else {
+            Log::error('Gagal mengirim pesan WhatsApp: ' . $response->body());
+        }
+
+        // Tampilkan halaman sukses pembayaran kepada pengguna
         return view('frontend.orders.ordersucces', compact('orderId'));
     }
 
