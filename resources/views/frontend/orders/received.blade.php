@@ -115,7 +115,7 @@
                                     @forelse ($order->orderItems as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
-                                            <td>{{ $item->name }}</td>
+                                            <td>{{ $item->first_name }}</td>
                                             {{-- <td>{!! showAttributes($item->attributes) !!}</td> --}}
                                             <td>{{ $item->qty }}</td>
                                             <td>Rp{{ number_format($item->base_price, 0, ',', '.') }}</td>

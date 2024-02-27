@@ -27,7 +27,8 @@ class Product extends Model
     public const CONFIGURABLE = 'configurable';
     public const TYPES = [
         self::SIMPLE => 'Simple',
-        self::CONFIGURABLE => 'Configurable',
+        // configurable matikan dulu yaaa
+        // self::CONFIGURABLE => 'Configurable',
     ];
 
     /**
