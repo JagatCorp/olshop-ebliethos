@@ -43,6 +43,11 @@ class DashboardController extends Controller
             return $groupedOrders->sum('grand_total');
         });
 
+        // penjualan per product
+        $product = OrderItem::whereHas('product')->whereHas('order', function ($query) {
+            $query->where('status', 'completed');
+        })->get();
+
         return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData'));
 
     }

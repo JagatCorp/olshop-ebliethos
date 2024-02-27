@@ -73,6 +73,7 @@ class RegisterController extends Controller
     // Membuat pengguna pada koneksi pertama
     $user1 = User::create([
         'name' => $data['name'],
+        'first_name' => $data['name'],
         'last_name' => $data['last_name'],
         'email' => $data['email'],
         'password' => Hash::make($data['password']),
