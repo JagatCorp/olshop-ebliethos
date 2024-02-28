@@ -156,11 +156,11 @@
             </div>
 
             <div class="row">
-                <div class="col-12 p-b-15">
+                <div class="col-6 p-b-15">
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                         <div class="card-header justify-content-between">
-                            <h2>Transaksi Terbaru</h2>
+                            <h2>Transaksi Produk pada bulan {{ date('M') }}</h2>
                             <div class="date-range-report">
                                 <span></span>
                             </div>
@@ -170,56 +170,166 @@
                                 <table class="table card-table table-responsive" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Tanggal</th>
-                                            <th>Order ID</th>
-                                            <th>Nama Pengguna</th>
-                                            <th>Produk</th>
-                                            <th class="d-none d-lg-table-cell">QTY</th>
-                                            <th class="d-none d-lg-table-cell">Total Pembayaran</th>
-                                            <th>Status</th>
+                                            <th>Nama Produk</th>
+                                            <th>Gambar</th>
+                                            <th>Terjual</th>
+                                            <th>Harga</th>
+                                            <th>Subtotal</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($newestTransaction->take(5) as $items)
+                                        @foreach ($listProd as $prod)
                                             <tr>
-                                                <td>{{ $items->order_date }}</td>
-                                                <td>
-                                                    <a class="text-dark" href="">{{ $items->code }}</a>
-                                                </td>
-                                                <td>{{ $items->customer_first_name }}</td>
-                                                <td class="d-none d-lg-table-cell">
-                                                    @foreach ($items->orderItems as $orderItem)
-                                                        {{ $orderItem->product->name }}<br>
-                                                    @endforeach
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">
-                                                    @foreach ($items->orderItems as $orderItem)
-                                                        {{ $orderItem->qty }}<br>
-                                                    @endforeach
-                                                </td>
-                                                <td class="d-none d-lg-table-cell"> Rp.
-                                                    {{ number_format($items->grand_total, 0, ',', '.') }}
-                                                </td>
-                                                <td>
-                                                    <span class="badge badge-success">{{ $items->status }}</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href=""
-                                                            role="button" id="dropdown-recent-order1"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="/admin/orders/{{ $items->id }}">View</a>
-                                                            </li>
-
-                                                        </ul>
-                                                    </div>
+                                                <td>{{ $prod->name }}</td>
+                                                <td><img src="{{ asset('img/fotoproducts/' . $prod->productImages->first()->foto) }}"
+                                                        alt="Product" width="100px" /></td>
+                                                <td>{{ $prodTerjual->where('product_id', $prod->id)->sum('qty') }}</td>
+                                                <td>{{ number_format($prod->price, 0, ',', '.') }}</td>
+                                                <td>{{ number_format($prodTerjual->where('product_id', $prod->id)->sum('base_total'), 0, ',', '.') }}
                                                 </td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 p-b-15">
+                    <!-- Recent Order Table -->
+                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                        <div class="card-header justify-content-between">
+                            <h2>Transaksi Pelanggan pada bulan {{ date('M') }}</h2>
+                            <div class="date-range-report">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <div class="table-responsive">
+                                <table class="table card-table table-responsive" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nama</th>
+                                            <th>Foto</th>
+                                            <th>No HP</th>
+                                            <th>Pembelian Produk</th>
+                                            <th>Total Dihabiskan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($dataCust as $data)
+                                            <tr>
+                                                <td>{{ $data->name }}</td>
+                                                <td><img src="{{ asset('img/fotouser/' . $data->foto) }}" alt="User"
+                                                        width="100px" /></td>
+                                                <td>{{ $data->name }}</td>
+                                                <td>
+                                                    {{ $transCust->where('user_id', $data->id)->sum(function ($order) {
+                                                        return $order->orderItems->sum('qty');
+                                                    }) }}
+                                                </td>
+                                                <td>{{ number_format(
+                                                    $transCust->where('user_id', $data->id)->sum(function ($order) {
+                                                        return $order->grand_total;
+                                                    }),
+                                                    0,
+                                                    ',',
+                                                    '.',
+                                                ) }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6 p-b-15">
+                    <!-- Recent Order Table -->
+                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                        <div class="card-header justify-content-between">
+                            <h2>Status Transaksi pada bulan {{ date('M') }}</h2>
+                            <div class="date-range-report">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <div class="table-responsive">
+                                <table class="table card-table table-responsive" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Created</th>
+                                            <th>Confirmed</th>
+                                            <th>Delivered</th>
+                                            <th>Completed</th>
+                                            <th>Cancelled</th>
+                                            <th>Paid</th>
+                                            <th>Unpaid</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <tr>
+                                                <td class="text-center">{{ $created }}</td>
+                                                <td class="text-center">{{ $confirmed }}</td>
+                                                <td class="text-center">{{ $delivered }}</td>
+                                                <td class="text-center">{{ $completed }}</td>
+                                                <td class="text-center">{{ $cancelled }}</td>
+                                                <td class="text-center">{{ $paid }}</td>
+                                                <td class="text-center">{{ $unpaid }}</td>
+                                            </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 p-b-15">
+                    <!-- Recent Order Table -->
+                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                        <div class="card-header justify-content-between">
+                            <h2>Pemakaian Diskon</h2>
+                            <div class="date-range-report">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <div class="table-responsive">
+                                <table class="table card-table table-responsive" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode</th>
+                                            <th>Persentase</th>
+                                            <th>Digunakan</th>
+                                            <th>Batas Penggunaan</th>
+                                            <th>Sisa Penggunaan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($diskon as $dis)
+                                        @php
+                                            $sisa = $dis->usage_limit - $dis->usage_count;
+                                        @endphp
+                                            <tr>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td class="text-center">{{ $dis->coupon_code }}</td>
+                                                <td class="text-center">{{ $dis->discount }}</td>
+                                                <td class="text-center">{{ $dis->usage_count }}</td>
+                                                <td class="text-center">{{ $dis->usage_limit }}</td>
+                                                <td class="text-center">{{ $sisa }}</td>
+                                            </tr>
+                                            @endforeach
                                     </tbody>
                                 </table>
                             </div>
