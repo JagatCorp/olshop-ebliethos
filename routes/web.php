@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DatabaseController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -118,6 +119,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('edit-settings', [SettingsController::class, 'update'])->name('edit-settings');
     Route::get('delete-settings/{id}', [SettingsController::class, 'delete'])->name('delete-settings');
 
+    //coupon
+    Route::get('coupon', [CouponController::class, 'index'])->name('coupon-index');
+    Route::post('create-coupon', [CouponController::class, 'store'])->name('create-coupon');
+    Route::post('edit-coupon', [CouponController::class, 'update'])->name('edit-coupon');
+    Route::get('delete-coupon/{id}', [CouponController::class, 'delete'])->name('delete-coupon');
+
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');
     Route::get('database/backup', [DatabaseController::class, 'createBackup'])->name('create.backup');
@@ -176,6 +183,9 @@ Route::group(['middleware' => 'auth'], function () {
     // reply
     Route::post('/reply', [ReplyController::class, 'store'])->name('reply.store');
     Route::delete('/reply/{reply}', [ReplyController::class, 'destroy'])->name('reply.destroy');
+
+    // coupon
+    Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
 
 });
 

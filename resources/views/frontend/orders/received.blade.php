@@ -17,6 +17,7 @@
     <script src="{{ asset('themes/ezone/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
     <!-- checkout-area start -->
+    @include('sweetalert::alert')
     <div class="cart-main-area  ptb-100">
         <div class="container">
             <div class="row">
@@ -90,7 +91,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @php
+                                    {{-- @php
                                         function showAttributes($jsonAttributes)
                                         {
                                             $jsonAttr = (string) $jsonAttributes;
@@ -111,7 +112,7 @@
                                             }
                                             return $showAttributes;
                                         }
-                                    @endphp
+                                    @endphp --}}
                                     @forelse ($order->orderItems as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
@@ -132,7 +133,20 @@
                         <div class="row">
                             <div class="col-md-5 ml-auto">
                                 <div class="cart-page-total">
-                                    <ul>
+
+                                    {{-- <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span> --}}
+
+                                    <div class="ec-checkout-coupan-content hidden ">
+                                        <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="POST"
+                                            action="{{ route('apply.coupon', ['orderId' => $orderId]) }}">
+                                            @csrf
+                                            <input type="hidden" name="orderId" value="{{ $orderId }}">
+                                            <input class="ec-coupan" type="text" placeholder="Masukkan Code Kupon"
+                                                name="coupon_code">
+                                            <button class="ec-coupan-btn button btn-danger mt-1" type="submit">Cek</button>
+                                        </form>
+                                    </div>
+                                    <ul class="mt-3">
                                         <li> Subtotal
                                             <span>Rp{{ number_format($order->base_total_price, 0, ',', '.') }}</span>
                                         </li>

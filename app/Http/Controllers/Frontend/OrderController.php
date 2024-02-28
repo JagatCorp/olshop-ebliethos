@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -326,6 +327,9 @@ class OrderController extends Controller
     {
         $this->initPaymentGateway();
 
+        // Ambil grand_total setelah diskon kupon diterapkan
+        $grandTotalAfterDiscount = $order->grand_total;
+
         $customerDetails = [
             'first_name' => $order->customer_first_name,
             'last_name' => $order->customer_last_name,
@@ -337,7 +341,7 @@ class OrderController extends Controller
             'enable_payments' => Payment::PAYMENT_CHANNELS,
             'transaction_details' => [
                 'order_id' => $order->code,
-                'gross_amount' => $order->grand_total,
+                'gross_amount' => $grandTotalAfterDiscount,
             ],
             'customer_details' => $customerDetails,
             'expiry' => [
@@ -349,17 +353,54 @@ class OrderController extends Controller
 
         $snap = \Midtrans\Snap::createTransaction($params);
 
-        // if ($snap->token) {
-        //     $order->payment_token = $snap->token;
-        //     $order->payment_url = $snap->redirect_url;
-        //     $order->save();
-        // }
         if ($snap->token) {
             $order->payment_token = $snap->token;
             $order->save();
         }
-        return redirect()->route('orders.received', $order->id);
 
+        return redirect()->route('orders.received', $order->id);
+    }
+
+    //coupon diskon
+    public function applyCoupon(Request $request, $orderId)
+    {
+        $couponCode = $request->input('coupon_code');
+        $coupon = Coupon::where('coupon_code', $couponCode)->first();
+
+        if (!$coupon) {
+            return redirect()->back()->with('error', 'Kupon tidak valid.');
+        }
+
+        // Periksa apakah kupon sudah mencapai batas penggunaan
+        if ($coupon->usage_limit !== null && $coupon->usage_count >= $coupon->usage_limit) {
+            return redirect()->back()->with('error', 'Kupon sudah tidak berlaku.');
+        }
+
+        // Temukan pesanan berdasarkan ID
+        $order = Order::find($orderId);
+
+        if (!$order) {
+            return redirect()->back()->with('error', 'Pesanan tidak ditemukan.');
+        }
+
+        // Hitung diskon
+        $discount = $order->grand_total * ($coupon->discount / 100);
+
+        // Terapkan diskon pada grand_total
+        $order->grand_total -= $discount;
+
+        // Tandai kupon sebagai digunakan
+        $coupon->usage_count++;
+        $coupon->save();
+
+        // Simpan perubahan pada pesanan
+        $order->save();
+
+        // Generate payment token with updated grand_total
+        $this->_generatePaymentToken($order);
+
+        // Redirect kembali ke halaman checkout
+        return redirect()->back()->with('success', 'Kupon berhasil diterapkan.');
     }
 
     // public function successOrder(Order $orderId)
@@ -437,7 +478,7 @@ class OrderController extends Controller
             ->where('user_id', auth()->id())
             ->firstOrFail();
 
-        return view('frontend.orders.received', compact('order'));
+        return view('frontend.orders.received', compact('order', 'orderId'));
     }
 
 }

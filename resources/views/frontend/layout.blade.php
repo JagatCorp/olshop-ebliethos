@@ -556,6 +556,13 @@
     </div>
     <!-- Cart Floating Button end -->
 
+    {{-- icon live chat --}}
+    <div class="ec-style ec-right-bottom d-flex  gap-2">
+        <a href="https://chat.eblieshop.online/login">
+            <img src="{{ asset('images/logochat.png') }}" alt="" width="40"
+                style="margin-right: 110px">
+        </a>
+    </div>
     <!-- Whatsapp -->
     <div class="ec-style ec-right-bottom">
         <!-- Start Floating Panel Container -->

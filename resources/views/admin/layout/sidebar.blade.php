@@ -135,11 +135,11 @@
                                     <span class="nav-text">List Product</span>
                                 </a>
                             </li>
-                            {{-- <li class="">
-                                <a class="sidenav-item-link" href="{{ url('admin/reports/inventory') }}">
-                                    <span class="nav-text">Stok Product</span>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/coupon') }}">
+                                    <span class="nav-text">Kupon Diskon</span>
                                 </a>
-                            </li> --}}
+                            </li>
                         </ul>
                     </div>
                 </li>
