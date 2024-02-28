@@ -32,6 +32,13 @@
                                             value="{{ old('foto') }}" id="foto">
                                     </div>
                                 </div>
+                                {{-- <div class="form-group row border-bottom pb-4">
+                                    <label for="video" class="col-sm-2 col-form-label">Video</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control" name="video"
+                                            value="{{ old('video') }}" id="video">
+                                    </div>
+                                </div> --}}
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>
                         </div>

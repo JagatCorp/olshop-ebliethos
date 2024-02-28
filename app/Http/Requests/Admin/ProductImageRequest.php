@@ -22,7 +22,7 @@ class ProductImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'foto' => ['required'],
+            'foto' => ['nullable'],
         ];
     }
 }

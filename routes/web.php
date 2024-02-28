@@ -51,6 +51,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::resource('attributes.attribute_options', \App\Http\Controllers\Admin\AttributeOptionController::class);
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
     Route::resource('products.product_images', \App\Http\Controllers\Admin\ProductImageController::class);
+    Route::resource('products.product_video', \App\Http\Controllers\Admin\ProductVideoController::class);
 
     Route::get('orders/trashed', [\App\Http\Controllers\Admin\OrderController::class, 'trashed'])->name('orders.trashed');
     Route::get('orders/restore/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'restore'])->name('orders.restore');

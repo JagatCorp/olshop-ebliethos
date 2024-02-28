@@ -16,6 +16,7 @@ class ProductImageController extends Controller
     public function index(Product $product)
     {
         $productImages = ProductImage::where('product_id', $product->id)->get();
+
         return view('admin.product_images.index', compact('product', 'productImages'));
 
     }
@@ -53,13 +54,31 @@ class ProductImageController extends Controller
         //         }
         //     }
         // }
-        $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
-        $request->foto->move(public_path('img/fotoproducts/'), $imageName);
+        // $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+        // $request->foto->move(public_path('img/fotoproducts/'), $imageName);
+
+        $imageName = null;
+        $videoName = null;
+
+// Upload foto
+        if ($request->hasFile('foto')) {
+            $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
+            $request->foto->move(public_path('img/fotoproducts/'), $imageName);
+            // Simpan nama file ke database atau variabel jika perlu
+        }
+
+// Upload video
+        if ($request->hasFile('video')) {
+            $videoName = time() . '_' . $request->file('video')->getClientOriginalName();
+            $request->video->move(public_path('img/videoproducts/'), $videoName);
+            // Simpan nama file ke database atau variabel jika perlu
+        }
 
         // Membuat entri baru dalam tabel ProductImage dengan menyimpan array nama file gambar
         ProductImage::create([
             'foto' => $imageName,
             'product_id' => $product->id, // Menyimpan ID produk yang sesuai
+            'video' => $videoName,
         ]);
 
         return redirect()->route('admin.products.product_images.index', $product)->with([

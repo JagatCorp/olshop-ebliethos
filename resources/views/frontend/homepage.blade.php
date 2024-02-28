@@ -418,9 +418,19 @@
                                     @foreach ($product->productImages as $image)
                                         @if ($count < 4)
                                             <div class="qty-slide">
-                                                <img class="img-responsive thumbnail-image"
-                                                    src="{{ asset('img/fotoproducts/' . $image->foto) }}"
-                                                    alt="Product" />
+                                                <div class="easyzoom easyzoom--overlay">
+                                                    @if ($image->foto)
+                                                        <img class="img-responsive thumbnail-image"
+                                                            src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                            alt="Product" />
+                                                    @elseif ($image->video)
+                                                        <video width="100%" height="100%" controls>
+                                                            <source
+                                                                src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                                type="video/mp4">
+                                                        </video>
+                                                    @endif
+                                                </div>
                                             </div>
                                             @php $count++; @endphp
                                         @endif

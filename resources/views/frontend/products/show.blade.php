@@ -88,10 +88,17 @@
                                     <div class="tab-pane fade {{ $i == 1 ? 'active show' : '' }}"
                                         id="pro-details{{ $i }}" role="tabpanel">
                                         <div class="easyzoom easyzoom--overlay">
-                                            <a href="{{ asset('img/fotoproducts/' . $image->foto) }}">
-                                                <img src="{{ asset('img/fotoproducts/' . $image->foto) }}"
-                                                    alt="{{ $product->name }}">
-                                            </a>
+                                            @if ($image->foto)
+                                                <a href="{{ asset('img/fotoproducts/' . $image->foto) }}">
+                                                    <img src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                        alt="{{ $product->name }}">
+                                                </a>
+                                            @else
+                                                <video width="100%" height="100%" controls>
+                                                    <source src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                        type="video/mp4">
+                                                </video>
+                                            @endif
                                         </div>
                                     </div>
                                     @php
@@ -102,37 +109,47 @@
                                 @endforelse
                             </div>
                             <div class="product-details-small nav mt-12" role="tablist">
+
                                 @php
                                     $i = 1;
                                     $maxImages = 4;
                                 @endphp
                                 @forelse ($product->productImages as $image)
-                                    {{-- reponsive foto --}}
+                                    {{-- responsive foto --}}
                                     <style>
                                         @media only screen and (max-width: 768px) {
                                             .foto-details {
                                                 width: 70px !important;
-
-
                                             }
                                         }
                                     </style>
+
                                     @if ($i <= $maxImages)
                                         <a style="width: 100px;" class="{{ $i == 1 ? 'active' : '' }} mr-12 foto-details"
                                             href="#pro-details{{ $i }}" data-toggle="tab" role="tab"
                                             aria-selected="true">
-                                            <img src="{{ asset('img/fotoproducts/' . $image->foto) }}" class=""
-                                                alt="{{ $product->name }}">
+                                            <div class="easyzoom easyzoom--overlay">
+                                                @if ($image->foto)
+                                                    <img src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                        class="" alt="{{ $product->name }}">
+                                                @endif
+                                                @if ($image->video)
+                                                    <video width="100%" height="100%" controls>
+                                                        <source src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                            type="video/mp4">
+                                                    </video>
+                                                @endif
+                                            </div>
                                         </a>
-                                        @php
-                                            $i++;
-                                        @endphp
+                                        @php $i++; @endphp
                                     @else
                                     @break
                                 @endif
                             @empty
                                 No image found!
                             @endforelse
+
+
                         </div>
 
                     </div>

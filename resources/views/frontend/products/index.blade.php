@@ -210,28 +210,56 @@
                         <div class="row">
                             <div class="col-md-5 col-sm-12 col-xs-12">
                                 <!-- Swiper -->
+                                {{-- large image --}}
                                 <div class="qty-product-cover">
                                     @if ($product->productImages->isNotEmpty())
                                         <div class="qty-slide">
-                                            <img class="img-responsive cover-image"
-                                                src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
-                                                alt="Product" />
+                                            @foreach ($product->productImages as $image)
+                                                <div class="easyzoom easyzoom--overlay">
+                                                    @if ($loop->first)
+                                                        @if ($image->foto)
+                                                            <img class="img-responsive cover-image"
+                                                                src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                                alt="Product" />
+                                                        @elseif ($image->video)
+                                                            <video width="100%" height="100%" controls>
+                                                                <source
+                                                                    src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                                    type="video/mp4">
+                                                            </video>
+                                                        @endif
+                                                    @endif
+                                                </div>
+                                            @endforeach
                                         </div>
                                     @endif
                                 </div>
+
+                                {{-- small image --}}
                                 <div class="qty-nav-thumb">
                                     @php $count = 0; @endphp
                                     @foreach ($product->productImages as $image)
                                         @if ($count < 4)
                                             <div class="qty-slide">
-                                                <img class="img-responsive thumbnail-image"
-                                                    src="{{ asset('img/fotoproducts/' . $image->foto) }}"
-                                                    alt="Product" />
+                                                <div class="easyzoom easyzoom--overlay">
+                                                    @if ($image->foto)
+                                                        <img class="img-responsive thumbnail-image"
+                                                            src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                            alt="Product" />
+                                                    @elseif ($image->video)
+                                                        <video width="100%" height="100%" controls>
+                                                            <source
+                                                                src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                                type="video/mp4">
+                                                        </video>
+                                                    @endif
+                                                </div>
                                             </div>
                                             @php $count++; @endphp
                                         @endif
                                     @endforeach
                                 </div>
+
 
                             </div>
                             <div class="col-md-7 col-sm-12 col-xs-12">

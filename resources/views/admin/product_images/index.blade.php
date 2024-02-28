@@ -17,7 +17,10 @@
                             class="fa fa-arrow-left"></i> Kembali
                     </a>
                     <a href="{{ route('admin.products.product_images.create', $product) }}"
-                        class="btn btn-primary shadow-sm float-right mr-2"> <i class="fa fa-upload"></i> Upload
+                        class="btn btn-primary shadow-sm float-right mr-2"> <i class="fa fa-upload"></i> Upload Foto
+                    </a>
+                    <a href="{{ route('admin.products.product_video.create', $product) }}"
+                        class="btn btn-primary shadow-sm float-right mr-2"> <i class="fa fa-upload"></i> Upload Video
                     </a>
                 </div>
             </div>
@@ -31,6 +34,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Gambar</th>
+                                            <th>Video</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -41,11 +45,23 @@
                                                 <td>
                                                     {{-- @foreach ($productImages as $productImage)
                                                         @foreach (json_decode($productImage->foto) as $photo) --}}
-                                                    <img src="{{ asset('img/fotoproducts/' . $productImage->foto) }}"
-                                                        alt="Product" width="100px" />
+                                                    @if ($productImage->foto)
+                                                        <img src="{{ asset('img/fotoproducts/' . $productImage->foto) }}"
+                                                            alt="Product" width="100px" />
+                                                    @endif
+
                                                     {{-- @endforeach
                                                     @endforeach --}}
 
+                                                </td>
+                                                <td>
+                                                    @if ($productImage->video)
+                                                        <video width="100" height="100" controls>
+                                                            <source
+                                                                src="{{ asset('img/videoproducts/' . $productImage->video) }}"
+                                                                type="video/mp4">
+                                                        </video>
+                                                    @endif
                                                 </td>
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
