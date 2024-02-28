@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     use HasFactory;
+    protected $table = 'order_items';
+
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
 

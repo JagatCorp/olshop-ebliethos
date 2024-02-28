@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -44,11 +47,55 @@ class DashboardController extends Controller
         });
 
         // penjualan per product
-        $product = OrderItem::whereHas('product')->whereHas('order', function ($query) {
-            $query->where('status', 'completed');
-        })->get();
+        $listProd = Product::get();
 
-        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData'));
+        $monthStart = Carbon::now()->startOfMonth();
+        $monthEnd = Carbon::now()->endOfMonth();
+
+        $prodTerjual = OrderItem::select('product_id', 'qty', 'base_price', 'base_total')
+            ->whereHas('order', function ($query) use ($monthStart, $monthEnd) {
+                $query->where('payment_status', 'PAID')
+                    ->whereBetween('order_date', [$monthStart, $monthEnd]);
+            })->get();
+
+        // data pembelian setiap customer
+        $dataCust = User::where('is_admin', '!=', 1)->get();
+        $transCust = Order::where('payment_status', 'PAID')
+            ->whereBetween('order_date', [$monthStart, $monthEnd])
+            ->get();
+
+        // data status overviews
+        $created = Order::where('status', 'created')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $confirmed = Order::where('status', 'confirmed')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $delivered = Order::where('status', 'delivered')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $completed = Order::where('status', 'completed')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $cancelled = Order::where('status', 'cancelled')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $paid = Order::where('payment_status', 'PAID')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $unpaid = Order::where('payment_status', 'UNPAID')
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->count();
+
+        $diskon = Coupon::get();
+
+        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid','diskon'));
 
     }
 }
