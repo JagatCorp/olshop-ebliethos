@@ -206,7 +206,7 @@
                                         <div class="col-md-6 space-t-15">
                                             <label class="form-label">Phone</label>
                                             <input type="text" class="form-control" name="phone"
-                                                value="{{ auth()->user()->phone }}">
+                                                placeholder="08xxxxxxx" value="{{ auth()->user()->phone }}">
                                         </div>
                                         <div class="col-md-6 space-t-15">
                                             <label class="form-label">Kode Pos</label>

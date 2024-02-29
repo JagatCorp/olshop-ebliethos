@@ -88,7 +88,7 @@
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>No. Handphone<span class="required">*</span></label>
-                                        <input type="text" name="phone"
+                                        <input type="text" name="phone" placeholder="08xxxxxxx"
                                             value="{{ old('phone', auth()->user()->phone) }}">
                                     </div>
                                 </div>
@@ -225,9 +225,9 @@
                                             <td><span class="amount">Rp{{ Cart::subtotal(0, ',', '.') }}</span></td>
                                         </tr>
                                         <!-- <tr class="cart-subtotal">
-                                                                                                                                                                                                                              <th>Tax</th>
-                                                                                                                                                                                                                              <td><span class="amount">jnfjk</span></td>
-                                                                                                                                                                                                                             </tr> -->
+                                                                                                                                                                                                                                  <th>Tax</th>
+                                                                                                                                                                                                                                  <td><span class="amount">jnfjk</span></td>
+                                                                                                                                                                                                                                 </tr> -->
                                         <tr class="cart-subtotal">
                                             <th>Biaya Ongkir</th>
                                             <td><select id="shipping-cost-option" required name="shipping_service">
