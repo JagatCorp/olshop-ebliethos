@@ -420,7 +420,7 @@ class OrderController extends Controller
         $orderUrl = url('orders/' . $orderId->id);
 
         // Kirim pesan WhatsApp jika pembayaran berhasil
-        $response = Http::post('http://localhost:8000/send-message', [
+        $response = Http::post('https://washop.afkaaruna.sch.id/send-message', [
             'number' => $orderId->customer_phone,
             'message' => 'Halo ' . $orderId->customer_first_name . '! Invoice Anda dengan nomor ' . $orderId->code . ' telah berhasil dibayar. Detail pesanan dapat dilihat di sini: ' . $orderUrl,
         ]);
