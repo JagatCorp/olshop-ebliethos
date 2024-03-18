@@ -56,6 +56,27 @@ class OrderController extends Controller
                 ->whereRaw("DATE(order_date) <= ? ", $endDate);
         }
 
+        $pembelian = $request->input("pembelian");
+        $discount = $request->input("discount");
+
+        if ($pembelian) {
+            $productIds = OrderItem::select('product_id')
+                                   ->groupBy('product_id')
+                                   ->havingRaw('COUNT(product_id) = ?', [$pembelian])
+                                   ->pluck('product_id')
+                                   ->toArray();
+
+            $orders = $orders->whereIn('id', function ($query) use ($productIds) {
+                $query->select('order_id')
+                      ->from('order_items')
+                      ->whereIn('product_id', $productIds);
+            });
+        }
+
+        if ($discount) {
+            $orders = $orders->where("discount_percent", '=', $discount);
+        }
+
         $orders = $orders->get();
         $product = Product::all();
         $orderItem = OrderItem::all();
