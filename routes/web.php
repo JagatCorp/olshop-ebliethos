@@ -57,7 +57,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('orders/restore/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'restore'])->name('orders.restore');
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
     Route::post('orders/complete/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'doComplete'])->name('orders.complete');
-    Route::get('orders/{order:id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
+    Route::get('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
     Route::put('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'doCancel'])->name('orders.cancel');
     Route::post('orders/edit-status', [\App\Http\Controllers\Admin\OrderController::class, 'update'])->name('orders.status.edit');
     Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);

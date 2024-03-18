@@ -6,6 +6,7 @@ use App\Exceptions\OutOfStockException;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\ProductInventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,8 +57,9 @@ class OrderController extends Controller
         }
 
         $orders = $orders->get();
-
-        return view('admin.orders.index', compact('orders', 'statuses'));
+        $product = Product::all();
+        $orderItem = OrderItem::all();
+        return view('admin.orders.index', compact('orders', 'statuses', 'product', 'orderItem'));
     }
 
     /**

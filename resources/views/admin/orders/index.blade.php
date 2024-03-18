@@ -64,10 +64,18 @@
                                 <table id="responsive-data-table" class="table">
                                     <thead>
                                         <th>Order ID</th>
+                                        <th>Product</th>
                                         <th>Grand Total</th>
                                         <th>Name</th>
                                         <th>Status</th>
+                                        <th>Diskon</th>
                                         <th>Payment</th>
+                                        <th>Biaya Ongkir</th>
+                                        <th>Jasa Pengiriman</th>
+                                        <th>Customer Note</th>
+                                        <th>Customer Phone</th>
+                                        <th>Customer Kode Pos</th>
+                                        <th>Customer Address</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -78,6 +86,21 @@
                                                     <span style="font-size: 12px; font-weight: normal">
                                                         {{ $order->order_date }}</span>
                                                 </td>
+                                                <td>
+                                                    @foreach ($order->orderItems as $item)
+                                                        @if ($item->product)
+                                                            {{ $item->product->name }}<br>
+                                                            pembelian ke: {{ $item->product->totalOrders() }} kali
+                                                        @else
+                                                            {{ $item->name }}<br>
+                                                        @endif
+                                                        <br />
+                                                        <span style="font-size: 12px; font-weight: normal">
+                                                            qty: {{ $item->qty }}</span>
+                                                    @endforeach
+
+                                                </td>
+                                                {{-- <td>{{ $order->orderItems->name }}</td> --}}
                                                 <td>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</td>
                                                 <td>
                                                     {{ $order->customer_full_name }}<br>
@@ -85,13 +108,48 @@
                                                         {{ $order->customer_email }}</span>
                                                 </td>
                                                 <td>{{ $order->status }}</td>
+                                                {{-- <td>
+                                                    @if ($order->orderItems->first()->coupon)
+                                                        Kupon Diskon:
+                                                        {{ $order->orderItems->first()->coupon->coupon_code }}<br>
+                                                        Diskon: {{ $order->orderItems->first()->coupon->discount }}%
+                                                    @else
+                                                        Tidak ada kupon diskon
+                                                    @endif
+                                                </td> --}}
+                                                <td>
+                                                    Diskon: {{ $order->discount_percent }}%
+                                                </td>
                                                 <td>{{ $order->payment_status }}</td>
+
+                                                <td>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $order->shipping_courier }}<br>
+                                                    <span style="font-size: 12px; font-weight: normal">
+                                                        {{ $order->shipping_service_name }}</span>
+                                                </td>
+                                                <td>{{ $order->note }}</td>
+
+                                                <td>{{ $order->customer_phone }}</td>
+                                                <td>{{ $order->customer_postcode }}</td>
+                                                <td>{{ $order->customer_address1 }}</td>
+
+
                                                 <td>
                                                     <div class="btn-group btn-group-sm">
-                                                        <a href="{{ route('admin.orders.show', $order->id) }}"
+                                                        @if ($order->isCancelled())
+                                                            <a href="{{ route('admin.orders.cancel', $order->id) }}">
+                                                                <button type="button"
+                                                                    class="btn btn-danger rounded-circle  mr-1 btn-sm"><i
+                                                                        class="fa fa-ban"></i></button>
+
+                                                            </a>
+                                                        @endif
+
+                                                        {{-- <a href="{{ route('admin.orders.show', $order->id) }}"
                                                             class="btn btn-primary rounded-circle  mr-1  btn-sm"><i
                                                                 class="fa fa-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         {{-- <form onclick="return confirm('are you sure !')"
                                                             action="{{ route('admin.orders.destroy', $order) }}"
                                                             method="POST">
@@ -114,7 +172,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="6">No records found</td>
+                                                <td colspan="2">Tidak ada data pesanan</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -174,7 +232,8 @@
                         </div>
 
                         <div class="modal-footer px-4">
-                            <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-secondary btn-pill"
+                                data-bs-dismiss="modal">Tutup</button>
                             <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
                         </div>
                     </form>

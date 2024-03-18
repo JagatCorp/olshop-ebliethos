@@ -389,6 +389,9 @@ class OrderController extends Controller
         // Terapkan diskon pada grand_total
         $order->grand_total -= $discount;
 
+        // Hitung persentase diskon dan masukkan ke order discount_percent
+        $order->discount_percent = $coupon->discount;
+
         // Tandai kupon sebagai digunakan
         $coupon->usage_count++;
         $coupon->save();

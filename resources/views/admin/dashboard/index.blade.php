@@ -30,7 +30,8 @@
                 <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                     <div class="card card-mini dash-card card-3">
                         <div class="card-body">
-                            <h2 class="mb-1">Rp. {{ number_format($totalPenjualan, 0, ',', '.') }}</h2>
+                            <h2 class="mb-1" style="font-size: 15px">Rp. {{ number_format($totalPenjualan, 0, ',', '.') }}
+                            </h2>
                             <p>Total Penjualan</p>
                             <span class="mdi mdi-cart"></span>
                         </div>
@@ -47,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12 p-b-15">
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
@@ -118,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-xl-8 col-md-12 p-b-15">
@@ -277,15 +278,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <tr>
-                                                <td class="text-center">{{ $created }}</td>
-                                                <td class="text-center">{{ $confirmed }}</td>
-                                                <td class="text-center">{{ $delivered }}</td>
-                                                <td class="text-center">{{ $completed }}</td>
-                                                <td class="text-center">{{ $cancelled }}</td>
-                                                <td class="text-center">{{ $paid }}</td>
-                                                <td class="text-center">{{ $unpaid }}</td>
-                                            </tr>
+                                        <tr>
+                                            <td class="text-center">{{ $created }}</td>
+                                            <td class="text-center">{{ $confirmed }}</td>
+                                            <td class="text-center">{{ $delivered }}</td>
+                                            <td class="text-center">{{ $completed }}</td>
+                                            <td class="text-center">{{ $cancelled }}</td>
+                                            <td class="text-center">{{ $paid }}</td>
+                                            <td class="text-center">{{ $unpaid }}</td>
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -318,9 +319,9 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($diskon as $dis)
-                                        @php
-                                            $sisa = $dis->usage_limit - $dis->usage_count;
-                                        @endphp
+                                            @php
+                                                $sisa = $dis->usage_limit - $dis->usage_count;
+                                            @endphp
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td class="text-center">{{ $dis->coupon_code }}</td>
@@ -329,7 +330,7 @@
                                                 <td class="text-center">{{ $dis->usage_limit }}</td>
                                                 <td class="text-center">{{ $sisa }}</td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

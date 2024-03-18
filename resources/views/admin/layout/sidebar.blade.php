@@ -71,6 +71,11 @@
                                     <span class="nav-text">Testimoni</span>
                                 </a>
                             </li>
+                            <li class="@yield('ActiveSettings')">
+                                <a class="sidenav-item-link" href="{{ url('admin/settings') }}">
+                                    <span class="nav-text">Settings</span>
+                                </a>
+                            </li>
 
                         </ul>
                     </div>
