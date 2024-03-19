@@ -105,7 +105,7 @@ class DashboardController extends Controller
         $visitorData = $visitors->pluck('total_visitors', 'date');
 
         $activeUsers = User::whereHas('orders')->count();
-        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers'));
+        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData'));
 
     }
 }
