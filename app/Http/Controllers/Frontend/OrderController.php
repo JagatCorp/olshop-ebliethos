@@ -351,7 +351,19 @@ class OrderController extends Controller
             ],
         ];
 
-        $snap = \Midtrans\Snap::createTransaction($params);
+        // $snap = \Midtrans\Snap::createTransaction($params);
+
+        try {
+            $snap = \Midtrans\Snap::createTransaction($params);
+            if ($snap->token) {
+                $order->payment_token = $snap->token;
+                $order->save();
+            }
+            return redirect()->route('orders.received', $order->id);
+        } catch (\Exception $e) {
+            // Tangani kesalahan di sini
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat transaksi. Silakan coba lagi.');
+        }
 
         if ($snap->token) {
             $order->payment_token = $snap->token;
