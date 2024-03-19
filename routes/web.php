@@ -132,36 +132,41 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('database/backup/download/{filename}', [DatabaseController::class, 'downloadBackup'])->name('download.backup');
 
 });
-// home
-Route::get('/', [HomepageController::class, 'index']);
-// products
-Route::get('products', [ProductController::class, 'index']);
-Route::get('product/{product:slug}', [ProductController::class, 'show'])->name('product.detail');
-Route::get('products/quick-view/{product:slug}', [ProductController::class, 'quickView']);
-// special deal
-Route::get('special-deal', [ProductController::class, 'specialDeal']);
-// about
-Route::get('/about', [HomepageController::class, 'about']);
-// konsultasi
-Route::get('/konsultasi', [HomepageController::class, 'konsultasi']);
-// artikel
-Route::get('/artikel', [HomepageController::class, 'artikel']);
-Route::get('/detail-artikel/{slug}', [HomepageController::class, 'Detailartikel']);
-// keluar
-Route::get('/keluar', [HomepageController::class, 'keluar'])->name('logout');
-//carts
-Route::get('carts', [CartController::class, 'index'])->name('carts.index');
-Route::post('carts', [CartController::class, 'store'])->name('carts.store');
-Route::post('carts/update', [CartController::class, 'update']);
-Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
 
-// reviews
-Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
-// Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
 
-Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
+Route::group(['middleware' => 'cek_visit_token'], function () {
+    // home
+    Route::get('/', [HomepageController::class, 'index']);
+    // products
+    Route::get('products', [ProductController::class, 'index']);
+    Route::get('product/{product:slug}', [ProductController::class, 'show'])->name('product.detail');
+    Route::get('products/quick-view/{product:slug}', [ProductController::class, 'quickView']);
+    // special deal
+    Route::get('special-deal', [ProductController::class, 'specialDeal']);
+    // about
+    Route::get('/about', [HomepageController::class, 'about']);
+    // konsultasi
+    Route::get('/konsultasi', [HomepageController::class, 'konsultasi']);
+    // artikel
+    Route::get('/artikel', [HomepageController::class, 'artikel']);
+    Route::get('/detail-artikel/{slug}', [HomepageController::class, 'Detailartikel']);
+    // keluar
+    Route::get('/keluar', [HomepageController::class, 'keluar'])->name('logout');
+    //carts
+    Route::get('carts', [CartController::class, 'index'])->name('carts.index');
+    Route::post('carts', [CartController::class, 'store'])->name('carts.store');
+    Route::post('carts/update', [CartController::class, 'update']);
+    Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
 
-Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
+    // reviews
+    Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
+    // Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
+
+    Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
+
+    Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
+});
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
