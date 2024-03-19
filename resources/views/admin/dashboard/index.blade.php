@@ -154,6 +154,38 @@
 
                     </div>
                 </div>
+
+                <div class="col-xl-4 col-md-12 p-b-15">
+                    <!-- Doughnut Chart -->
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Customers Login</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="CustomerLogin"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-5">
+                    <div id="user-acquisition" class="card card-default">
+                        <div class="card-header">
+                            <h2>Report Pengunjung</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content pt-4" id="salesReport">
+                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
+                                    <div class="mb-6" style="max-height:247px">
+                                        <div id="ReportVisitor" class="chartjs2"></div>
+                                        <div id="acqLegend" class="customLegend mb-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="row">
@@ -416,5 +448,109 @@
         var chart = new ApexCharts(document.querySelector("#OrdersOverview"), options);
         chart.render();
     </script>
+    {{-- end chart --}}
+
+
+    {{-- chart report visitor --}}
+    <script>
+        var optionsVisitor = {
+            series: [{
+                name: 'Total Pengunjung',
+                data: {!! json_encode(array_values($visitorData->toArray())) !!}
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '10%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: {!! json_encode(array_keys($visitorData->toArray())) !!}
+            },
+            yaxis: {
+                title: {
+                    text: 'Total Pengunjung'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function(val) {
+                        return val
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#ReportVisitor"), optionsVisitor);
+        chart.render();
+    </script>
+    {{-- end chart Visitor --}}
+
+
+    {{-- chart customer login --}}
+    <script>
+        var activeUsers = {!! json_encode($activeUsers) !!};
+
+        var options = {
+            series: [activeUsers],
+            labels: ['Customer Login'],
+            chart: {
+                type: 'donut',
+                height: 250
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            total: {
+                                show: true,
+                                label: 'Customer Login',
+                                formatter: function(w) {
+                                    return activeUsers;
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 250
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#CustomerLogin"), options);
+        chart.render();
+    </script>
+
+
+
     {{-- end chart --}}
 @endsection

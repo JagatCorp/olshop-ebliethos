@@ -50,6 +50,9 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        // Set kolom is_logged_in menjadi true saat pengguna berhasil login
+        $user->update(['is_logged_in' => true]);
+
         // Check jika is_admin true bakal direct ke admin dashboard
         if ($user->is_admin) {
             return redirect()->route('admin.dashboard');

@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('database/backup/download/{filename}', [DatabaseController::class, 'downloadBackup'])->name('download.backup');
 
 });
+
 // home
 Route::get('/', [HomepageController::class, 'index']);
 // products

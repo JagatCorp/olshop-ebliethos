@@ -16,6 +16,36 @@
     <link rel="stylesheet" href="{{ asset('themes/ezone/assets/css/responsive.css') }}">
     <script src="{{ asset('themes/ezone/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
+    <?php
+    
+    $authString = base64_encode('Mid-server-s1vkwphMoetLhiQc0goFM-oD' . ':');
+    $headers = ['Accept: application/json', 'Content-Type: application/json', 'Authorization: Basic ' . $authString];
+    
+    $curl = curl_init();
+    
+    curl_setopt_array($curl, [
+        CURLOPT_URL => 'https://app.midtrans.com/snap/snap.js',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_HTTPHEADER => $headers,
+    ]);
+    
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    curl_close($curl);
+    
+    if ($err) {
+        echo 'Error: ' . $err;
+    } else {
+        echo $response;
+    }
+    ?>
+
     <!-- checkout-area start -->
     @include('sweetalert::alert')
     <div class="cart-main-area  ptb-100">
@@ -173,8 +203,9 @@
     </div>
 @endsection
 
+
 @section('scripts')
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ base64_encode(env('MIDTRANS_CLIENT_KEY')) }}">
     </script>
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {

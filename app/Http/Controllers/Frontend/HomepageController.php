@@ -65,9 +65,23 @@ class HomepageController extends Controller
 // keluar
     public function keluar()
     {
+        // Mengambil pengguna yang sedang login
+        $user = auth()->user();
+
+        // Set kolom is_logged_in menjadi false saat pengguna logout
+        if ($user) {
+            $user->update(['is_logged_in' => false]);
+        }
+
+        // Logout pengguna
         auth()->logout();
+
+        // Menghapus sesi pengguna
         request()->session()->invalidate();
+
+        // Memperbarui token sesi
         request()->session()->regenerateToken();
+
         return redirect('/login');
     }
 

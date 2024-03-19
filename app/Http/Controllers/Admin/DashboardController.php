@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\VisitorUser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -95,7 +96,16 @@ class DashboardController extends Controller
 
         $diskon = Coupon::get();
 
-        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid','diskon'));
+        // Visitor / Pengunjung website
+        $visitors = VisitorUser::select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as total_visitors'))
+            ->whereBetween('created_at', [$monthStart, $monthEnd])
+            ->groupBy('date')
+            ->get();
+
+        $visitorData = $visitors->pluck('total_visitors', 'date');
+
+        $activeUsers = User::whereHas('orders')->count();
+        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers'));
 
     }
 }
