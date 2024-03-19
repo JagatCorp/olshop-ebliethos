@@ -150,8 +150,14 @@
                         <div class="card-body">
                             <div id="OrdersOverview"></div>
                         </div>
-
-
+                    </div>
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Product Overview</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="PembelianOverview"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -184,8 +190,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="row">
@@ -549,8 +553,33 @@
         var chart = new ApexCharts(document.querySelector("#CustomerLogin"), options);
         chart.render();
     </script>
-
-
-
     {{-- end chart --}}
+
+    {{-- chart pembelian product --}}
+    <script>
+        var options = {
+            series: {!! json_encode(array_values($pembelians)) !!},
+            labels: {!! json_encode(array_keys($pembelians)) !!},
+            chart: {
+                type: 'donut',
+            },
+            responsive: [{
+                breakpoint: 480,
+                options: {
+
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#PembelianOverview"), options);
+        chart.render();
+    </script>
+    {{-- end pembelian product --}}
+
 @endsection

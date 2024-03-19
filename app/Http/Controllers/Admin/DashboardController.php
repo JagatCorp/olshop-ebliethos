@@ -108,7 +108,19 @@ class DashboardController extends Controller
             ->where('is_logged_in', 1)
             ->count();
 
-        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData'));
+        // pembelian product
+        $pembelianData = OrderItem::select('product_id', DB::raw('COUNT(*) as total_order'), 'p.name')
+            ->join('products as p', 'product_id', '=', 'p.id')
+            ->groupBy('product_id')
+            ->get();
+
+        $pembelians = [];
+
+        foreach ($pembelianData as $item) {
+            $pembelians[$item->name] = $item->total_order;
+        }
+
+        return view('admin.dashboard.index', compact('pembelians', 'orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData'));
 
     }
 }
