@@ -161,6 +161,12 @@
                     </div>
                 </div>
 
+
+
+
+            </div>
+
+            <div class="row mb-5">
                 <div class="col-xl-4 col-md-12 p-b-15">
                     <!-- Doughnut Chart -->
                     <div class="card card-default">
@@ -172,24 +178,23 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row mb-5">
-                    <div id="user-acquisition" class="card card-default">
-                        <div class="card-header">
-                            <h2>Report Pengunjung</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content pt-4" id="salesReport">
-                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
-                                    <div class="mb-6" style="max-height:247px">
-                                        <div id="ReportVisitor" class="chartjs2"></div>
-                                        <div id="acqLegend" class="customLegend mb-2"></div>
-                                    </div>
+                <div class="col-xl-8 col-md-12 p-b-15">
+                <div id="user-acquisition" class="card card-default">
+                    <div class="card-header">
+                        <h2>Report Pengunjung</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content pt-4" id="salesReport">
+                            <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
+                                <div class="mb-6" style="max-height:247px">
+                                    <div id="ReportVisitor" class="chartjs2"></div>
+                                    <div id="acqLegend" class="customLegend mb-2"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <div class="row">
