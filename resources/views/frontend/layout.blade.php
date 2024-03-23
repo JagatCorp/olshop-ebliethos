@@ -549,7 +549,7 @@
     <!-- Cart Floating Button -->
     <div class="ec-cart-float">
         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-            <div class="header-icon"><i class="fi-rr-shopping-basket"></i>fgsd
+            <div class="header-icon"><i class="fi-rr-shopping-cart"></i>fgsd
             </div>
             <span class="ec-cart-count cart-count-lable">{{ Cart::count() }}</span>
         </a>

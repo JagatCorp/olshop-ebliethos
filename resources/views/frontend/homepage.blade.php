@@ -228,7 +228,7 @@
                                                                 product-id="{{ $product->id }}"
                                                                 product-type="{{ $product->type }}"
                                                                 product-slug="{{ $product->slug }}">
-                                                                <i class="fi-rr-shopping-basket"></i>
+                                                                <i class="fi-rr-shopping-cart"></i>
                                                             </a>
 
                                                             <a href="{{ auth()->check() ? route('wishlists.store') : route('login') }}"
@@ -340,7 +340,7 @@
                                                         product-id="{{ $product->id }}"
                                                         product-type="{{ $product->type }}"
                                                         product-slug="{{ $product->slug }}">
-                                                        <i class="fi-rr-shopping-basket"></i>
+                                                        <i class="fi-rr-shopping-cart"></i>
                                                     </a>
 
                                                     <a href="{{ auth()->check() ? route('wishlists.store') : route('login') }}"
@@ -469,8 +469,8 @@
                                         <div class="ec-quickview-cart ">
                                             <a href="" class="add-to-cart btn btn-primary"
                                                 product-id="{{ $product->id }}" product-type="{{ $product->type }}"
-                                                product-slug="{{ $product->slug }}" style="background-color: #B42225"><i
-                                                    class="fi-rr-shopping-basket"></i>
+                                                product-slug="{{ $product->slug }}" style="background-color: #B42225">
+                                                <i class="fi-rr-shopping-cart"></i>
                                                 Add To Cart</a>
                                         </div>
                                     </div>

@@ -61,7 +61,7 @@
                                                             product-id="{{ $product->id }}"
                                                             product-type="{{ $product->type }}"
                                                             product-slug="{{ $product->slug }}">
-                                                            <i class="fi-rr-shopping-basket"></i>
+                                                            <i class="fi-rr-shopping-cart"></i>
                                                         </a>
                                                         <a href="{{ auth()->check() ? route('wishlists.store') : route('login') }}"
                                                             class="ec-btn-group wishlist add-to-fav"
