@@ -323,6 +323,44 @@ class OrderController extends Controller
         }
     }
 
+    // private function _generatePaymentToken($order)
+    // {
+    //     $this->initPaymentGateway();
+
+    //     // Ambil grand_total setelah diskon kupon diterapkan
+    //     $grandTotalAfterDiscount = $order->grand_total;
+
+    //     $customerDetails = [
+    //         'first_name' => $order->customer_first_name,
+    //         'last_name' => $order->customer_last_name,
+    //         'email' => $order->customer_email,
+    //         'phone' => $order->customer_phone,
+    //     ];
+
+    //     $params = [
+    //         'enable_payments' => Payment::PAYMENT_CHANNELS,
+    //         'transaction_details' => [
+    //             'order_id' => $order->code,
+    //             'gross_amount' => $grandTotalAfterDiscount,
+    //         ],
+    //         'customer_details' => $customerDetails,
+    //         'expiry' => [
+    //             'start_time' => date('Y-m-d H:i:s T'),
+    //             'unit' => Payment::EXPIRY_UNIT,
+    //             'duration' => Payment::EXPIRY_DURATION,
+    //         ],
+    //     ];
+
+    //     $snap = \Midtrans\Snap::createTransaction($params);
+
+    //     if ($snap->token) {
+    //         $order->payment_token = $snap->token;
+    //         $order->save();
+    //     }
+    //     dd($snap);
+
+    //     return redirect()->route('orders.received', $order->id);
+    // }
     private function _generatePaymentToken($order)
     {
         $this->initPaymentGateway();
@@ -351,23 +389,21 @@ class OrderController extends Controller
             ],
         ];
 
-        // $snap = \Midtrans\Snap::createTransaction($params);
+        $headers = [
+            'Authorization' => 'Basic ' . base64_encode(config('midtrans.serverKey')),
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+        ];
 
-        try {
-            $snap = \Midtrans\Snap::createTransaction($params);
-            if ($snap->token) {
-                $order->payment_token = $snap->token;
-                $order->save();
+        $url = "https://app.midtrans.com/snap/v1/transactions";
+
+        $response = Http::withHeaders($headers)->post($url, $params);
+
+        if ($response->successful()) {
+            $snap = $response->json();
+            if (isset($snap['token'])) {
+                $order->update(['payment_token' => $snap['token']]);
             }
-            return redirect()->route('orders.received', $order->id);
-        } catch (\Exception $e) {
-            // Tangani kesalahan di sini
-            return redirect()->back()->with('error', 'Terjadi kesalahan saat membuat transaksi. Silakan coba lagi.');
-        }
-
-        if ($snap->token) {
-            $order->payment_token = $snap->token;
-            $order->save();
         }
 
         return redirect()->route('orders.received', $order->id);
@@ -435,7 +471,7 @@ class OrderController extends Controller
         $orderUrl = url('orders/' . $orderId->id);
 
         // Kirim pesan WhatsApp jika pembayaran berhasil
-        $response = Http::post('https://washop.afkaaruna.sch.id/send-message', [
+        $response = Http::post('https://wa.eblieshop.online/send-message', [
             'number' => $orderId->customer_phone,
             'message' => 'Halo ' . $orderId->customer_first_name . '! Invoice Anda dengan nomor ' . $orderId->code . ' telah berhasil dibayar. Detail pesanan dapat dilihat di sini: ' . $orderUrl,
         ]);
