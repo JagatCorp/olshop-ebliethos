@@ -4,8 +4,14 @@
             $settings = App\Models\Settings::first();
         @endphp
         <div class="ec-brand">
-            <img class="ec-brand-icon" src="{{ asset('img/logotoko/' . $settings->logo) }}" alt=""
-                style="width: auto; height: 40px; margin-left: 30px" />
+            @if ($settings->logo)
+                <img class="ec-brand-icon" src="{{ asset('img/logotoko/' . $settings->logo) }}" alt=""
+                    style="width: auto; height: 40px; margin-left: 30px" />
+            @else
+                <img class="ec-brand-icon" src="{{ asset('img/default-logo.jpg') }}" alt="Default Logo"
+                    style="width: auto; height: 40px; margin-left: 30px" />
+            @endif
+
             {{-- <a href="index.html" title="Ekka">
 
                 <span class="ec-brand-name text-truncate">Ekka</span>
@@ -145,6 +151,11 @@
                             <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/city') }}">
                                     <span class="nav-text">City</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/kecamatan') }}">
+                                    <span class="nav-text">Kecamatan</span>
                                 </a>
                             </li>
                             <li class="">

@@ -191,8 +191,14 @@
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center col-3 " style="margin-left: -100px">
                             <div class="header-logo">
-                                <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
-                                        class="main-logo" alt="" /></a>
+                                @if (optional($settings)->logo)
+                                    <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
+                                            class="main-logo" alt="" /></a>
+                                @else
+                                    <a href="/"><img src="{{ asset('images/logoebli.png') }}"
+                                            class="main-logo" alt="" /></a>
+                                @endif
+
                             </div>
                         </div>
                         <style>
@@ -272,8 +278,13 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
-                                    alt="Site Logo" class="main-logo" /></a>
+                            @if (optional($settings)->logo)
+                                <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
+                                        alt="Site Logo" class="main-logo" /></a>
+                            @else
+                                <a href="/"><img src="{{ asset('images/logoebli.png') }}" alt="Site Logo"
+                                        class="main-logo" /></a>
+                            @endif
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->

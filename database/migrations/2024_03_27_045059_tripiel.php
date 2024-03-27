@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id');
             $table->unsignedBigInteger('courier_id');
             $table->unsignedBigInteger('warehouse_id');
+            $table->unsignedBigInteger('kecamatan_id');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
 

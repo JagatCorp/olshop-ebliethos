@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CourierController;
 use App\Http\Controllers\Admin\CourierwarehousepricesController;
 use App\Http\Controllers\Admin\DatabaseController;
+use App\Http\Controllers\Admin\KecamatanController;
 use App\Http\Controllers\Admin\KonsultasiController;
 use App\Http\Controllers\Admin\NinjaController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -155,6 +156,13 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
     //jquery fetch city by province
     Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
+
+    //kecamatan
+    Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
+    Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
+    Route::post('edit-kecamatan', [KecamatanController::class, 'update'])->name('edit-kecamatan');
+    Route::get('delete-kecamatan/{id}', [KecamatanController::class, 'delete'])->name('delete-kecamatan');
+
     //courier
     Route::get('courier', [CourierController::class, 'index'])->name('courier-index');
     Route::post('create-courier', [CourierController::class, 'store'])->name('create-courier');
