@@ -99,7 +99,7 @@
                                                     </option>
                                                     @foreach ($courier as $item)
                                                         <option value="{{ $item->courier_id }}">
-                                                            {{ $item->courier_name }}
+                                                            {{ $item->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -166,7 +166,7 @@
                                                     @foreach ($courier as $courier_item)
                                                         <option value="{{ $courier_item->courier_id }}"
                                                             {{ $courier_item->courier_id == $item->courier_id ? 'selected' : '' }}>
-                                                            {{ $courier_item->courier_name }}
+                                                            {{ $courier_item->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
