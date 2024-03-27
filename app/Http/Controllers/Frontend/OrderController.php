@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Coupon;
+use App\Models\CourierWarehousePrices;
+use App\Models\Kurir;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\ProductInventory;
+use App\Models\Province;
 use App\Models\Shipment;
+use App\Models\Tripiel;
+use App\Models\Warehouse;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +23,7 @@ use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
+
     public function index()
     {
         $orders = Order::forUser(auth()->user())
@@ -63,6 +70,54 @@ class OrderController extends Controller
         return $this->_getShippingCost($destination, $this->_getTotalWeight());
     }
 
+    // Raja Ongkir cek ongkir yang lama
+    // private function _getShippingCost($destination, $weight)
+    // {
+    //     $params = [
+    //         'origin' => $this->rajaOngkirOrigin,
+    //         'destination' => $destination,
+    //         'weight' => $weight,
+    //     ];
+
+    //     $results = [];
+    //     foreach ($this->couriers as $code => $courier) {
+    //         $params['courier'] = $code;
+
+    //         $response = $this->rajaOngkirRequest('cost', $params, 'POST');
+
+    //         if (!empty($response['rajaongkir']['results'])) {
+    //             foreach ($response['rajaongkir']['results'] as $cost) {
+    //                 if (!empty($cost['costs'])) {
+    //                     foreach ($cost['costs'] as $costDetail) {
+    //                         $serviceName = strtoupper($cost['code']) . ' - ' . $costDetail['service'];
+    //                         $costAmount = $costDetail['cost'][0]['value'];
+    //                         $etd = $costDetail['cost'][0]['etd'];
+
+    //                         $result = [
+    //                             'service' => $serviceName,
+    //                             'cost' => $costAmount,
+    //                             'etd' => $etd,
+    //                             'courier' => $code,
+    //                         ];
+
+    //                         $results[] = $result;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     $response = [
+    //         'origin' => $params['origin'],
+    //         'destination' => $destination,
+    //         'weight' => $weight,
+    //         'results' => $results,
+    //     ];
+
+    //     return $response;
+    // }
+
+    // Raja Ongkir cek ongkir yang baru
     private function _getShippingCost($destination, $weight)
     {
         $params = [
@@ -150,7 +205,7 @@ class OrderController extends Controller
         return $response;
     }
 
-    public function checkout()
+    public function checkout(Request $request)
     {
         if (Cart::count() == 0) {
             return redirect('carts');
@@ -158,13 +213,62 @@ class OrderController extends Controller
 
         $items = Cart::content();
 
-        $totalWeight = $this->_getTotalWeight() / 1000;
+        $warehouses = Warehouse::get();
+        $provinces = Province::get();
+        $citys = City::get();
+        $couriers = Kurir::get();
 
-        $provinces = $this->getProvinces();
+        // Loop melalui setiap kurir dan tambahkan harga dari CourierWarehousePrices
+        foreach ($couriers as $courier) {
+            $courier->price = CourierWarehousePrices::where('courier_id', $courier->id)->value('price');
+        }
+        return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys', 'couriers'));
+    }
 
-        $cities = isset(auth()->user()->province_id) ? $this->getCities(auth()->user()->province_id) : [];
+    public function searchShippingCost(Request $request)
+    {
+        $request->validate([
+            'warehouse_id' => 'required',
+            'province_id' => 'required|exists:tripiel,province_id',
+            'city_id' => 'required|exists:tripiel,city_id',
+            'courier_id' => 'required',
+        ]);
 
-        return view('frontend.orders.checkout', compact('items', 'totalWeight', 'provinces', 'cities'));
+        $warehouse_id = $request->input('warehouse_id');
+        $courier_id = $request->input('courier_id');
+        $province_id = $request->input('province_id');
+        $city_id = $request->input('city_id');
+
+        // Mencari harga gudang hanya jika semua input valid
+        $price = null;
+
+        // Memeriksa apakah warehouse dan courier valid
+        $validWarehouseCourier = CourierWarehousePrices::where('courier_id', $courier_id)
+            ->where('warehouse_id', $warehouse_id)
+            ->exists();
+
+        // Jika warehouse dan courier valid, coba cari harga
+        if ($validWarehouseCourier) {
+            // Memeriksa apakah province dan city valid
+            $validProvinceCity = Tripiel::where('province_id', $province_id)
+                ->where('city_id', $city_id)
+                ->exists();
+
+            // Jika province dan city valid, cari harga
+            if ($validProvinceCity) {
+                $price = CourierWarehousePrices::where('courier_id', $courier_id)
+                    ->where('warehouse_id', $warehouse_id)
+                    ->value('price');
+            }
+        }
+
+        // Jika harga ditemukan, kirimkan harga sebagai respons
+        if ($price !== null) {
+            return response()->json(['price' => $price]);
+        } else {
+            // Jika harga tidak ditemukan atau input tidak valid, kirimkan null sebagai respons
+            return response()->json(['price' => null]);
+        }
     }
 
     public function doCheckout(Request $request)
@@ -208,9 +312,9 @@ class OrderController extends Controller
         $shippingOptions = $this->_getShippingCost($destination, $totalWeight);
 
         $selectedShipping = null;
-        if ($shippingOptions['results']) {
-            foreach ($shippingOptions['results'] as $shippingOption) {
-                if (str_replace(' ', '', $shippingOption['service']) == $shippingService) {
+        if ($shippingOptions && is_array($shippingOptions)) { // Memeriksa apakah $shippingOptions adalah array
+            foreach ($shippingOptions as $shippingOption) {
+                if (isset($shippingOption->service) && str_replace(' ', '', $shippingOption->service) == $shippingService) {
                     $selectedShipping = $shippingOption;
                     break;
                 }
@@ -222,13 +326,13 @@ class OrderController extends Controller
 
     private function _saveOrder($params)
     {
-        $destination = !isset($params['ship_to']) ? $params['shipping_city_id'] : $params['customer_shipping_city_id'];
+        $destination = !isset($params['ship_to']) ? $params['city_id'] : $params['customer_shipping_city_id'];
         $selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
 
         $baseTotalPrice = (int) Cart::subtotal(0, '', '');
         $taxAmount = 0;
         $taxPercent = 0;
-        $shippingCost = $selectedShipping['cost'];
+        $shippingCost = $selectedShipping['price'];
         $discountAmount = 0;
         $discountPercent = 0;
         $grandTotal = ($baseTotalPrice + $taxAmount + $shippingCost) - $discountAmount;

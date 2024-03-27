@@ -1,31 +1,53 @@
 function getShippingCostOptions(city_id) {
+    // Mengambil nilai gudang yang dipilih
+    var warehouse_id = $("#shipping-warehouse").val();
+    // Mengambil nilai provinsi yang dipilih
+    var province_id = $("#shipping-province").val();
+    // Mengambil nilai kurir yang dipilih
+    var courier_id = $("#shipping-courier").val();
+
+    $("#loader").show();
     $.ajax({
         type: "POST",
-        url: "/orders/shipping-cost",
+        url: "/search-shipping-cost",
         data: {
             _token: $('meta[name="csrf-token"]').attr("content"),
             city_id: city_id,
+            warehouse_id: warehouse_id,
+            province_id: province_id,
+            courier_id: courier_id,
         },
+        // Ketika permintaan Ajax berhasil, tampilkan hasilnya
         success: function (response) {
             $("#loader").hide();
-            $("#shipping-cost-option").empty();
-            $("#shipping-cost-option").append(
+            $("#shipping-cost-options").empty();
+            $("#shipping-cost-options").append(
                 "<option value>- Please Select -</option>"
             );
 
-            $.each(response.results, function (key, result) {
-                $("#shipping-cost-option").append(
+            // Tampilkan harga jika berhasil ditemukan
+            if (response.price !== null) {
+                $("#shipping-cost-options").append(
                     '<option value="' +
-                        result.service.replace(/\s/g, "") +
+                        response.price.replace(/\s/g, "") +
                         '">' +
-                        result.service +
-                        " | " +
-                        result.cost +
-                        " | " +
-                        result.etd +
+                        response.price +
                         "</option>"
                 );
-            });
+                // Update total pesanan
+                updateOrderTotal(response.price);
+            } else {
+                // Tampilkan pesan jika harga tidak ditemukan
+                $("#shipping-cost-options").append(
+                    '<option value="">Tidak ada ongkir yang tersedia</option>'
+                );
+                // Reset total pesanan
+                updateOrderTotal(0);
+            }
+        },
+        error: function (xhr, status, error) {
+            // Tangani kesalahan Ajax
+            console.error(xhr.responseText);
         },
     });
 }
@@ -93,6 +115,43 @@ function getQuickView(product_slug) {
     //     });
     // });
 
+    // gudang di pilih
+    // Memperbarui harga ongkir ketika pilihan gudang, provinsi, atau kota/kabupaten berubah
+    $("#shipping-warehouse, #shipping-province, #shipping-city").on(
+        "change",
+        function () {
+            var warehouse = $("#shipping-warehouse").val(); // Mengambil nilai gudang yang dipilih
+            var province = $("#shipping-province").val(); // Mengambil nilai provinsi yang dipilih
+            var city = $("#shipping-city").val(); // Mengambil nilai kota/kabupaten yang dipilih
+
+            // Memeriksa apakah telah dipilih gudang, provinsi, dan kota/kabupaten
+            if (warehouse && province && city) {
+                $("#loader").show();
+                // Mengirimkan permintaan ke server untuk mendapatkan harga ongkir
+                $.get(
+                    "/orders/shipping-cost",
+                    { warehouse: warehouse, province: province, city: city },
+                    function (data) {
+                        $("#loader").hide();
+                        if (data && data.harga_ongkir) {
+                            // Menampilkan harga ongkir yang ditemukan
+                            $("#shipping-cost").text(
+                                "Harga Ongkir: " + data.harga_ongkir
+                            );
+                        } else {
+                            // Menampilkan pesan jika harga ongkir tidak ditemukan
+                            $("#shipping-cost").text(
+                                "Harga Ongkir tidak ditemukan"
+                            );
+                        }
+                    }
+                );
+            }
+        }
+    );
+
+    // get provice
+    // Memperbarui pilihan kota/kabupaten berdasarkan provinsi yang dipilih
     $("#shipping-province").on("change", function (e) {
         var province_id = e.target.value;
 
@@ -113,13 +172,90 @@ function getQuickView(product_slug) {
             });
         });
     });
+    // kota yang di pilih
+    // Memperbarui harga ongkir ketika pilihan kota/kabupaten berubah
+    $("#shipping-city").on("change", function (e) {
+        var city_id = e.target.value;
+
+        // Mengambil nilai gudang yang dipilih
+        var warehouse = $("#shipping-warehouse").val();
+
+        // Memeriksa apakah telah dipilih gudang, provinsi, dan kota/kabupaten
+        if (warehouse && city_id) {
+            $("#loader").show();
+            $.get(
+                "/orders/shipping-cost",
+                { warehouse: warehouse, city_id: city_id },
+                function (data) {
+                    $("#loader").hide();
+
+                    if (data && data.harga_ongkir) {
+                        // Menampilkan harga ongkir yang ditemukan
+                        $("#shipping-cost").text(
+                            "Harga Ongkir: " + data.harga_ongkir
+                        );
+                    } else {
+                        // Menampilkan pesan jika harga ongkir tidak ditemukan
+                        $("#shipping-cost").text(
+                            "Harga Ongkir tidak ditemukan"
+                        );
+                    }
+                }
+            );
+        }
+    });
+
+    // Memperbarui harga ongkir ketika pilihan gudang, provinsi, kota/kabupaten, atau kurir berubah
+    // Memperbarui harga ongkir ketika pilihan gudang, provinsi, kota/kabupaten, atau kurir berubah
+    $(
+        "#shipping-warehouse, #shipping-province, #shipping-city, #shipping-courier"
+    ).on("change", function () {
+        var warehouse = $("#shipping-warehouse").val(); // Mengambil nilai gudang yang dipilih
+        var province = $("#shipping-province").val(); // Mengambil nilai provinsi yang dipilih
+        var city = $("#shipping-city").val(); // Mengambil nilai kota/kabupaten yang dipilih
+        var courier = $("#shipping-courier").val(); // Mengambil nilai kurir yang dipilih
+
+        // Memeriksa apakah telah dipilih gudang, provinsi, kota/kabupaten, dan kurir
+        if (warehouse && province && city && courier) {
+            $("#loader").show();
+            // Mengirimkan permintaan ke server untuk mendapatkan harga ongkir
+            $.ajax({
+                type: "POST",
+                url: "/orders/shipping-cost",
+                data: {
+                    warehouse: warehouse,
+                    province: province,
+                    city: city,
+                    courier: courier,
+                },
+                success: function (response) {
+                    $("#loader").hide();
+                    // Mengosongkan pilihan sebelumnya
+                    $("#shipping-cost-option").empty();
+                    // Menambahkan pilihan harga ongkir yang ditemukan ke dalam dropdown
+                    $("#shipping-cost-option").append(
+                        '<option value="' +
+                            response.shipping_cost +
+                            '">' +
+                            response.shipping_cost +
+                            "</option>"
+                    );
+                },
+                error: function (xhr, status, error) {
+                    $("#loader").hide();
+                    // Menampilkan pesan kesalahan jika terjadi kesalahan
+                    alert("Terjadi kesalahan: " + xhr.responseText);
+                },
+            });
+        }
+    });
 
     // ======= Show Shipping Cost Options =========
-    if ($("#city-id").val()) {
-        getShippingCostOptions($("#city-id").val());
+    if ($("#shipping-city").val()) {
+        getShippingCostOptions($("#shipping-city").val());
     }
 
-    $("#city-id").on("change", function (e) {
+    $("#shipping-city").on("change", function (e) {
         var city_id = e.target.value;
 
         if (!$("#ship-box").is(":checked")) {
@@ -127,13 +263,8 @@ function getQuickView(product_slug) {
         }
     });
 
-    $("#shipping-city").on("change", function (e) {
-        var city_id = e.target.value;
-        $("#loader").show();
-        getShippingCostOptions(city_id);
-    });
-
     // ============ Set Shipping Cost ================
+    // Memperbarui harga ongkir ketika layanan pengiriman berubah
     $("#shipping-cost-option").on("change", function (e) {
         var shipping_service = e.target.value;
         var city_id = $("#shipping-city").val();
@@ -141,20 +272,39 @@ function getQuickView(product_slug) {
         if ($("#ship-box").is(":checked")) {
             city_id = $("#shipping-city").val();
         }
-        $("#loader").show();
-        $.ajax({
-            type: "POST",
-            url: "/orders/set-shipping",
-            data: {
-                _token: $('meta[name="csrf-token"]').attr("content"),
-                city_id: city_id,
-                shipping_service: shipping_service,
-            },
-            success: function (response) {
-                $("#loader").hide();
-                $(".total-amount").html(response.data.total.toLocaleString());
-            },
-        });
+
+        // Mengambil nilai gudang yang dipilih
+        var warehouse = $("#shipping-warehouse").val();
+        // Mengambil nilai provinsi yang dipilih
+        var province = $("#shipping-province").val();
+        // Mengambil nilai kota/kabupaten yang dipilih
+        var city = $("#shipping-city").val();
+        // Mengambil nilai kurir yang dipilih
+        var courier = $("#shipping-courier").val();
+
+        if (warehouse && province && city && courier) {
+            $("#loader").show();
+            // Mengirimkan permintaan ke server untuk mendapatkan harga ongkir
+            $.ajax({
+                type: "POST",
+                url: "/orders/set-shipping",
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"),
+                    city_id: city_id,
+                    shipping_service: shipping_service,
+                    warehouse: warehouse,
+                    province: province,
+                    city: city,
+                    courier: courier,
+                },
+                success: function (response) {
+                    $("#loader").hide();
+                    $(".total-amount").html(
+                        response.data.total.toLocaleString()
+                    );
+                },
+            });
+        }
     });
 
     $(".quick-view").on("click", function (e) {

@@ -120,7 +120,43 @@
                     <hr>
                 </li>
 
+                <li class="has-sub @yield('Active3PL')">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="mdi mdi-archive"></i>
+                        <span class="nav-text">3PL</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/warehouse') }}">
+                                    <span class="nav-text">Warehouse</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/province') }}">
+                                    <span class="nav-text">Province</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/city') }}">
+                                    <span class="nav-text">City</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/courier') }}">
+                                    <span class="nav-text">Courier</span>
+                                </a>
+                            </li>
 
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/courierwarehouseprices') }}">
+                                    <span class="nav-text">Courierwarehouseprices</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
 
                 <!-- Products -->
                 <li class="has-sub @yield('ActiveProduct')">

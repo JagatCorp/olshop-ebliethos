@@ -3,14 +3,20 @@
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\CourierController;
+use App\Http\Controllers\Admin\CourierwarehousepricesController;
 use App\Http\Controllers\Admin\DatabaseController;
 use App\Http\Controllers\Admin\KonsultasiController;
+use App\Http\Controllers\Admin\NinjaController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CommentsController;
 use App\Http\Controllers\Frontend\HomepageController;
@@ -125,6 +131,40 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-coupon', [CouponController::class, 'store'])->name('create-coupon');
     Route::post('edit-coupon', [CouponController::class, 'update'])->name('edit-coupon');
     Route::get('delete-coupon/{id}', [CouponController::class, 'delete'])->name('delete-coupon');
+    // Ninja
+    Route::get('ninja', [NinjaController::class, 'index'])->name('ninja-index');
+    Route::post('/import-excel', [NinjaController::class, 'importExcel'])->name('import.excel');
+
+    //warehouse
+    Route::get('warehouse', [WarehouseController::class, 'index'])->name('warehouse-index');
+    Route::post('create-warehouse', [WarehouseController::class, 'store'])->name('create-warehouse');
+    Route::post('edit-warehouse', [WarehouseController::class, 'update'])->name('edit-warehouse');
+    Route::get('delete-warehouse/{id}', [WarehouseController::class, 'delete'])->name('delete-warehouse');
+
+    //province
+    Route::get('province', [ProvinceController::class, 'index'])->name('province-index');
+    Route::post('create-province', [ProvinceController::class, 'store'])->name('create-province');
+    Route::post('edit-province', [ProvinceController::class, 'update'])->name('edit-province');
+    Route::get('delete-province/{province_id}', [ProvinceController::class, 'delete'])->name('delete-province');
+
+    //city
+    Route::get('city', [CityController::class, 'index'])->name('city-index');
+    Route::post('create-city', [CityController::class, 'store'])->name('create-city');
+    Route::post('edit-city', [CityController::class, 'update'])->name('edit-city');
+    Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
+    //jquery fetch city by province
+    Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
+    //courier
+    Route::get('courier', [CourierController::class, 'index'])->name('courier-index');
+    Route::post('create-courier', [CourierController::class, 'store'])->name('create-courier');
+    Route::post('edit-courier', [CourierController::class, 'update'])->name('edit-courier');
+    Route::get('delete-courier/{id}', [CourierController::class, 'delete'])->name('delete-courier');
+
+    //courierwarehouseprices
+    Route::get('courierwarehouseprices', [CourierwarehousepricesController::class, 'index'])->name('courierwarehouseprices-index');
+    Route::post('create-courierwarehouseprices', [CourierwarehousepricesController::class, 'store'])->name('create-courierwarehouseprices');
+    Route::post('edit-courierwarehouseprices', [CourierwarehousepricesController::class, 'update'])->name('edit-courierwarehouseprices');
+    Route::get('delete-courierwarehouseprices/{id}', [CourierwarehousepricesController::class, 'delete'])->name('delete-courierwarehouseprices');
 
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');
@@ -132,7 +172,6 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('database/backup/download/{filename}', [DatabaseController::class, 'downloadBackup'])->name('download.backup');
 
 });
-
 
 Route::group(['middleware' => 'cek_visit_token'], function () {
     // home
@@ -167,7 +206,6 @@ Route::group(['middleware' => 'cek_visit_token'], function () {
     Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
 });
 
-
 Route::group(['middleware' => 'auth'], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
     Route::post('orders/checkout', [OrderController::class, 'doCheckout'])->name('orders.checkout')->middleware('auth');
@@ -192,6 +230,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // coupon
     Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
+    // search shipping cost sesuai excel eblie
+    Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
 
 });
 
