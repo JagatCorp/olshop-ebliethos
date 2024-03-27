@@ -284,6 +284,8 @@ class OrderController extends Controller
         //     'customer_province_id' => 'required',
 
         // ]);
+        // return response()->json($request);
+
         $dataCourier = Kurir::where('id', $request->courier_id)->first();
         $params = $request->except('_token');
         $params['service'] = $dataCourier->name . ' | ' . $dataCourier->type;
@@ -340,6 +342,7 @@ class OrderController extends Controller
         $discountAmount = 0;
         $discountPercent = 0;
         $grandTotal = ($baseTotalPrice + $taxAmount + $shippingCost) - $discountAmount;
+        $cod = $params['cod'];
 
         $orderDate = date('Y-m-d H:i:s');
         $paymentDue = (new \DateTime($orderDate))->modify('+7 day')->format('Y-m-d H:i:s');
@@ -373,6 +376,7 @@ class OrderController extends Controller
             'discount_percent' => $discountPercent,
             'shipping_cost' => $shippingCost,
             'grand_total' => $grandTotal,
+            'cod' => $cod,
             'note' => $params['note'],
             'customer_first_name' => $params['first_name'],
             'customer_last_name' => $params['last_name'],
@@ -574,17 +578,21 @@ class OrderController extends Controller
 
     public function successOrder(Order $orderId)
     {
-        // Ubah status pembayaran menjadi 'PAID'
-        $orderId->payment_status = 'PAID';
-        $orderId->save();
+        // return response()->json($orderId->cod);
+        // Ubah status pembayaran menjadi 'PAID' langsung bila pembayaran melalui transfer
+        if($orderId->cod == 'YES'){
+            $orderId->payment_status = 'PAID';
+            $orderId->save();
+        }
 
         // URL untuk melihat detail pesanan
         $orderUrl = url('orders/' . $orderId->id);
+        $messageCod = $orderId->cod == 'YES' ? 'terkirim' : 'terbayar';
 
         // Kirim pesan WhatsApp jika pembayaran berhasil
         $response = Http::post('https://wa.eblieshop.online/send-message', [
             'number' => $orderId->customer_phone,
-            'message' => 'Halo ' . $orderId->customer_first_name . '! Invoice Anda dengan nomor ' . $orderId->code . ' telah berhasil dibayar. Detail pesanan dapat dilihat di sini: ' . $orderUrl,
+            'message' => 'Halo ' . $orderId->customer_first_name . '! Invoice Anda dengan nomor ' . $orderId->code . ' telah berhasil ' . $messageCod . '. Detail pesanan dapat dilihat di sini: ' . $orderUrl,
         ]);
 
         // Lakukan penanganan respons API WhatsApp di sini, misalnya log atau lainnya
@@ -640,6 +648,8 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)
             ->where('user_id', auth()->id())
             ->firstOrFail();
+
+        // return response()->json($order);
 
         return view('frontend.orders.received', compact('order', 'orderId'));
     }

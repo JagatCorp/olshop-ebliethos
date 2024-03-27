@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('discount_percent', 16, 2)->default(0);
             $table->decimal('shipping_cost', 16, 2)->default(0);
             $table->decimal('grand_total', 16, 2)->default(0);
+            $table->enum('cod', ['YES', 'NO']);
             $table->text('note')->nullable();
             $table->string('customer_first_name');
             $table->string('customer_last_name');
@@ -50,7 +51,7 @@ return new class extends Migration
             $table->foreign('cancelled_by')->references('id')->on('users');
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->index('code');
             $table->index(['code', 'order_date']);
             $table->index('payment_token');

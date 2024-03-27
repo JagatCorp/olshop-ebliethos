@@ -189,11 +189,6 @@
                                     </div>
                                 </div> --}}
 
-
-
-
-
-
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kode Pos<span class="required">*</span></label>
@@ -364,6 +359,16 @@
                                             <td>
                                                 <select id="shipping-cost-options" required name="shipping_service"
                                                     required></select>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="cart-subtotal">
+                                            <th>Type Pembayaran</th>
+                                            <td>
+                                                <select id="cod" required name="cod" required>
+                                                    <option value="YES">COD</option>
+                                                    <option value="NO">Transfer</option>
+                                                </select>
                                             </td>
                                         </tr>
 
