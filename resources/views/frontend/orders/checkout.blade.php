@@ -54,6 +54,7 @@
                                     </div>
                                 </div>
 
+
                                 {{-- <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Provinsi<span class="required">*</span></label>
@@ -100,7 +101,7 @@
                                     <div class="checkout-form-list">
                                         <label>Warehouse<span class="required">*</span></label>
 
-                                        <select name="warehouse_id" required>
+                                        <select name="warehouse_id" required id="warehouse_id">
                                             <option value="">-- Pilih Gudang Dari --</option>
                                             @foreach ($warehouses as $warehouse)
                                                 <option value="{{ $warehouse->id }}">{{ $warehouse->name }}</option>
@@ -412,6 +413,9 @@
     </div>
     {{-- ajax search shipping cost --}}
     <script>
+
+
+
         $(document).ready(function() {
             // Fungsi untuk melakukan validasi dan mengirimkan permintaan Ajax
             function validateAndSendRequest() {
@@ -441,6 +445,7 @@
                                     '">' + response.price + '</option>');
 
                                 // Update total pesanan
+                                console.log('444',response.price);
                                 updateOrderTotal(response.price);
                             } else {
                                 // Tampilkan pesan jika harga tidak ditemukan
@@ -468,12 +473,19 @@
             }
 
             // Fungsi untuk memperbarui total pesanan
+            var biayaOngkirSebelumnya = 0;
             function updateOrderTotal(shippingCost) {
                 // Ambil total pesanan sebelumnya
                 var subtotal = parseInt($('.total-amount').text().replace(/\D/g, ''));
 
+                if(biayaOngkirSebelumnya !== 0){
+                    subtotal -= biayaOngkirSebelumnya;
+                }
+
                 // Hitung total pesanan baru dengan menambahkan biaya pengiriman
                 var newTotal = subtotal + parseInt(shippingCost);
+
+                biayaOngkirSebelumnya = parseInt(shippingCost);
 
                 // Tampilkan total pesanan baru
                 $('.total-amount').text(newTotal.toLocaleString());

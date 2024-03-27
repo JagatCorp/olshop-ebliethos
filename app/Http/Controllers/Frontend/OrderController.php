@@ -223,6 +223,7 @@ class OrderController extends Controller
             $courier->price = CourierWarehousePrices::where('courier_id', $courier->id)->value('price');
         }
         return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys', 'couriers'));
+        // return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys'));
     }
 
     public function searchShippingCost(Request $request)
@@ -283,7 +284,9 @@ class OrderController extends Controller
         //     'customer_province_id' => 'required',
 
         // ]);
+        $dataCourier = Kurir::where('id', $request->courier_id)->first();
         $params = $request->except('_token');
+        $params['service'] = $dataCourier->name . ' | ' . $dataCourier->type;
 
         $order = DB::transaction(
             function () use ($params) {
@@ -327,12 +330,13 @@ class OrderController extends Controller
     private function _saveOrder($params)
     {
         $destination = !isset($params['ship_to']) ? $params['city_id'] : $params['customer_shipping_city_id'];
-        $selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
+        // $selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
 
         $baseTotalPrice = (int) Cart::subtotal(0, '', '');
         $taxAmount = 0;
         $taxPercent = 0;
-        $shippingCost = $selectedShipping['price'];
+        // $shippingCost = $selectedShipping['price'];
+        $shippingCost = $params['shipping_service'];
         $discountAmount = 0;
         $discountPercent = 0;
         $grandTotal = ($baseTotalPrice + $taxAmount + $shippingCost) - $discountAmount;
@@ -346,7 +350,8 @@ class OrderController extends Controller
             'address1' => $params['address1'],
             'address2' => $params['address2'],
             'province_id' => $params['province_id'],
-            'city_id' => $params['shipping_city_id'],
+            // 'city_id' => $params['shipping_city_id'],
+            'city_id' => $params['city_id'],
             'postcode' => $params['postcode'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -375,11 +380,13 @@ class OrderController extends Controller
             'customer_address2' => $params['address2'],
             'customer_phone' => $params['phone'],
             'customer_email' => $params['email'],
-            'customer_city_id' => $params['shipping_city_id'],
+            // 'customer_city_id' => $params['shipping_city_id'],
+            'customer_city_id' => $params['city_id'],
             'customer_province_id' => $params['province_id'],
             'customer_postcode' => $params['postcode'],
-            'shipping_courier' => $selectedShipping['courier'],
-            'shipping_service_name' => $selectedShipping['service'],
+            // 'shipping_courier' => $selectedShipping['courier'],
+            'shipping_courier' => $params['courier_id'],
+            'shipping_service_name' => $params['service'],
         ];
 
         return Order::create($orderParams);
@@ -599,7 +606,8 @@ class OrderController extends Controller
         $shippingAddress2 = isset($params['ship_to']) ? $params['shipping_address2'] : $params['address2'];
         $shippingPhone = isset($params['ship_to']) ? $params['shipping_phone'] : $params['phone'];
         $shippingEmail = isset($params['ship_to']) ? $params['shipping_email'] : $params['email'];
-        $shippingCityId = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['shipping_city_id'];
+        // $shippingCityId = isset($params['ship_to']) ? $params['shipping_city_id'] : $params['shipping_city_id'];
+        $shippingCityId = $params['city_id'];
         $shippingProvinceId = isset($params['ship_to']) ? $params['shipping_province_id'] : $params['province_id'];
         $shippingPostcode = isset($params['ship_to']) ? $params['shipping_postcode'] : $params['postcode'];
         $totalQty = 0;
