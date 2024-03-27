@@ -123,10 +123,15 @@
                 <li class="has-sub @yield('Active3PL')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-archive"></i>
-                        <span class="nav-text">3PL</span> <b class="caret"></b>
+                        <span class="nav-text">Master 3PL</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
                         <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/tripiel') }}">
+                                    <span class="nav-text">3PL</span>
+                                </a>
+                            </li>
                             <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/warehouse') }}">
                                     <span class="nav-text">Warehouse</span>

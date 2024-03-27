@@ -1,5 +1,5 @@
 @extends('admin.layout.dashboard')
-@section('title', 'Tripiel')
+@section('title', '3PL')
 @section('ActiveTripiel', 'active')
 @section('Active3PL', 'active')
 @section('content')
@@ -9,15 +9,15 @@
         <div class="content">
             <div class="breadcrumb-wrapper breadcrumb-contacts">
                 <div>
-                    <h1>Tripiel</h1>
+                    <h1>3PL</h1>
                     <p class="breadcrumbs"><span><a href="admin/dashboard">Home</a></span>
-                        <span><i class="mdi mdi-chevron-right"></i></span>Tripiel
+                        <span><i class="mdi mdi-chevron-right"></i></span>3PL
                     </p>
                 </div>
                 <div>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAdd"> <i
                             class="fa fa-plus"></i>
-                        Tripiel
+                        3PL
                     </button>
                 </div>
             </div>
@@ -95,18 +95,63 @@
                             <div class="modal-body px-4">
                                 <div class="row mb-2">
                                     <div class="col-lg-6">
-                                        <div class="form-group mb-4">
-                                            <label for="userName">Name Tripiel</label>
-                                            <input type="text" class="form-control" id="editor" name="name"
-                                                rows="5" cols="5" required />
+                                        <div class="form-group">
+                                            <label for="firstName">Province Name</label>
+                                            <select name="province_id" class="form-control" required>
+                                                <option value="">-- Select Province --
+                                                </option>
+                                                @foreach ($province as $item)
+                                                    <option value="{{ $item->province_id }}">
+                                                        {{ $item->province_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="form-group mb-4">
-                                            <label for="userName">Type</label>
-                                            <input type="text" class="form-control" name="type" required />
+                                        <div class="form-group">
+                                            <label for="firstName">City Name</label>
+                                            <select name="city_id" class="form-control" required>
+                                                <option value="">-- Select City --
+                                                </option>
+                                                @foreach ($city as $item)
+                                                    <option value="{{ $item->city_id }}">
+                                                        {{ $item->city_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="firstName">courier Name</label>
+                                            <select name="courier_id" class="form-control" required>
+                                                <option value="">-- Select courier --
+                                                </option>
+                                                @foreach ($courier as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="firstName">warehouse Name</label>
+                                            <select name="warehouse_id" class="form-control" required>
+                                                <option value="">-- Select warehouse --
+                                                </option>
+                                                @foreach ($warehouse as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>
@@ -134,23 +179,64 @@
                                 <input type="hidden" name="id" value="{{ $item->id }}">
                                 <div class="modal-body px-4">
                                     <div class="row mb-2">
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">Name Tripiel</label>
-                                                <input type="text" class="form-control" name="name"
-                                                    id="editor{{ $item->id }}" rows="5" cols="5"
-                                                    value="{{ $item->name }}" />
-                                            </div>
-                                        </div>
 
                                         <div class="col-lg-6">
                                             <div class="form-group mb-4">
-                                                <label for="userName">Type</label>
-                                                <input type="text" class="form-control" name="type"
-                                                    value="{{ $item->type }}" />
+                                                <label for="userName">Province</label>
+                                                <select name="province_id" class="form-control" required>
+
+                                                    @foreach ($province as $province_item)
+                                                        <option value="{{ $province_item->province_id }}"
+                                                            {{ $province_item->province_id == $item->province_id ? 'selected' : '' }}>
+                                                            {{ $province_item->province_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-4">
+                                                <label for="userName">City</label>
+                                                <select name="city_id" class="form-control" required>
+
+                                                    @foreach ($city as $city_item)
+                                                        <option value="{{ $city_item->city_id }}"
+                                                            {{ $city_item->city_id == $item->city_id ? 'selected' : '' }}>
+                                                            {{ $city_item->city_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-4">
+                                                <label for="userName">courier Name</label>
+                                                <select name="courier_id" class="form-control">
+
+                                                    @foreach ($courier as $courier_item)
+                                                        <option value="{{ $courier_item->id }}"
+                                                            {{ $courier_item->id == $item->id ? 'selected' : '' }}>
+                                                            {{ $courier_item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-4">
+                                                <label for="userName">Warehouse Name</label>
+                                                <select name="warehouse_id" class="form-control">
+                                                    @foreach ($warehouse as $warehouse_item)
+                                                        <option value="{{ $warehouse_item->id }}"
+                                                            {{ $warehouse_item->id == $item->id ? 'selected' : '' }}>
+                                                            {{ $warehouse_item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
