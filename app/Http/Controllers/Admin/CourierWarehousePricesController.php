@@ -27,7 +27,7 @@ class CourierwarehousepricesController extends Controller
             'price' => 'required',
 
         ]);
-
+        // dd($request->all());
         Courierwarehouseprices::create([
 
             'courier_id' => $request->courier_id,

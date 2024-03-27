@@ -13,10 +13,18 @@ class Tripiel extends Model
     protected $guarded = [];
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
     }
-    public function couriers()
+    public function courier()
     {
-        return $this->hasMany(Kurir::class, 'courier_id', 'id');
+        return $this->belongsTo(Kurir::class, 'courier_id', 'id');
+    }
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_id', 'province_id');
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id', 'city_id');
     }
 }

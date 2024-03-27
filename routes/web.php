@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\Admin\TripielController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CommentsController;
@@ -165,6 +166,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-courierwarehouseprices', [CourierwarehousepricesController::class, 'store'])->name('create-courierwarehouseprices');
     Route::post('edit-courierwarehouseprices', [CourierwarehousepricesController::class, 'update'])->name('edit-courierwarehouseprices');
     Route::get('delete-courierwarehouseprices/{id}', [CourierwarehousepricesController::class, 'delete'])->name('delete-courierwarehouseprices');
+
+    //tripiel
+    Route::get('tripiel', [TripielController::class, 'index'])->name('tripiel-index');
+    Route::post('create-tripiel', [TripielController::class, 'store'])->name('create-tripiel');
+    Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
+    Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
 
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');

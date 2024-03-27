@@ -10,7 +10,7 @@ class CourierWarehousePrices extends Model
     use HasFactory;
     protected $table = 'courier_warehouse_price';
     public $timestamps = false;
-    protected $guarded = [];
+    protected $fillable = ['price', 'courier_id', 'warehouse_id'];
 
     public function courier()
     {
