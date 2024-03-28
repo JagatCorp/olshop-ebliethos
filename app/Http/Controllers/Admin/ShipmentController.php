@@ -58,34 +58,41 @@ class ShipmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shipment $shipment)
+    // public function update(Request $request, Shipment $shipment)
+    // {
+    //     $request->validate(
+    //         [
+    //             'nomor_resi' => 'required|max:255',
+    //         ]
+    //     );
+
+    //     $order = DB::transaction(
+    //         function () use ($shipment, $request) {
+    //             $shipment->nomor_resi = $request->input('nomor_resi');
+    //             $shipment->status = Shipment::SHIPPED;
+    //             // $shipment->shipped_at = now();
+    //             // $shipment->shipped_by = auth()->id();
+
+    //             if ($shipment->save()) {
+    //                 $shipment->order->status = Order::DELIVERED;
+    //                 $shipment->order->save();
+    //             }
+
+    //             return $shipment->order;
+    //         }
+    //     );
+
+    //     Session::flash('success', 'The shipment has been updated');
+    //     return redirect('admin/orders/' . $order->id);
+    // }
+    public function update(Request $request)
     {
-        $request->validate(
-            [
-                'track_number' => 'required|max:255',
-            ]
-        );
+        Order::where('id', $request->id)->update([
+            'nomor_resi' => $request->nomor_resi,
+        ]);
 
-        $order = DB::transaction(
-            function () use ($shipment, $request) {
-                $shipment->track_number = $request->input('track_number');
-                $shipment->status = Shipment::SHIPPED;
-                $shipment->shipped_at = now();
-                $shipment->shipped_by = auth()->id();
-
-                if ($shipment->save()) {
-                    $shipment->order->status = Order::DELIVERED;
-                    $shipment->order->save();
-                }
-
-                return $shipment->order;
-            }
-        );
-
-        Session::flash('success', 'The shipment has been updated');
-        return redirect('admin/orders/' . $order->id);
+        return redirect('admin/shipments')->with('toast_success', 'nomor_resi Order Berhasil');
     }
-
     /**
      * Remove the specified resource from storage.
      */

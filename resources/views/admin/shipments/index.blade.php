@@ -27,6 +27,7 @@
                                         <th>Status</th>
                                         <th>Total Qty</th>
                                         <th>Total Weight (gram)</th>
+                                        <th>Nomor Resi</th>
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -46,7 +47,13 @@
                                                 </td>
                                                 <td>{{ $shipment->total_qty }}</td>
                                                 <td>{{ $shipment->total_weight }}</td>
+                                                <td>{{ $shipment->nomor_resi }}</td>
+
                                                 <td>
+                                                    <a class="btn btn-sm btn-warning mr-1 rounded-circle "
+                                                        style="cursor:pointer" data-bs-toggle="modal"
+                                                        data-bs-target="#ModalEdit{{ $shipment->id }}"><i
+                                                            class="fa fa-edit"></i></a>
                                                     <a href="{{ url('admin/orders/' . $shipment->order->id) }}"
                                                         class="btn btn-info btn-sm">show</a>
                                                 </td>
@@ -71,6 +78,39 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    @foreach ($shipments as $shipment)
+        <div class="modal fade modal-add-contact" id="ModalEdit{{ $shipment->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('admin.shipments.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header px-4">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Ubah Nomor Resi Order</h5>
+                        </div>
+                        <input type="hidden" name="id" value="{{ $shipment->id }}">
+                        <div class="modal-body px-4">
+                            <div class="row mb-2">
+                                <div class="col-lg-12">
+                                    <div class="form-group textmb-4">
+                                        <label for="userName">Ubah Nomor Resi Order</label>
+                                        <input type="text" name="nomor_resi" class="form-control"
+                                            value="{{ $shipment->nomor_resi }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer px-4">
+                            <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 
 {{-- @push('style-alt')

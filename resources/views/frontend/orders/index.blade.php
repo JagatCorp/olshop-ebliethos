@@ -26,6 +26,7 @@
                                             <th scope="col">Status</th>
 
                                             <th scope="col">Payment</th>
+                                            <th scope="col">Nomor Resi</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
@@ -48,8 +49,10 @@
 
 
                                                 <td><span>{{ $order->payment_status }}</span></td>
+                                                <td><span>{{ $order->nomor_resi }}</span></td>
                                                 <td><span class="tbl-btn"><a class="btn btn-lg btn-primary"
                                                             href="{{ url('orders/' . $order->id) }}">View</a></span></td>
+
                                             </tr>
                                         @empty
                                             <tr>

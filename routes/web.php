@@ -69,7 +69,9 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
     Route::put('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'doCancel'])->name('orders.cancel');
     Route::post('orders/edit-status', [\App\Http\Controllers\Admin\OrderController::class, 'update'])->name('orders.status.edit');
-    Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);
+    // Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);
+    Route::get('shipments', [\App\Http\Controllers\Admin\ShipmentController::class,'index'])->name('shipments.index');
+    Route::post('shipments-update', [\App\Http\Controllers\Admin\ShipmentController::class,'update'])->name('shipments.update');
 
     Route::get('reports/revenue', [\App\Http\Controllers\Admin\ReportController::class, 'revenue'])->name('reports.revenue');
     Route::get('reports/product', [\App\Http\Controllers\Admin\ReportController::class, 'product'])->name('reports.product');
@@ -250,7 +252,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
     // search shipping cost sesuai excel eblie
     Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
-
+// tranking paket by resi
     Route::get('track-paket', [TrackpaketController::class, 'showTrackForm'])->name('track.form');
     Route::get('track-paket-result', [TrackpaketController::class, 'trackPaket'])->name('track.paket');
 
