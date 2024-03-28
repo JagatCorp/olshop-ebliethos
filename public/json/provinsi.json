@@ -1,0 +1,192 @@
+[
+    {
+        "province_id": 1,
+        "province_name": "Nanggroe Aceh Darussalam (NAD)",
+        "code": "11"
+    },
+    {
+        "province_id": 2,
+        "province_name": "Bali",
+        "code": "51"
+    },
+    {
+        "province_id": 3,
+        "province_name": "Banten",
+        "code": "36"
+    },
+    {
+        "province_id": 4,
+        "province_name": "Bengkulu",
+        "code": "17"
+    },
+    {
+        "province_id": 5,
+        "province_name": "DI Yogyakarta",
+        "code": "34"
+    },
+    {
+        "province_id": 6,
+        "province_name": "DKI Jakarta",
+        "code": "31"
+    },
+    {
+        "province_id": 7,
+        "province_name": "Gorontalo",
+        "code": "75"
+    },
+    {
+        "province_id": 8,
+        "province_name": "Jambi",
+        "code": "15"
+    },
+    {
+        "province_id": 9,
+        "province_name": "Jawa Barat",
+        "code": "32"
+    },
+    {
+        "province_id": 10,
+        "province_name": "Jawa Tengah",
+        "code": "33"
+    },
+    {
+        "province_id": 11,
+        "province_name": "Jawa Timur",
+        "code": "35"
+    },
+    {
+        "province_id": 12,
+        "province_name": "Kalimantan Barat",
+        "code": "61"
+    },
+    {
+        "province_id": 13,
+        "province_name": "Kalimantan Selatan",
+        "code": "63"
+    },
+    {
+        "province_id": 14,
+        "province_name": "Kalimantan Tengah",
+        "code": "62"
+    },
+    {
+        "province_id": 15,
+        "province_name": "Kalimantan Timur",
+        "code": "64"
+    },
+    {
+        "province_id": 16,
+        "province_name": "Kalimantan Utara",
+        "code": "65"
+    },
+    {
+        "province_id": 17,
+        "province_name": "Kepulauan Bangka Belitung",
+        "code": "19"
+    },
+    {
+        "province_id": 18,
+        "province_name": "Kepulauan Riau",
+        "code": "21"
+    },
+    {
+        "province_id": 19,
+        "province_name": "Lampung",
+        "code": "18"
+    },
+    {
+        "province_id": 20,
+        "province_name": "Maluku",
+        "code": "81"
+    },
+    {
+        "province_id": 21,
+        "province_name": "Maluku Utara",
+        "code": "82"
+    },
+    {
+        "province_id": 22,
+        "province_name": "Nusa Tenggara Barat (NTB)",
+        "code": "52"
+    },
+    {
+        "province_id": 23,
+        "province_name": "Nusa Tenggara Timur (NTT)",
+        "code": "53"
+    },
+    {
+        "province_id": 24,
+        "province_name": "Papua",
+        "code": "91"
+    },
+    {
+        "province_id": 25,
+        "province_name": "Papua Barat",
+        "code": "92"
+    },
+    {
+        "province_id": 26,
+        "province_name": "Papua Barat Daya",
+        "code": "92"
+    },
+    {
+        "province_id": 27,
+        "province_name": "Papua Pegunungan",
+        "code": "95"
+    },
+    {
+        "province_id": 28,
+        "province_name": "Papua Selatan",
+        "code": "93"
+    },
+    {
+        "province_id": 29,
+        "province_name": "Papua Tengah",
+        "code": "94"
+    },
+    {
+        "province_id": 30,
+        "province_name": "Riau",
+        "code": "14"
+    },
+    {
+        "province_id": 31,
+        "province_name": "Sulawesi Barat",
+        "code": "76"
+    },
+    {
+        "province_id": 32,
+        "province_name": "Sulawesi Selatan",
+        "code": "73"
+    },
+    {
+        "province_id": 33,
+        "province_name": "Sulawesi Tengah",
+        "code": "72"
+    },
+    {
+        "province_id": 34,
+        "province_name": "Sulawesi Tenggara",
+        "code": "74"
+    },
+    {
+        "province_id": 35,
+        "province_name": "Sulawesi Utara",
+        "code": "71"
+    },
+    {
+        "province_id": 36,
+        "province_name": "Sumatera Barat",
+        "code": "13"
+    },
+    {
+        "province_id": 37,
+        "province_name": "Sumatera Selatan",
+        "code": "16"
+    },
+    {
+        "province_id": 38,
+        "province_name": "Sumatera Utara",
+        "code": "12"
+    }
+]
