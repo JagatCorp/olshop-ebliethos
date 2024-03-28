@@ -27,4 +27,8 @@ class Tripiel extends Model
     {
         return $this->belongsTo(City::class, 'city_id', 'city_id');
     }
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'kecamatan_id', 'id');
+    }
 }

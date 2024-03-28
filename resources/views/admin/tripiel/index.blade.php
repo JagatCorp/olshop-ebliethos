@@ -32,8 +32,10 @@
                                             <th>No</th>
                                             <th>Destination Province</th>
                                             <th>Destination City</th>
+                                            <th>Destination Kecamatan</th>
                                             <th>Courier</th>
                                             <th>Warehouse</th>
+                                            <th>Price</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -50,6 +52,9 @@
                                                 <td>{{ $item->courier->name }}</td>
 
                                                 <td>{{ $item->warehouse->name }}</td>
+                                                <td>{{ $item->kecamatan->name }}</td>
+
+                                                <td>{{ $item->price }}</td>
 
                                                 <td>
                                                     <div class="btn-group mb-1">
@@ -151,6 +156,26 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Kecamatan</label>
+                                            <select name="kecamatan_id" class="form-control" required>
+                                                <option value="">-- Select Kecamatan --
+                                                </option>
+                                                @foreach ($kecamatan as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Price</label>
+                                            <input type="number" name="price" class="form-control" required>
+                                        </div>
+                                    </div>
 
 
                                 </div>
@@ -167,11 +192,12 @@
             </div>
             {{-- Edit Modal --}}
             @foreach ($tripiel as $item)
-                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('admin.edit-tripiel') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.edit-tripiel') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header px-4">
                                     <h5 class="modal-title" id="exampleModalCenterTitle">Edit Tripiel</h5>
@@ -237,6 +263,29 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-4">
+                                                <label for="userName">Kecamatan</label>
+                                                <select name="kecamatan_id" class="form-control">
+                                                    @foreach ($kecamatan as $kecamatan_item)
+                                                        <option value="{{ $kecamatan_item->id }}"
+                                                            {{ $kecamatan_item->id == $item->id ? 'selected' : '' }}>
+                                                            {{ $kecamatan_item->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group mb-4">
+                                                <label for="userName">Price</label>
+
+                                                <input type="number" name="price" class="form-control"
+                                                    value="{{ $item->price }}">
+                                            </div>
+                                        </div>
+
 
                                     </div>
                                 </div>

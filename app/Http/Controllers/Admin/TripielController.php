@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Kecamatan;
 use App\Models\Kurir;
 use App\Models\Province;
 use App\Models\Tripiel;
@@ -19,7 +20,8 @@ class TripielController extends Controller
         $city = City::all();
         $courier = Kurir::all();
         $warehouse = Warehouse::all();
-        return view('admin.tripiel.index', compact('tripiel', 'province', 'city', 'courier', 'warehouse'));
+        $kecamatan = Kecamatan::all();
+        return view('admin.tripiel.index', compact('tripiel', 'province', 'city', 'courier', 'warehouse', 'kecamatan'));
     }
 
     public function store(Request $request)
@@ -39,6 +41,8 @@ class TripielController extends Controller
             'province_id' => $request->province_id,
             'city_id' => $request->city_id,
             'warehouse_id' => $request->warehouse_id,
+            'kecamatan_id' => $request->kecamatan_id,
+            'price' => $request->price,
 
         ]);
 
@@ -60,6 +64,8 @@ class TripielController extends Controller
             'province_id' => $request->province_id,
             'city_id' => $request->city_id,
             'warehouse_id' => $request->warehouse_id,
+            'kecamatan_id' => $request->kecamatan_id,
+            'price' => $request->price,
 
         ]);
         return redirect()->route('admin.tripiel-index')->with('toast_success', 'Tripiel Berhasil Di Ubah');
