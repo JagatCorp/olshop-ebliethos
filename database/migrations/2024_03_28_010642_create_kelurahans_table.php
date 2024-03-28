@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('pos_code');
             $table->integer('code')->nullable();
             $table->integer('full_code')->nullable();
-            $table->timestamps();
+             $table->timestamps();
         });
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Province;
+use App\Models\Kecamatan;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
@@ -26,6 +27,18 @@ class CityController extends Controller
         // Return data kota/kabupaten dalam format JSON
         return response()->json($cities);
     }
+    public function fetchDistrictsByCity(Request $request)
+{
+    // Ambil city_id dari permintaan Ajax
+    $cityId = $request->input('city_id');
+
+    // Query untuk mendapatkan daftar kecamatan berdasarkan city_id
+    $districts = Kecamatan::where('city_id', $cityId)->get();
+
+    // Return data kecamatan dalam format JSON
+    return response()->json($districts);
+}
+
     public function store(Request $request)
     {
         $request->validate([

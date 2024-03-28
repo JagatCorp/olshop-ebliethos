@@ -1,35 +1,36 @@
 <?php
 
-use App\Http\Controllers\Admin\AboutController;
-use App\Http\Controllers\Admin\ArtikelController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\CityController;
-use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\CourierController;
-use App\Http\Controllers\Admin\CourierwarehousepricesController;
-use App\Http\Controllers\Admin\DatabaseController;
-use App\Http\Controllers\Admin\KecamatanController;
-use App\Http\Controllers\Admin\KonsultasiController;
-use App\Http\Controllers\Admin\NinjaController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\ProvinceController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\TestimoniController;
-use App\Http\Controllers\Admin\TripielController;
-use App\Http\Controllers\Admin\WarehouseController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\CommentsController;
-use App\Http\Controllers\Frontend\HomepageController;
-use App\Http\Controllers\Frontend\OrderController;
-use App\Http\Controllers\Frontend\PaymentController;
-use App\Http\Controllers\Frontend\ProductController;
-use App\Http\Controllers\Frontend\ReplyController;
-use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
-use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\AboutController;
+use App\Http\Controllers\Admin\NinjaController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\ArtikelController;
+use App\Http\Controllers\Admin\CourierController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\TripielController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Admin\DatabaseController;
+use App\Http\Controllers\Admin\ProvinceController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\ReplyController;
+use App\Http\Controllers\Admin\KecamatanController;
+use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\Admin\KonsultasiController;
+use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\CommentsController;
+use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\Frontend\WishListController;
+use App\Http\Controllers\Frontend\TrackpaketController;
+use App\Http\Controllers\Admin\CourierwarehousepricesController;
+use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -157,6 +158,8 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     //jquery fetch city by province
     Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
 
+    Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
+
     //kecamatan
     Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
@@ -247,6 +250,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
     // search shipping cost sesuai excel eblie
     Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
+
+    Route::get('track-paket', [TrackpaketController::class, 'showTrackForm'])->name('track.form');
+    Route::get('track-paket-result', [TrackpaketController::class, 'trackPaket'])->name('track.paket');
 
 });
 

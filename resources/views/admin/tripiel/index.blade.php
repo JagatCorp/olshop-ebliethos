@@ -48,11 +48,11 @@
                                                 <td>{{ $item->province->province_name }}</td>
 
                                                 <td>{{ $item->city->city_name }}</td>
-
+                                                <td>{{ $item->kecamatan->name }}</td>
                                                 <td>{{ $item->courier->name }}</td>
 
                                                 <td>{{ $item->warehouse->name }}</td>
-                                                <td>{{ $item->kecamatan->name }}</td>
+                                             
 
                                                 <td>{{ $item->price }}</td>
 
@@ -102,7 +102,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="firstName">Province Name</label>
-                                            <select name="province_id" class="form-control" required>
+                                            <select id="province" name="province_id" class="form-control" required>
                                                 <option value="">-- Select Province --
                                                 </option>
                                                 @foreach ($province as $item)
@@ -116,12 +116,26 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="firstName">City Name</label>
-                                            <select name="city_id" class="form-control" required>
+                                            <select id="city" name="city_id" class="form-control" required>
                                                 <option value="">-- Select City --
                                                 </option>
                                                 @foreach ($city as $item)
                                                     <option value="{{ $item->city_id }}">
                                                         {{ $item->city_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="firstName">Kecamatan</label>
+                                            <select id="district" name="kecamatan_id" class="form-control" required>
+                                                <option value="">-- Select Kecamatan --
+                                                </option>
+                                                @foreach ($kecamatan as $item)
+                                                    <option value="{{ $item->id }}">
+                                                        {{ $item->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -135,7 +149,7 @@
                                                 </option>
                                                 @foreach ($courier as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->name }}
+                                                        {{ $item->name }} {{$item->type}}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -156,20 +170,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="firstName">Kecamatan</label>
-                                            <select name="kecamatan_id" class="form-control" required>
-                                                <option value="">-- Select Kecamatan --
-                                                </option>
-                                                @foreach ($kecamatan as $item)
-                                                    <option value="{{ $item->id }}">
-                                                        {{ $item->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
+                                  
                                     <div class="col-lg-6">
                                         <div class="form-group mb-4">
                                             <label for="userName">Price</label>
@@ -242,7 +243,7 @@
                                                     @foreach ($courier as $courier_item)
                                                         <option value="{{ $courier_item->id }}"
                                                             {{ $courier_item->id == $item->id ? 'selected' : '' }}>
-                                                            {{ $courier_item->name }}
+                                                            {{ $courier_item->name }} {{$item->type}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -328,4 +329,63 @@
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+
+      {{-- jquery fetch city based on province --}}
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#province').change(function() {
+                  var provinceId = $(this).val();
+  
+                  // Clear existing options and add default option
+                  $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
+  
+                  $.ajax({
+                      url: '/admin/fetch-cities',
+                      method: 'GET',
+                      data: {
+                          province_id: provinceId
+                      },
+                      success: function(response) {
+                          $.each(response, function(index, city) {
+                              $('#city').append('<option value="' + city.city_id + '">' +
+                                  city.type + ' ' + city.city_name + '</option>');
+                          });
+                      },
+                      error: function(xhr, status, error) {
+                          console.error(error);
+                      }
+                  });
+              });
+          });
+      </script>
+
+<script>
+    $(document).ready(function() {
+        $('#city').change(function() {
+            var cityId = $(this).val();
+
+            // Clear existing options and add default option
+            $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+
+            $.ajax({
+                url: '/admin/fetch-districts-by-city',
+                method: 'GET',
+                data: {
+                    city_id: cityId
+                },
+                success: function(response) {
+                    $.each(response, function(index, district) {
+                        $('#district').append('<option value="' + district.id + '">' +
+                            district.name + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
 @endsection
