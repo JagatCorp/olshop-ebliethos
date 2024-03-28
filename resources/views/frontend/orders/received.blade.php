@@ -56,6 +56,7 @@
                                     Pengiriman
                                 </p>
                                 <address>
+                                    {{-- {{ $order->shipment->first_name }} {{ $order->shipment->last_name }} --}}
                                     {{ $order->shipment->first_name }} {{ $order->shipment->last_name }}
                                     <br> {{ $order->shipment->address1 }}
                                     <br> {{ $order->shipment->address2 }}
@@ -74,6 +75,7 @@
                                     <br> Status: {{ $order->status }}
                                     <br> Payment Status: {{ $order->payment_status }}
                                     <br> Pengiriman by: {{ $order->shipping_service_name }}
+                                    <br> Type Pembayaran: {{ $order->cod == 'YES' ? 'COD' : 'Transfer' }}
                                 </address>
                             </div>
                         </div>
@@ -116,7 +118,7 @@
                                     @forelse ($order->orderItems as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
-                                            <td>{{ $item->first_name }}</td>
+                                            <td>{{ $item->product->name }}</td>
                                             {{-- <td>{!! showAttributes($item->attributes) !!}</td> --}}
                                             <td>{{ $item->qty }}</td>
                                             <td>Rp{{ number_format($item->base_price, 0, ',', '.') }}</td>
@@ -135,17 +137,25 @@
                                 <div class="cart-page-total">
 
                                     {{-- <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span> --}}
-
-                                    <div class="ec-checkout-coupan-content hidden ">
-                                        <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="POST"
-                                            action="{{ route('apply.coupon', ['orderId' => $orderId]) }}">
-                                            @csrf
-                                            <input type="hidden" name="orderId" value="{{ $orderId }}">
-                                            <input class="ec-coupan" type="text" placeholder="Masukkan Code Kupon"
-                                                name="coupon_code">
-                                            <button class="ec-coupan-btn button btn-danger mt-1" type="submit">Cek</button>
-                                        </form>
-                                    </div>
+                                    @php
+                                        $jumlahTotal = $order->shipping_cost + $order->base_total_price;
+                                        $jumlahDiskon = ($order->discount_percent / 100) * $jumlahTotal;
+                                        $diskon = intval($order->discount_percent);
+                                    @endphp
+                                    @if ($diskon === 0)
+                                        <div class="ec-checkout-coupan-content hidden ">
+                                            <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form"
+                                                method="POST"
+                                                action="{{ route('apply.coupon', ['orderId' => $orderId]) }}">
+                                                @csrf
+                                                <input type="hidden" name="orderId" value="{{ $orderId }}">
+                                                <input class="ec-coupan" type="text" placeholder="Masukkan Code Kupon"
+                                                    name="coupon_code">
+                                                <button class="ec-coupan-btn button btn-danger mt-1"
+                                                    type="submit">Cek</button>
+                                            </form>
+                                        </div>
+                                    @endif
                                     <ul class="mt-3">
                                         <li> Subtotal
                                             <span>Rp{{ number_format($order->base_total_price, 0, ',', '.') }}</span>
@@ -156,6 +166,14 @@
                                         <li>Biaya Ongkir
                                             <span>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</span>
                                         </li>
+                                        @if ($diskon !== 0)
+                                            <li>Total Sebelumnya
+                                                <span>Rp{{ number_format($jumlahTotal, 0, ',', '.') }}</span>
+                                            </li>
+                                            <li>Diskon {{ $diskon }}%
+                                                <span>- Rp{{ number_format($jumlahDiskon, 0, ',', '.') }}</span>
+                                            </li>
+                                        @endif
                                         <li>Total
                                             <span>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</span>
                                         </li>
@@ -163,7 +181,16 @@
                                     {{-- @if (!$order->isPaid())
                                         <a href="{{ $order->payment_url }}">Proceed to payment</a>
                                     @endif --}}
-                                    <a class="rounded-5 text-white" id="pay-button">Bayar</a>
+
+                                    @if ($order->cod === 'YES')
+                                        <form action={{ route('order-success', $order->id) }} method="get">
+                                            <button type="submit"
+                                                class="btn-dark rounded-pill py-2 px-3 mt-4">Pesan</button>
+                                        </form>
+                                    @else
+                                        <a class="rounded-5 text-white" id="pay-button">Bayar</a>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

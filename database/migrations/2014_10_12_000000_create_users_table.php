@@ -28,6 +28,7 @@ return new class extends Migration
             $table->integer('city_id')->nullable();
             $table->integer('postcode')->nullable();
             $table->boolean('is_admin')->default(false);
+            $table->boolean('is_logged_in')->default(0);
             $table->timestamps();
         });
     }
