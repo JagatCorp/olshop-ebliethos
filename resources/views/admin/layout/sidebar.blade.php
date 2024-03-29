@@ -219,6 +219,11 @@
                                     <span class="nav-text">Pengiriman</span>
                                 </a>
                             </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/track-paket') }}">
+                                    <span class="nav-text">Track Paket</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

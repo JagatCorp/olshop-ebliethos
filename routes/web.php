@@ -29,6 +29,7 @@ use App\Http\Controllers\Frontend\CommentsController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Frontend\TrackpaketController;
+use App\Http\Controllers\Admin\AdminTrackPaketController;
 use App\Http\Controllers\Admin\CourierwarehousepricesController;
 use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 
@@ -186,6 +187,10 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
     Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
 
+    // tranking paket by resi
+    Route::get('track-paket-admin', [AdminTrackPaketController::class, 'showTrackForm'])->name('track.form.admin');
+    Route::get('track-paket-result-admin', [AdminTrackPaketController::class, 'trackPaket'])->name('track.paket');
+
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');
     Route::get('database/backup', [DatabaseController::class, 'createBackup'])->name('create.backup');
@@ -224,6 +229,8 @@ Route::group(['middleware' => 'cek_visit_token'], function () {
     Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
 
     Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
+
+
 });
 
 Route::group(['middleware' => 'auth'], function () {
