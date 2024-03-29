@@ -132,18 +132,20 @@
                                     </div>
                                 </div>
 
-
+                                <div class="col-md-6">
+                                    <div class="checkout-form-list">
+                                        <label>Kecamatan<span class="required">*</span></label>
+                                        <select id="district" name="kecamatan_id" required>
+                                            <option value="">-- Pilih Kecamatan --</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Courier<span class="required">*</span></label>
                                         <select name="courier_id" required>
-
                                             <option value="">-- Pilih Kurir --</option>
-                                            @foreach ($couriers as $courier)
-                                                <option value="{{ $courier->id }}">{{ $courier->name }},
-                                                    {{ $courier->type }} | {{ $courier->price }}</option>
-                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -344,9 +346,9 @@
                                         </tr>
                                         <!-- <tr class="cart-subtotal">
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <th>Tax</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <td><span class="amount">jnfjk</span></td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </tr> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <th>Tax</th>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <td><span class="amount">jnfjk</span></td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </tr> -->
                                         {{-- <tr class="cart-subtotal">
                                             <th>Biaya Ongkir</th>
                                             <td><select id="shipping-cost-option" required name="shipping_service">
@@ -366,8 +368,6 @@
                                             <th>Type Pembayaran</th>
                                             <td>
                                                 <select id="cod" required name="cod" required>
-                                                    <option value="YES">COD</option>
-                                                    <option value="NO">Transfer</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -377,6 +377,7 @@
                                             <td><strong>Rp<span
                                                         class="total-amount">{{ Cart::subtotal(0, ',', '.') }}</span></strong>
                                             </td>
+                                            <input type="text" hidden readonly name="shipping_price" class="shipping_price">
                                         </tr>
 
 
@@ -418,19 +419,41 @@
     </div>
     {{-- ajax search shipping cost --}}
     <script>
-
-
-
         $(document).ready(function() {
+            function createObjectHandler() {
+                let object = {}; // Variabel lokal untuk menyimpan objek
+
+                // Function untuk mengatur (set) nilai properti objek
+                function setProperty(key, value) {
+                    object[key] = value;
+                }
+
+                // Function untuk mendapatkan (get) nilai properti objek
+                function getProperty(key) {
+                    return object[key];
+                }
+
+                // Mengembalikan object yang berisi function setProperty dan getProperty
+                return {
+                    setProperty: setProperty,
+                    getProperty: getProperty
+                };
+            }
+            let codValue = createObjectHandler();
+
             // Fungsi untuk melakukan validasi dan mengirimkan permintaan Ajax
             function validateAndSendRequest() {
                 var warehouse_id = $('select[name="warehouse_id"]').val();
                 var province_id = $('select[name="province_id"]').val();
                 var city_id = $('select[name="city_id"]').val();
-                var courier_id = $('select[name="courier_id"]').val();
+                var kecamatan_id = $('select[name="kecamatan_id"]').val();
+                var courier_id = $('select[name="courier_id"]');
+                var selectOngkir = $('#shipping-cost-options');
+                var selectCod = $('select[name="cod"]');
+                updateOrderTotal(0);
 
                 // Periksa apakah semua bidang telah diisi dengan benar
-                if (warehouse_id && province_id && city_id && courier_id) {
+                if (warehouse_id && province_id && city_id && kecamatan_id) {
                     // Jika ya, kirimkan permintaan Ajax
                     $.ajax({
                         url: '/search-shipping-cost',
@@ -439,22 +462,36 @@
                             warehouse_id: warehouse_id,
                             province_id: province_id,
                             city_id: city_id,
-                            courier_id: courier_id,
+                            kecamatan_id: kecamatan_id,
                             "_token": "{{ csrf_token() }}"
                         },
                         success: function(response) {
                             // Tampilkan harga jika berhasil ditemukan
-                            if (response.price !== null) {
+                            if (response.price.length != 0) {
                                 // Update opsi biaya pengiriman
-                                $('#shipping-cost-options').html('<option value="' + response.price +
-                                    '">' + response.price + '</option>');
+                                selectOngkir.empty();
+                                selectCod.empty();
+                                courier_id.html(
+                                    '<option value="">-- Pilih Kurir --</option>'
+                                );
+                                console.log(response.price);
 
-                                // Update total pesanan
-                                console.log('444',response.price);
-                                updateOrderTotal(response.price);
+                                var arrayCod = [];
+                                response.price.forEach(function(item) {
+                                    // var valueOngkir = number_format(item.price, 2, ',', '.');
+                                    // console.log(valueOngkir);
+                                    courier_id.append('<option value="' +
+                                        item.courier.id +
+                                        '">' + item.courier.name + ' | ' + item.courier.type + ' | Rp. ' + parseInt(item.price) +
+                                        '</option>');
+                                    let dataCodHarga = [item.cod, item.price];
+                                    // console.log('2', dataCodHarga)
+                                    codValue.setProperty(item.courier.id, dataCodHarga);
+                                });
+
                             } else {
                                 // Tampilkan pesan jika harga tidak ditemukan
-                                $('#shipping-cost-options').html(
+                                courier_id.html(
                                     '<option value="">Tidak ada ongkir yang tersedia</option>'
                                 );
 
@@ -477,13 +514,15 @@
                 }
             }
 
+
             // Fungsi untuk memperbarui total pesanan
             var biayaOngkirSebelumnya = 0;
+
             function updateOrderTotal(shippingCost) {
                 // Ambil total pesanan sebelumnya
                 var subtotal = parseInt($('.total-amount').text().replace(/\D/g, ''));
 
-                if(biayaOngkirSebelumnya !== 0){
+                if (biayaOngkirSebelumnya !== 0) {
                     subtotal -= biayaOngkirSebelumnya;
                 }
 
@@ -491,16 +530,63 @@
                 var newTotal = subtotal + parseInt(shippingCost);
 
                 biayaOngkirSebelumnya = parseInt(shippingCost);
-
+                $('.shipping_price').val(biayaOngkirSebelumnya);
                 // Tampilkan total pesanan baru
                 $('.total-amount').text(newTotal.toLocaleString());
             }
 
             // Ketika select province, city, courier, atau warehouse diubah, lakukan validasi dan kirimkan permintaan Ajax
-            $('select[name="province_id"], select[name="city_id"], select[name="courier_id"], select[name="warehouse_id"]')
+            // $('select[name="province_id"], select[name="city_id"], select[name="courier_id"], select[name="warehouse_id"]')
+            //     .change(function() {
+            //         console.log('coba');
+            //         $('select[name="province_id"]').empty();
+            //         $('select[name="city_id"]').empty();
+            //         $('select[name="courier_id"]').empty();
+            //         $('select[name="warehouse_id"]').empty();
+            //         validateAndSendRequest();
+            //     });
+
+            $('select[name="courier_id"]').on('change', function() {
+                var selectOngkir = $('#shipping-cost-options');
+                var selectCod = $('select[name="cod"]');
+                selectOngkir.empty();
+                selectCod.empty();
+                var selectCourier = $(this).find('option:selected');
+                var valueSelectCourier = codValue.getProperty(selectCourier.val());
+                var cloneCourier = selectCourier.clone();
+                updateOrderTotal(valueSelectCourier[1]);
+
+                cloneCourier.appendTo(selectOngkir);
+
+                if (valueSelectCourier[0] == 'yes') {
+                    selectCod.append(
+                        '<option value="yes">COD</option>'
+                    );
+                    selectCod.append(
+                        '<option value="no">Transfer</option>'
+                    );
+                } else {
+                    selectCod.append(
+                        '<option value="no">Transfer</option>'
+                    );
+                }
+            })
+
+            // Menambahkan event listener untuk setiap elemen <select>
+            $('select[name="province_id"], select[name="city_id"], select[name="warehouse_id"], select[name="kecamatan_id"]')
                 .change(function() {
-                    validateAndSendRequest();
+                    // Memeriksa apakah semua input memiliki nilai yang dipilih
+                    if ($('select[name="province_id"]').val() !== '' &&
+                        $('select[name="city_id"]').val() !== '' &&
+                        $('select[name="kecamatan_id"]').val() !== '' &&
+                        $('select[name="warehouse_id"]').val() !== '') {
+                        // Lakukan sesuatu ketika ketiga input sudah terisi
+                        validateAndSendRequest();
+                        console.log('Keempat input sudah terisi.');
+                        // Contoh: Panggil fungsi lain atau lakukan tindakan tertentu di sini
+                    }
                 });
+
         });
     </script>
     {{-- jquery fetch city based on province --}}
@@ -523,6 +609,35 @@
                         $.each(response, function(index, city) {
                             $('#city').append('<option value="' + city.city_id + '">' +
                                 city.type + ' ' + city.city_name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#city').change(function() {
+                var cityId = $(this).val();
+
+                // Clear existing options and add default option
+                $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+
+                $.ajax({
+                    url: '/admin/fetch-districts-by-city',
+                    method: 'GET',
+                    data: {
+                        city_id: cityId
+                    },
+                    success: function(response) {
+                        $.each(response, function(index, district) {
+                            $('#district').append('<option value="' + district.id +
+                                '">' +
+                                district.name + '</option>');
                         });
                     },
                     error: function(xhr, status, error) {

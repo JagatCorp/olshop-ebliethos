@@ -216,27 +216,28 @@ class OrderController extends Controller
         $warehouses = Warehouse::get();
         $provinces = Province::get();
         $citys = City::get();
-        $couriers = Kurir::get();
+        // $couriers = Kurir::get();
 
         // Loop melalui setiap kurir dan tambahkan harga dari CourierWarehousePrices
-        foreach ($couriers as $courier) {
-            $courier->price = CourierWarehousePrices::where('courier_id', $courier->id)->value('price');
-        }
-        return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys', 'couriers'));
-        // return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys'));
+        // foreach ($couriers as $courier) {
+        //     $courier->price = CourierWarehousePrices::where('courier_id', $courier->id)->value('price');
+        // }
+        // return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys', 'couriers'));
+        return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys'));
     }
 
     public function searchShippingCost(Request $request)
     {
+        // return response()->json('coba');
         $request->validate([
             'warehouse_id' => 'required',
             'province_id' => 'required|exists:tripiel,province_id',
             'city_id' => 'required|exists:tripiel,city_id',
-            'courier_id' => 'required',
+            'kecamatan_id' => 'required',
         ]);
 
         $warehouse_id = $request->input('warehouse_id');
-        $courier_id = $request->input('courier_id');
+        $kecamatan_id = $request->input('kecamatan_id');
         $province_id = $request->input('province_id');
         $city_id = $request->input('city_id');
 
@@ -244,24 +245,28 @@ class OrderController extends Controller
         $price = null;
 
         // Memeriksa apakah warehouse dan courier valid
-        $validWarehouseCourier = CourierWarehousePrices::where('courier_id', $courier_id)
-            ->where('warehouse_id', $warehouse_id)
-            ->exists();
+        // $validWarehouseCourier = CourierWarehousePrices::where('courier_id', $courier_id)
+        //     ->where('warehouse_id', $warehouse_id)
+        //     ->exists();
 
         // Jika warehouse dan courier valid, coba cari harga
-        if ($validWarehouseCourier) {
+        // if ($validWarehouseCourier) {
             // Memeriksa apakah province dan city valid
-            $validProvinceCity = Tripiel::where('province_id', $province_id)
+            $price = Tripiel::where('province_id', $province_id)
                 ->where('city_id', $city_id)
-                ->exists();
+                ->where('warehouse_id', $warehouse_id)
+                ->where('kecamatan_id', $kecamatan_id)
+                ->with('courier')
+                ->get();
 
+            // return response()->json(['price' => $price]);
             // Jika province dan city valid, cari harga
-            if ($validProvinceCity) {
-                $price = CourierWarehousePrices::where('courier_id', $courier_id)
-                    ->where('warehouse_id', $warehouse_id)
-                    ->value('price');
-            }
-        }
+            // if ($validProvinceCity) {
+            //     $price = CourierWarehousePrices::where('courier_id', $courier_id)
+            //         ->where('warehouse_id', $warehouse_id)
+            //         ->value('price');
+            // }
+        // }
 
         // Jika harga ditemukan, kirimkan harga sebagai respons
         if ($price !== null) {
@@ -287,6 +292,8 @@ class OrderController extends Controller
         // return response()->json($request);
 
         $dataCourier = Kurir::where('id', $request->courier_id)->first();
+        // return response()->json($dataCourier);
+        // return response()->json($request);
         $params = $request->except('_token');
         $params['service'] = $dataCourier->name . ' | ' . $dataCourier->type;
 
@@ -338,7 +345,7 @@ class OrderController extends Controller
         $taxAmount = 0;
         $taxPercent = 0;
         // $shippingCost = $selectedShipping['price'];
-        $shippingCost = $params['shipping_service'];
+        $shippingCost = $params['shipping_price'];
         $discountAmount = 0;
         $discountPercent = 0;
         $grandTotal = ($baseTotalPrice + $taxAmount + $shippingCost) - $discountAmount;
@@ -355,6 +362,7 @@ class OrderController extends Controller
             'province_id' => $params['province_id'],
             // 'city_id' => $params['shipping_city_id'],
             'city_id' => $params['city_id'],
+            'kecamatan_id' => $params['kecamatan_id'],
             'postcode' => $params['postcode'],
             'phone' => $params['phone'],
             'email' => $params['email'],
@@ -387,6 +395,7 @@ class OrderController extends Controller
             // 'customer_city_id' => $params['shipping_city_id'],
             'customer_city_id' => $params['city_id'],
             'customer_province_id' => $params['province_id'],
+            'customer_kecamatan_id' => $params['kecamatan_id'],
             'customer_postcode' => $params['postcode'],
             // 'shipping_courier' => $selectedShipping['courier'],
             'shipping_courier' => $params['courier_id'],
@@ -580,14 +589,14 @@ class OrderController extends Controller
     {
         // return response()->json($orderId->cod);
         // Ubah status pembayaran menjadi 'PAID' langsung bila pembayaran melalui transfer
-        if($orderId->cod == 'YES'){
+        if($orderId->cod == 'yes'){
             $orderId->payment_status = 'PAID';
             $orderId->save();
         }
 
         // URL untuk melihat detail pesanan
         $orderUrl = url('orders/' . $orderId->id);
-        $messageCod = $orderId->cod == 'YES' ? 'terkirim' : 'terbayar';
+        $messageCod = $orderId->cod == 'yes' ? 'terkirim' : 'terbayar';
 
         // Kirim pesan WhatsApp jika pembayaran berhasil
         $response = Http::post('https://wa.eblieshop.online/send-message', [
