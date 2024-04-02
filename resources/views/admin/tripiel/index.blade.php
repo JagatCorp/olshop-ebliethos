@@ -26,7 +26,7 @@
                     <div class="ec-vendor-list card card-default">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="responsive-data-table" class="table">
+                                <table class="table data-table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -41,44 +41,54 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($tripiel as $item)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                var table = $('.data-table').DataTable({
+                                                    processing: true,
+                                                    serverSide: true,
+                                                    ajax: "{{ route('admin.tripiel-index') }}",
+                                                    columns: [{
+                                                            data: 'DT_RowIndex',
+                                                            name: 'DT_RowIndex',
+                                                            orderable: false, // Kolom ini tidak bisa diurutkan
+                                                            searchable: false // Kolom ini tidak bisa dicari
 
-                                                <td>{{ $item->province->province_name }}</td>
+                                                        },
+                                                        {
+                                                            data: 'province.province_name',
+                                                            name: 'province.province_name'
+                                                        },
+                                                        {
+                                                            data: 'city.city_name',
+                                                            name: 'city.city_name'
+                                                        },
+                                                        {
+                                                            data: 'kecamatan.name',
+                                                            name: 'kecamatan.name'
+                                                        },
+                                                        {
+                                                            data: 'courier.name',
+                                                            name: 'courier.name'
+                                                        },
+                                                        {
+                                                            data: 'warehouse.name',
+                                                            name: 'warehouse.name'
+                                                        },
+                                                        {
+                                                            data: 'price',
+                                                            name: 'price'
+                                                        },
+                                                        {
+                                                            data: 'action',
+                                                            name: 'action',
+                                                            orderable: false,
+                                                            searchable: false
+                                                        },
+                                                    ]
+                                                });
+                                            });
+                                        </script>
 
-                                                <td>{{ $item->city->city_name }}</td>
-                                                <td>{{ $item->kecamatan->name }}</td>
-                                                <td>{{ $item->courier->name }}</td>
-
-                                                <td>{{ $item->warehouse->name }}</td>
-                                             
-
-                                                <td>{{ $item->price }}</td>
-
-                                                <td>
-                                                    <div class="btn-group mb-1">
-                                                        <button type="button"
-                                                            class="btn btn-outline-success">Action</button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false" data-display="static">
-                                                            <span class="sr-only">Info</span>
-                                                        </button>
-
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" style="cursor:pointer"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ModalEdit{{ $item->id }}">Edit</a>
-                                                            <a class="dropdown-item" style="cursor:pointer"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ModalDelete{{ $item->id }}">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -149,7 +159,7 @@
                                                 </option>
                                                 @foreach ($courier as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->name }} {{$item->type}}
+                                                        {{ $item->name }} {{ $item->type }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -170,7 +180,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                  
+
                                     <div class="col-lg-6">
                                         <div class="form-group mb-4">
                                             <label for="userName">Price</label>
@@ -193,12 +203,11 @@
             </div>
             {{-- Edit Modal --}}
             @foreach ($tripiel as $item)
-                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1"
-                    role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('admin.edit-tripiel') }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('admin.edit-tripiel') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header px-4">
                                     <h5 class="modal-title" id="exampleModalCenterTitle">Edit Tripiel</h5>
@@ -243,7 +252,7 @@
                                                     @foreach ($courier as $courier_item)
                                                         <option value="{{ $courier_item->id }}"
                                                             {{ $courier_item->id == $item->id ? 'selected' : '' }}>
-                                                            {{ $courier_item->name }} {{$item->type}}
+                                                            {{ $courier_item->name }} {{ $item->type }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -330,62 +339,63 @@
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
 
-      {{-- jquery fetch city based on province --}}
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
-          $(document).ready(function() {
-              $('#province').change(function() {
-                  var provinceId = $(this).val();
-  
-                  // Clear existing options and add default option
-                  $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
-  
-                  $.ajax({
-                      url: '/admin/fetch-cities',
-                      method: 'GET',
-                      data: {
-                          province_id: provinceId
-                      },
-                      success: function(response) {
-                          $.each(response, function(index, city) {
-                              $('#city').append('<option value="' + city.city_id + '">' +
-                                  city.type + ' ' + city.city_name + '</option>');
-                          });
-                      },
-                      error: function(xhr, status, error) {
-                          console.error(error);
-                      }
-                  });
-              });
-          });
-      </script>
+    {{-- jquery fetch city based on province --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#province').change(function() {
+                var provinceId = $(this).val();
 
-<script>
-    $(document).ready(function() {
-        $('#city').change(function() {
-            var cityId = $(this).val();
+                // Clear existing options and add default option
+                $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
 
-            // Clear existing options and add default option
-            $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
-
-            $.ajax({
-                url: '/admin/fetch-districts-by-city',
-                method: 'GET',
-                data: {
-                    city_id: cityId
-                },
-                success: function(response) {
-                    $.each(response, function(index, district) {
-                        $('#district').append('<option value="' + district.id + '">' +
-                            district.name + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
+                $.ajax({
+                    url: '/admin/fetch-cities',
+                    method: 'GET',
+                    data: {
+                        province_id: provinceId
+                    },
+                    success: function(response) {
+                        $.each(response, function(index, city) {
+                            $('#city').append('<option value="' + city.city_id + '">' +
+                                city.type + ' ' + city.city_name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#city').change(function() {
+                var cityId = $(this).val();
+
+                // Clear existing options and add default option
+                $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+
+                $.ajax({
+                    url: '/admin/fetch-districts-by-city',
+                    method: 'GET',
+                    data: {
+                        city_id: cityId
+                    },
+                    success: function(response) {
+                        $.each(response, function(index, district) {
+                            $('#district').append('<option value="' + district.id +
+                                '">' +
+                                district.name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

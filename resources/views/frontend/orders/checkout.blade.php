@@ -99,7 +99,7 @@
 
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
-                                        <label>Warehouse<span class="required">*</span></label>
+                                        <label>Gudang Pengiriman<span class="required">*</span></label>
 
                                         <select name="warehouse_id" required id="warehouse_id">
                                             <option value="">-- Pilih Gudang Dari --</option>

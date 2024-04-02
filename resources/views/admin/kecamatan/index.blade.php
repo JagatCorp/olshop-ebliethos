@@ -26,7 +26,7 @@
                     <div class="ec-vendor-list card card-default">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="responsive-data-table" class="table">
+                                <table class="table data-table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -39,7 +39,7 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($kecamatan as $item)
+                                        {{-- @foreach ($kecamatan as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
 
@@ -68,7 +68,39 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
+
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                var table = $('.data-table').DataTable({
+                                                    processing: true,
+                                                    serverSide: true,
+                                                    ajax: "{{ route('admin.kecamatan-index') }}",
+                                                    columns: [{
+                                                            data: 'DT_RowIndex', // Menampilkan nomor urut
+                                                            name: 'DT_RowIndex',
+                                                            orderable: false, // Kolom ini tidak bisa diurutkan
+                                                            searchable: false // Kolom ini tidak bisa dicari
+                                                        },
+                                                        {
+                                                            data: 'name',
+                                                            name: 'name'
+                                                        },
+                                                        {
+                                                            data: 'city.city_name',
+                                                            name: 'city.city_name'
+                                                        },
+
+                                                        {
+                                                            data: 'action',
+                                                            name: 'action',
+                                                            orderable: false,
+                                                            searchable: false
+                                                        },
+                                                    ]
+                                                });
+                                            });
+                                        </script>
                                     </tbody>
                                 </table>
                             </div>

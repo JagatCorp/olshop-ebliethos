@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('reports/product', [\App\Http\Controllers\Admin\ReportController::class, 'product'])->name('reports.product');
     Route::get('reports/inventory', [\App\Http\Controllers\Admin\ReportController::class, 'inventory'])->name('reports.inventory');
     Route::get('reports/payment', [\App\Http\Controllers\Admin\ReportController::class, 'payment'])->name('reports.payment');
+    Route::get('reports/transaksi', [\App\Http\Controllers\Admin\ReportController::class, 'transaksi'])->name('reports.transaksi');
 
     Route::get("dashboard", [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name("dashboard");
 
@@ -162,7 +163,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
 
     Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
-
+    Route::get('/admin/city/edit-modal/{id}', 'CityController@editModal')->name('city.edit-modal');
     //kecamatan
     Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');

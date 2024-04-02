@@ -57,22 +57,22 @@
                                 <div class="form-group mx-sm-3 mb-2 col-lg-1 col-md-1 col-sm-12 col-12">
                                     <button type="submit" class="btn btn-primary shadow-sm float-right">Cari</button>
                                 </div>
-                                
+
                                 <div class="form-group mx-sm-3 mb-2 col-lg-2 col-md-2 col-sm-6 col-6">
                                     <div>
                                         <p>Discount</p>
                                         <input type="text" class="form-control input-block " name="discount"
-                                        value="{{ !empty(request()->input('discount')) ? request()->input('discount') : '' }}"
-                                        placeholder="Type discount" autocomplete="off">
+                                            value="{{ !empty(request()->input('discount')) ? request()->input('discount') : '' }}"
+                                            placeholder="Type discount" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2 col-lg-2 col-md-2 col-sm-6 col-6">
-                                    <div >
+                                    <div>
                                         <p>Pembelian</p>
                                         <div>
                                             <input type="text" class="form-control input-block " name="pembelian"
-                                            value="{{ !empty(request()->input('pembelian')) ? request()->input('pembelian') : '' }}"
-                                            placeholder="Type amount" autocomplete="off">
+                                                value="{{ !empty(request()->input('pembelian')) ? request()->input('pembelian') : '' }}"
+                                                placeholder="Type amount" autocomplete="off">
                                         </div>
                                         <p>Kali</p>
                                     </div>
