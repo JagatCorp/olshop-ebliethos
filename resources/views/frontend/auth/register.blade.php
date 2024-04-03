@@ -52,7 +52,8 @@
                                 <div class="form-group first mb-4">
                                     <label class="text-muted" style="margin-bottom: -5px">First Name</label>
                                     <input type="text" class="form-control  @error('first_name') is-invalid @enderror"
-                                        id="register-form-first_name" name="first_name" value="{{ old('first_name') }}">
+                                        id="register-form-first_name" name="first_name" value="{{ old('first_name') }}"
+                                        placeholder="Masukkan Nama Depan Anda">
                                     @error('first_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -62,7 +63,8 @@
                                 <div class="form-group first mb-4">
                                     <label class="text-muted" style="margin-bottom: -5px">Last Name</label>
                                     <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                        id="register-form-username" name="last_name" value="{{ old('last_name') }}">
+                                        id="register-form-username" name="last_name" value="{{ old('last_name') }}"
+                                        placeholder="Masukkan Nama Belakang Anda">
                                     @error('last_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -70,15 +72,29 @@
                                     @enderror
                                 </div>
                                 <div class="form-group first mb-4">
+                                    <label class="text-muted" style="margin-bottom: -5px">Phone</label>
+                                    <input type="number" class="form-control @error('phone') is-invalid @enderror"
+                                        id="register-form-username" name="phone" value="{{ old('phone') }}"
+                                        placeholder="Masukkan No WA Anda 08xxxx">
+                                    @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group first mb-4">
                                     <label class="text-muted" style="margin-bottom: -5px">Email</label>
                                     <input type="text" class="form-control @error('email') is-invalid @enderror"
-                                        id="register-form-email" name="email" value="{{ old('email') }}">
+                                        id="register-form-email" name="email" value="{{ old('email') }}"
+                                        placeholder="Masukkan Email Valid Anda">
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>
+
 
                                 <div class="form-group last mb-4">
                                     <label class="text-muted" style="margin-bottom: -5px">Password</label>

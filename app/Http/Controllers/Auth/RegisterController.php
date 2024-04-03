@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -36,6 +40,20 @@ class RegisterController extends Controller
      *
      * @return void
      */
+
+     public function register(Request $request)
+     {
+         $this->validator($request->all())->validate();
+
+         $user = $this->create($request->all());
+
+         // Tambahkan logika tambahan setelah registrasi, jika diperlukan
+
+         return redirect()->route('login')->with('toast_success', 'Registrasi berhasil. Silakan Verifikasi.');
+     }
+
+
+
     public function __construct()
     {
         $this->middleware('guest');
@@ -70,13 +88,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         // Membuat pengguna pada koneksi pertama
         $user1 = User::create([
             'first_name' => $data['first_name'],
             // 'name' => $data['first_name'],
             'last_name' => $data['last_name'],
+            'phone' => $data['phone'],
             'email' => $data['email'],
-
             'password' => Hash::make($data['password']),
 
         ]);
@@ -89,8 +108,9 @@ class RegisterController extends Controller
         $user2->password = Hash::make($data['password']);
         $user2->save();
 
+//   return redirect()->route('verify');
         // Mengembalikan salah satu pengguna (atau keduanya) sesuai kebutuhan Anda
-        return $user1; // atau bisa juga return $user2; atau kedua-duanya jika perlu
+        // return $user1; // atau bisa juga return $user2; atau kedua-duanya jika perlu
     }
 
     public function showRegistrationForm()

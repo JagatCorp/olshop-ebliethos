@@ -31,6 +31,7 @@ use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Frontend\TrackpaketController;
 use App\Http\Controllers\Admin\AdminTrackPaketController;
 use App\Http\Controllers\Admin\CourierwarehousepricesController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 
 /*
@@ -234,7 +235,7 @@ Route::group(['middleware' => 'cek_visit_token'], function () {
 
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
     Route::post('orders/checkout', [OrderController::class, 'doCheckout'])->name('orders.checkout')->middleware('auth');
     Route::get('orders/cities', [OrderController::class, 'cities'])->middleware('auth');
@@ -270,3 +271,9 @@ Route::post('payments/notification', [PaymentController::class, 'notification'])
 Route::get('payments/completed', [PaymentController::class, 'completed']);
 Route::get('payments/failed', [PaymentController::class, 'failed']);
 Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
+// otp verifikasi
+Route::get('verify', [OtpController::class, 'verify'])->name('verify');
+Route::post('send-otp', [OtpController::class, 'sendOTP'])->name('send.otp');
+Route::get('cek-otp', [OtpController::class, 'cekOTP'])->name('cek.otp');
+Route::post('verify-otp', [OtpController::class, 'verifyOTP'])->name('verify.otp');
+
