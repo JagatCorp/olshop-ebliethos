@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('address2')->nullable();
             $table->integer('province_id')->nullable();
             $table->integer('city_id')->nullable();
+            $table->integer('kecamatan_id')->nullable();
             $table->integer('postcode')->nullable();
             $table->boolean('is_admin')->default(false);
             $table->boolean('is_logged_in')->default(0);

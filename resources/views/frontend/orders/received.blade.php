@@ -75,7 +75,7 @@
                                     <br> Status: {{ $order->status }}
                                     <br> Payment Status: {{ $order->payment_status }}
                                     <br> Pengiriman by: {{ $order->shipping_service_name }}
-                                    <br> Type Pembayaran: {{ $order->cod == 'YES' ? 'COD' : 'Transfer' }}
+                                    <br> Type Pembayaran: {{ $order->cod == 'yes' ? 'COD' : 'Transfer' }}
                                 </address>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                         <a href="{{ $order->payment_url }}">Proceed to payment</a>
                                     @endif --}}
 
-                                    @if ($order->cod === 'YES')
+                                    @if ($order->cod === 'yes')
                                         <form action={{ route('order-success', $order->id) }} method="get">
                                             <button type="submit"
                                                 class="btn-dark rounded-pill py-2 px-3 mt-4">Pesan</button>

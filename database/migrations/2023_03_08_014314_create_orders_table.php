@@ -27,7 +27,7 @@ return new class extends Migration
             $table->decimal('discount_percent', 16, 2)->default(0);
             $table->decimal('shipping_cost', 16, 2)->default(0);
             $table->decimal('grand_total', 16, 2)->default(0);
-            $table->enum('cod', ['YES', 'NO']);
+            $table->enum('cod', ['yes', 'no']);
             $table->text('note')->nullable();
             $table->string('customer_first_name');
             $table->string('customer_last_name');
@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('customer_email')->nullable();
             $table->string('customer_city_id')->nullable();
             $table->string('customer_province_id')->nullable();
+            $table->string('customer_kecamatan_id')->nullable();
             $table->integer('customer_postcode')->nullable();
             $table->string('shipping_courier')->nullable();
             $table->string('shipping_service_name')->nullable();

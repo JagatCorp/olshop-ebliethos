@@ -11,18 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-
         Schema::create('courier', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('province_id');
-            $table->unsignedBigInteger('city_id');
-            $table->unsignedBigInteger('courier_id');
-            $table->unsignedBigInteger('warehouse_id');
-            $table->unsignedBigInteger('kecamatan_id');
-            $table->decimal('price', 10, 2);
+            $table->string('name');
+            $table->string('type');
             $table->timestamps();
         });
-
     }
 
     /**
