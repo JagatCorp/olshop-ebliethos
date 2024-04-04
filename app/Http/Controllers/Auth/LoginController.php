@@ -53,12 +53,19 @@ class LoginController extends Controller
         // Set kolom is_logged_in menjadi true saat pengguna berhasil login
         $user->update(['is_logged_in' => true]);
 
-        // Check jika is_admin true bakal direct ke admin dashboard
+        // Jika pengguna bukan admin dan belum terverifikasi, arahkan ke halaman verifikasi
+        if (!$user->is_admin && !$user->is_verified) {
+            return redirect('/verify')->with('toast_info', 'Anda harus verifikasi akun Anda.');
+        }
+
+        // Jika pengguna adalah admin, arahkan ke dashboard admin
         if ($user->is_admin) {
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect('/');
+        // Jika pengguna adalah user biasa yang sudah terverifikasi, arahkan ke halaman profil
+        return redirect('/profile');
     }
+
 
 }

@@ -220,7 +220,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="{{ url('admin/track-paket') }}">
+                                <a class="sidenav-item-link" href="{{ url('admin/track-paket-admin') }}">
                                     <span class="nav-text">Track Paket</span>
                                 </a>
                             </li>
@@ -243,6 +243,11 @@
                     <div class="collapse">
                         <ul class="sub-menu mb-5" id="report" data-parent="#sidebar-menu">
                             <li class="">
+                                <a class="sidenav-item-link" href="{{ url('admin/reports/transaksi') }}">
+                                    <span class="nav-text">Transaksi</span>
+                                </a>
+                            </li>
+                            <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/reports/revenue') }}">
                                     <span class="nav-text">Keuntungan</span>
                                 </a>
@@ -257,11 +262,11 @@
                                     <span class="nav-text">Stok Produk</span>
                                 </a>
                             </li>
-                            <li class="">
+                            {{-- <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/reports/payment') }}">
                                     <span class="nav-text">Pembayaran</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </div>
                 </li>

@@ -48,6 +48,85 @@
                 </div>
             </div>
 
+
+
+            <div class="row">
+                <div class="col-xl-8 col-md-12 p-b-15">
+                    <!-- Sales Graph -->
+                    <div id="user-acquisition" class="card card-default">
+                        <div class="card-header">
+                            <h2>Report Penjualan</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content pt-4" id="salesReport">
+                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
+                                    <div class="mb-6" style="max-height:247px">
+                                        <div id="ReportPenjualan" class="chartjs2"></div>
+                                        <div id="acqLegend" class="customLegend mb-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-md-12 p-b-15">
+                    <!-- Doughnut Chart -->
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Orders Overview</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="OrdersOverview"></div>
+                        </div>
+                    </div>
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Product Overview</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="PembelianOverview"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-xl-4 col-md-12 p-b-15">
+                    <!-- Doughnut Chart -->
+                    <div class="card card-default">
+                        <div class="card-header justify-content-center">
+                            <h2>Customers Login</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="CustomerLogin"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-8 col-md-12 p-b-15">
+                    <div id="user-acquisition" class="card card-default">
+                        <div class="card-header">
+                            <h2>Report Pengunjung</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content pt-4" id="salesReport">
+                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
+                                    <div class="mb-6" style="max-height:247px">
+                                        <div id="ReportVisitor" class="chartjs2"></div>
+                                        <div id="acqLegend" class="customLegend mb-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             {{-- <div class="row">
                 <div class="col-12 p-b-15">
                     <!-- Recent Order Table -->
@@ -121,88 +200,13 @@
                 </div>
             </div> --}}
 
-            <div class="row">
-                <div class="col-xl-8 col-md-12 p-b-15">
-                    <!-- Sales Graph -->
-                    <div id="user-acquisition" class="card card-default">
-                        <div class="card-header">
-                            <h2>Report Penjualan</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content pt-4" id="salesReport">
-                                <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
-                                    <div class="mb-6" style="max-height:247px">
-                                        <div id="ReportPenjualan" class="chartjs2"></div>
-                                        <div id="acqLegend" class="customLegend mb-2"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 p-b-15">
-                    <!-- Doughnut Chart -->
-                    <div class="card card-default">
-                        <div class="card-header justify-content-center">
-                            <h2>Orders Overview</h2>
-                        </div>
-                        <div class="card-body">
-                            <div id="OrdersOverview"></div>
-                        </div>
-                    </div>
-                    <div class="card card-default">
-                        <div class="card-header justify-content-center">
-                            <h2>Product Overview</h2>
-                        </div>
-                        <div class="card-body">
-                            <div id="PembelianOverview"></div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-
-            <div class="row mb-5">
-                <div class="col-xl-4 col-md-12 p-b-15">
-                    <!-- Doughnut Chart -->
-                    <div class="card card-default">
-                        <div class="card-header justify-content-center">
-                            <h2>Customers Login</h2>
-                        </div>
-                        <div class="card-body">
-                            <div id="CustomerLogin"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-8 col-md-12 p-b-15">
-                <div id="user-acquisition" class="card card-default">
-                    <div class="card-header">
-                        <h2>Report Pengunjung</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content pt-4" id="salesReport">
-                            <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
-                                <div class="mb-6" style="max-height:247px">
-                                    <div id="ReportVisitor" class="chartjs2"></div>
-                                    <div id="acqLegend" class="customLegend mb-2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-6 p-b-15">
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                         <div class="card-header justify-content-between">
-                            <h2>Transaksi Produk pada bulan {{ date('M') }}</h2>
+                            <h2>Transaksi Produk pada bulan {{ \Carbon\Carbon::now()->monthName }}</h2>
+
                             <div class="date-range-report">
                                 <span></span>
                             </div>
@@ -291,9 +295,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-6 p-b-15">
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
@@ -378,7 +382,95 @@
                         </div>
                     </div>
                 </div>
+            </div> --}}
+
+            {{-- transaksi bulanan --}}
+            <div class="row">
+                <div class="col-12 p-b-15">
+                    <!-- Recent Order Table -->
+                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                        <div class="card-header justify-content-between">
+                            <h2>Transaksi pada bulan {{ \Carbon\Carbon::now()->monthName }}</h2>
+
+                            <div class="date-range-report">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <div class="table-responsive">
+                                <table id="responsive-data-table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Product</th>
+                                            <th>Grand Total</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Diskon</th>
+                                            <th>Payment</th>
+                                            <th>Biaya Ongkir</th>
+                                            <th>Jasa Pengiriman</th>
+                                            <th>Customer Note</th>
+                                            <th>Customer Phone</th>
+                                            <th>Customer Kode Pos</th>
+                                            <th>Customer Address</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($transaksiBulanan as $order)
+                                            <tr>
+                                                <td>{{ $order->code }}<br>{{ $order->order_date }}</td>
+                                                <td>
+                                                    @foreach ($order->orderItems as $item)
+                                                        @if ($item->product)
+                                                            {{ $item->product->name }}<br>
+                                                            pembelian ke: {{ $item->product->totalOrders() }} kali
+                                                        @else
+                                                            {{ $item->name }}<br>
+                                                        @endif
+                                                        <br />
+                                                        <span style="font-size: 12px; font-weight: normal">
+                                                            qty: {{ $item->qty }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $order->customer_full_name }}<br>
+                                                    <span
+                                                        style="font-size: 12px; font-weight: normal">{{ $order->customer_email }}</span>
+                                                </td>
+                                                <td>{{ $order->status }}</td>
+                                                <td>Diskon: {{ $order->discount_percent }}%</td>
+                                                <td>{{ $order->payment_status }}</td>
+                                                <td>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $order->shipping_courier }}<br>
+                                                    <span
+                                                        style="font-size: 12px; font-weight: normal">{{ $order->shipping_service_name }}</span>
+                                                </td>
+                                                <td>{{ $order->note }}</td>
+                                                <td>{{ $order->customer_phone }}</td>
+                                                <td>{{ $order->customer_postcode }}</td>
+                                                <td>{{ $order->customer_address1 }}</td>
+
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="14">Tidak ada data pesanan</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
+
+
         </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
     {{-- chart report penjualan --}}

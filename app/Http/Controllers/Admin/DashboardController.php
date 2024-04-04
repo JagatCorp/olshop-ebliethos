@@ -120,7 +120,12 @@ class DashboardController extends Controller
             $pembelians[$item->name] = $item->total_order;
         }
 
-        return view('admin.dashboard.index', compact('pembelians', 'orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData'));
+
+            // transaksi perbulan
+            $transaksiBulanan = Order::whereYear('order_date', Carbon::now()->year)
+        ->whereMonth('order_date', Carbon::now()->month)
+        ->get();
+        return view('admin.dashboard.index', compact('pembelians','orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData', 'transaksiBulanan'));
 
     }
 }

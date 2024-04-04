@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\ReportInventory;
+use App\Models\Order;
+use Illuminate\Http\Request;
 use App\Exports\ReportPayment;
 use App\Exports\ReportProduct;
 use App\Exports\ReportRevenue;
-use App\Http\Controllers\Controller;
-use App\Models\Order;
-use Illuminate\Http\Request;
+use App\Exports\ReportInventory;
+use App\Exports\ReportTransaksi;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller
@@ -125,6 +126,61 @@ class ReportController extends Controller
         return view('admin.reports.revenue', compact('revenues', 'exports'));
     }
 
+    public function transaksi(Request $request)
+    {
+        $exports = $this->exports;
+
+        $startDate = $request->input('start');
+        $endDate = $request->input('end');
+
+        // Lakukan validasi tanggal
+        if ($startDate && $endDate && strtotime($endDate) < strtotime($startDate)) {
+            return redirect()->back()->with('error', 'Tanggal akhir harus lebih besar dari tanggal awal');
+        }
+
+        // Lakukan validasi untuk memastikan rentang tanggal kurang dari atau sama dengan 31 hari
+        if ($startDate && $endDate) {
+            $startDateObj = new \DateTime($startDate);
+            $endDateObj = new \DateTime($endDate);
+            $interval = $startDateObj->diff($endDateObj)->days;
+            if ($interval > 31) {
+                return redirect()->back()->with('error', 'Rentang tanggal tidak boleh lebih dari 31 hari');
+            }
+        }
+
+        // Ambil data pesanan
+        $transaksi = Order::query()
+            ->when($startDate && $endDate, function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('order_date', [$startDate, $endDate]);
+            })
+            ->orderBy('order_date', 'asc')
+            ->get();
+
+        // Lakukan pengecekan apakah pengguna meminta ekspor data
+        if ($request->has('export')) {
+            $exportType = $request->input('export');
+
+            // Validasi tipe ekspor
+            if (!in_array($exportType, ['xlsx', 'pdf'])) {
+                return redirect()->back()->with('error', 'Tipe ekspor tidak valid');
+            }
+
+            // Ekspor ke Excel
+            if ($exportType === 'xlsx') {
+                $fileName = 'laporan-transaksi-' . $startDate . '-' . $endDate . '.xlsx';
+                return Excel::download(new ReportTransaksi($transaksi), $fileName);
+            }
+
+            // Ekspor ke PDF
+            if ($exportType === 'pdf') {
+                $fileName = 'laporan-transaksi-' . $startDate . '-' . $endDate . '.pdf';
+                $pdf = \PDF::loadView('admin.reports.exports.pdf_transaksi', compact('transaksi', 'startDate', 'endDate'));
+                return $pdf->download($fileName);
+            }
+        }
+        // dd($transaksi);
+        return view('admin.reports.transaksi', compact('transaksi', 'exports'));
+    }
     public function product(Request $request)
     {
         $exports = $this->exports;

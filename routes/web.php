@@ -31,6 +31,7 @@ use App\Http\Controllers\Frontend\WishListController;
 use App\Http\Controllers\Frontend\TrackpaketController;
 use App\Http\Controllers\Admin\AdminTrackPaketController;
 use App\Http\Controllers\Admin\CourierwarehousepricesController;
+use App\Http\Controllers\Auth\OtpController;
 use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 
 /*
@@ -78,6 +79,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('reports/product', [\App\Http\Controllers\Admin\ReportController::class, 'product'])->name('reports.product');
     Route::get('reports/inventory', [\App\Http\Controllers\Admin\ReportController::class, 'inventory'])->name('reports.inventory');
     Route::get('reports/payment', [\App\Http\Controllers\Admin\ReportController::class, 'payment'])->name('reports.payment');
+    Route::get('reports/transaksi', [\App\Http\Controllers\Admin\ReportController::class, 'transaksi'])->name('reports.transaksi');
 
     Route::get("dashboard", [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name("dashboard");
 
@@ -162,7 +164,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
 
     Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
-
+    Route::get('/admin/city/edit-modal/{id}', 'CityController@editModal')->name('city.edit-modal');
     //kecamatan
     Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
@@ -233,7 +235,7 @@ Route::group(['middleware' => 'cek_visit_token'], function () {
 
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
     Route::post('orders/checkout', [OrderController::class, 'doCheckout'])->name('orders.checkout')->middleware('auth');
     Route::get('orders/cities', [OrderController::class, 'cities'])->middleware('auth');
@@ -269,3 +271,9 @@ Route::post('payments/notification', [PaymentController::class, 'notification'])
 Route::get('payments/completed', [PaymentController::class, 'completed']);
 Route::get('payments/failed', [PaymentController::class, 'failed']);
 Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
+// otp verifikasi
+Route::get('verify', [OtpController::class, 'verify'])->name('verify');
+Route::post('send-otp', [OtpController::class, 'sendOTP'])->name('send.otp');
+Route::get('cek-otp', [OtpController::class, 'cekOTP'])->name('cek.otp');
+Route::post('verify-otp', [OtpController::class, 'verifyOTP'])->name('verify.otp');
+
