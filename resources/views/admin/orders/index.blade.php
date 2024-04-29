@@ -53,26 +53,25 @@
                                         @endforeach
                                     </select>
                                 </div>
-
                                 <div class="form-group mx-sm-3 mb-2 col-lg-1 col-md-1 col-sm-12 col-12">
                                     <button type="submit" class="btn btn-primary shadow-sm float-right">Cari</button>
                                 </div>
-
+                                
                                 <div class="form-group mx-sm-3 mb-2 col-lg-2 col-md-2 col-sm-6 col-6">
                                     <div>
                                         <p>Discount</p>
                                         <input type="text" class="form-control input-block " name="discount"
-                                            value="{{ !empty(request()->input('discount')) ? request()->input('discount') : '' }}"
-                                            placeholder="Type discount" autocomplete="off">
+                                        value="{{ !empty(request()->input('discount')) ? request()->input('discount') : '' }}"
+                                        placeholder="Type discount" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="form-group mx-sm-3 mb-2 col-lg-2 col-md-2 col-sm-6 col-6">
-                                    <div>
+                                    <div >
                                         <p>Pembelian</p>
                                         <div>
                                             <input type="text" class="form-control input-block " name="pembelian"
-                                                value="{{ !empty(request()->input('pembelian')) ? request()->input('pembelian') : '' }}"
-                                                placeholder="Type amount" autocomplete="off">
+                                            value="{{ !empty(request()->input('pembelian')) ? request()->input('pembelian') : '' }}"
+                                            placeholder="Type amount" autocomplete="off">
                                         </div>
                                         <p>Kali</p>
                                     </div>
@@ -92,11 +91,17 @@
                                         <th>Diskon</th>
                                         <th>Payment</th>
                                         <th>Biaya Ongkir</th>
+                                       
                                         <th>Jasa Pengiriman</th>
+                                        <th>Tipe Pembayaran</th>
                                         <th>Customer Note</th>
                                         <th>Customer Phone</th>
+                                        <th>Warehouse</th>
+                                        <th>Customer  Province</th>
+                                         <th>Customer  City</th>
                                         <th>Customer Kode Pos</th>
                                         <th>Customer Address</th>
+                                         
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
@@ -107,19 +112,17 @@
                                                     <span style="font-size: 12px; font-weight: normal">
                                                         {{ $order->order_date }}</span>
                                                 </td>
+                                             
+                                                
                                                 <td>
                                                     @foreach ($order->orderItems as $item)
                                                         @if ($item->product)
-                                                            {{ $item->product->name }}<br>
-                                                            pembelian ke: {{ $item->product->totalOrders() }} kali
+                                                            {{ $item->product->name }}
+                                                            pembelian ke: {{ $item->product->totalOrders() }} kali, qty: {{ $item->qty }} </br>
                                                         @else
                                                             {{ $item->name }}<br>
                                                         @endif
-                                                        <br />
-                                                        <span style="font-size: 12px; font-weight: normal">
-                                                            qty: {{ $item->qty }}</span>
                                                     @endforeach
-
                                                 </td>
                                                 {{-- <td>{{ $order->orderItems->name }}</td> --}}
                                                 <td>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</td>
@@ -149,9 +152,22 @@
                                                     <span style="font-size: 12px; font-weight: normal">
                                                         {{ $order->shipping_service_name }}</span>
                                                 </td>
+                                              
+                                                
+                                                <td>
+                                                    @if($order->cod != null)
+                                                        {{ $order->cod == 'yes' ? 'COD' : 'Transfer' }}
+                                                    @else
+                                                        NULL
+                                                    @endif
+                                                </td>
+                                                
                                                 <td>{{ $order->note }}</td>
 
                                                 <td>{{ $order->customer_phone }}</td>
+                                                 <td>{{ $order->warehouse->name }}</td>
+                                                  <td>{{ $order->province->province_name }}</td>
+                                                <td>{{ $order->city->city_name }}</td>
                                                 <td>{{ $order->customer_postcode }}</td>
                                                 <td>{{ $order->customer_address1 }}</td>
 

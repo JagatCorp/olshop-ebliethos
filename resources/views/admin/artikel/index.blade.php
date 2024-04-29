@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
-                                                    <img src="{{ asset('img/fotoartikel/' . $item->foto) }}" width="120"
+                                                    <img src="{{ asset('/img/fotoartikel/' . $item->foto) }}" width="120"
                                                         height="70" />
                                                 </td>
                                                 <td>{{ $item->judul }}</td>

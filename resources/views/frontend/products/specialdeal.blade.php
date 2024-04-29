@@ -44,18 +44,18 @@
                                                         @if ($product->productImages->isNotEmpty())
                                                             <div>
                                                                 <img class="main-image"
-                                                                    src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                                 <img class="hover-image"
-                                                                    src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                             </div>
                                                         @endif
                                                     </a>
                                                     <span class="percentage">{{ $product->label }}</span>
-                                                    {{-- <span class="flags">
-                                                        <span class="sale">Diskon</span>
-                                                    </span> --}}
+                                                    <!--<span class="flags">-->
+                                                    <!--    <span class="sale">Diskon</span>-->
+                                                    <!--</span>-->
                                                     <a href="#" class="quickview" data-link-action="quickview"
                                                         title="Quick view" data-bs-toggle="modal"
                                                         data-bs-target="#modal_detail{{ $product->id }}"><i
@@ -75,7 +75,7 @@
                                                             product-id="{{ $product->id }}"
                                                             product-type="{{ $product->type }}"
                                                             product-slug="{{ $product->slug }}">
-                                                            <i class="fi-rr-shopping-cart"></i>
+                                                           <i class="fi-rr-shopping-cart"></i>
                                                         </a>
 
                                                     </div>
@@ -156,25 +156,7 @@
                                 </div>
                             @endif
 
-                            <!-- Sidebar Price Block -->
-                            <div class="ec-sidebar-block">
-                                <div class="ec-sb-title">
-                                    <h3 class="ec-sidebar-title">Price</h3>
-                                </div>
-                                <div class="ec-sb-block-content es-price-slider">
-                                    <div class="ec-price-filter">
-                                        <div id="ec-sliderPrice" class="filter__slider-price" data-min="0" data-max="250"
-                                            data-step="10"></div>
-                                        <div class="ec-price-input">
-                                            <label class="filter__label"><input type="text"
-                                                    class="filter__input"></label>
-                                            <span class="ec-price-divider"></span>
-                                            <label class="filter__label"><input type="text"
-                                                    class="filter__input"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -197,12 +179,12 @@
                                     @if ($product->productImages->isNotEmpty())
                                         <div class="qty-slide">
                                             <img class="img-responsive cover-image"
-                                                src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                 alt="Product" />
                                         </div>
                                     @endif
                                 </div>
-                                <div class="qty-nav-thumb">
+                                 <div class="qty-nav-thumb">
                                     @php $count = 0; @endphp
                                     @foreach ($product->productImages as $image)
                                         @if ($count < 4)
@@ -210,12 +192,12 @@
                                                 <div class="easyzoom easyzoom--overlay">
                                                     @if ($image->foto)
                                                         <img class="img-responsive thumbnail-image"
-                                                            src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                            src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                             alt="Product" />
                                                     @elseif ($image->video)
                                                         <video width="100%" height="100%" controls>
                                                             <source
-                                                                src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                                src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                                 type="video/mp4">
                                                         </video>
                                                     @endif
@@ -225,6 +207,7 @@
                                         @endif
                                     @endforeach
                                 </div>
+
                             </div>
                             <div class="col-md-7 col-sm-12 col-xs-12">
                                 <div class="quickview-pro-content">
@@ -248,8 +231,7 @@
 
                                     <div class="ec-quickview-desc">{{ $product->short_description }}</div>
                                     <div class="ec-quickview-price">
-                                        <span class="old-price">IDR
-                                            {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
+                                        <span class="old-price">IDR     {{ number_format($product->priceOld(), 0, ',', '.') }}</span>
                                         <span class="new-price">IDR
                                             {{ number_format($product->priceLabel(), 0, ',', '.') }}</span>
                                     </div>
@@ -259,7 +241,7 @@
                                             <a href="" class="add-to-cart btn btn-primary"
                                                 product-id="{{ $product->id }}" product-type="{{ $product->type }}"
                                                 product-slug="{{ $product->slug }}" style="background-color: #B42225">
-                                                <i class="fi-rr-shopping-cart"></i>
+                                                 <i class="fi-rr-shopping-cart"></i>
                                                 Add To Cart</a>
                                         </div>
                                     </div>

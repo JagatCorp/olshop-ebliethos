@@ -26,19 +26,52 @@
                     <div class="ec-vendor-list card card-default">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="city_table" class="table data-table">
+                                <table class="table data-table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Province Name</th>
-                                            <th>City Name</th>
+                                            <th>city name</th>
                                             <th>Type</th>
                                             <th>Postal Code</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                </table>
-                                <script type="text/javascript">
+
+                                    <tbody>
+                                        <!--@foreach ($city as $item)-->
+                                        <!--    <tr>-->
+                                        <!--        <td>{{ $loop->iteration }}</td>-->
+                                        <!--        <td>{{ $item->province->province_name }}</td>-->
+                                        <!--        <td>{{ $item->city_name }}</td>-->
+                                        <!--        <td>{{ $item->type }}</td>-->
+                                        <!--        <td>{{ $item->postal_code }}</td>-->
+
+
+                                        <!--        <td>-->
+                                        <!--            <div class="btn-group mb-1">-->
+                                        <!--                <button type="button"-->
+                                        <!--                    class="btn btn-outline-success">Action</button>-->
+                                        <!--                <button type="button"-->
+                                        <!--                    class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"-->
+                                        <!--                    data-bs-toggle="dropdown" aria-haspopup="true"-->
+                                        <!--                    aria-expanded="false" data-display="static">-->
+                                        <!--                    <span class="sr-only">Info</span>-->
+                                        <!--                </button>-->
+
+                                        <!--                <div class="dropdown-menu">-->
+                                        <!--                    <a class="dropdown-item" style="cursor:pointer"-->
+                                        <!--                        data-bs-toggle="modal"-->
+                                        <!--                        data-bs-target="#ModalEdit{{ $item->city_id }}">Edit</a>-->
+                                        <!--                    <a class="dropdown-item" style="cursor:pointer"-->
+                                        <!--                        data-bs-toggle="modal"-->
+                                        <!--                        data-bs-target="#ModalDelete{{ $item->city_id }}">Delete</a>-->
+                                        <!--                </div>-->
+                                        <!--            </div>-->
+                                        <!--        </td>-->
+                                        <!--    </tr>-->
+                                        <!--@endforeach-->
+                                           <script type="text/javascript">
                                     $(function() {
                                         var table = $('.data-table').DataTable({
                                             processing: true,
@@ -76,7 +109,8 @@
                                         });
                                     });
                                 </script>
-
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -239,8 +273,6 @@
                     </div>
                 </div>
             @endforeach
-
-
         </div>
     </div>
 

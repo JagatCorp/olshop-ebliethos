@@ -54,10 +54,10 @@
                                                                             @if ($product->productImages->isNotEmpty())
                                                                                 <div>
                                                                                     <img class="main-image"
-                                                                                        src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                                         alt="Product Image">
                                                                                     <img class="hover-image"
-                                                                                        src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                                         alt="Product Image">
                                                                                 </div>
                                                                             @endif
@@ -86,19 +86,8 @@
                                                                     <h5 class="ec-pro-title"><a
                                                                             href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
                                                                     </h5>
-                                                                    {{-- <div class="ec-pro-rating">
-                                                                        @php
-                                                                            $averageRating = $product->average_rating ?? 0;
-                                                                            $filledStars = floor($averageRating);
-                                                                            $emptyStars = 5 - $filledStars;
-                                                                        @endphp
-                                                                        @for ($i = 0; $i < $filledStars; $i++)
-                                                                            <i class="ecicon eci-star fill"></i>
-                                                                        @endfor
-                                                                        @for ($i = 0; $i < $emptyStars; $i++)
-                                                                            <i class="ecicon eci-star"></i>
-                                                                        @endfor
-                                                                    </div> --}}
+
+
 
                                                                     <span class="ec-price">
                                                                         <span class="new-price">Rp

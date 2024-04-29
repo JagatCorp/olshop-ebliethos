@@ -163,7 +163,8 @@ class OrderController extends Controller
                 }
             );
 
-            return redirect('admin/orders');
+            // return redirect('admin/orders');
+            return redirect('admin/shipments');
         }
     }
 
@@ -201,7 +202,8 @@ class OrderController extends Controller
 
         // \Session::flash('success', 'The order has been cancelled');
 
-        return redirect('admin/orders');
+        // return redirect('admin/orders');
+        return redirect('admin/shipments');
     }
 
     public function doComplete(Request $request, Order $order)

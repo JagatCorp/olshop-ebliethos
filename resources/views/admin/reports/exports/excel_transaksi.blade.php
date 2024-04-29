@@ -28,7 +28,7 @@
                     <td>{{ $item->qty }}</td>
                     <td>{{ $item->product->totalOrders() }}</td>
                     <td>{{ $order->grand_total }}</td>
-                    <td>{{ $order->customer_full_name }}<br>{{ $order->customer_email }}</td>
+                    <td>{{ $order->customer_full_name }}</td>
                     <td>{{ $order->status }}</td>
                     <td>Diskon: {{ $order->discount_percent }}%</td>
                     <td>{{ $order->payment_status }}</td>

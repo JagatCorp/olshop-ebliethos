@@ -89,13 +89,13 @@
                                         id="pro-details{{ $i }}" role="tabpanel">
                                         <div class="easyzoom easyzoom--overlay">
                                             @if ($image->foto)
-                                                <a href="{{ asset('img/fotoproducts/' . $image->foto) }}">
-                                                    <img src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                <a href="{{ asset('/img/fotoproducts/' . $image->foto) }}">
+                                                    <img src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                         alt="{{ $product->name }}">
                                                 </a>
                                             @else
                                                 <video width="100%" height="100%" controls>
-                                                    <source src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                    <source src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                         type="video/mp4">
                                                 </video>
                                             @endif
@@ -130,12 +130,12 @@
                                             aria-selected="true">
                                             <div class="easyzoom easyzoom--overlay">
                                                 @if ($image->foto)
-                                                    <img src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                    <img src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                         class="" alt="{{ $product->name }}">
                                                 @endif
                                                 @if ($image->video)
                                                     <video width="100%" height="100%" controls>
-                                                        <source src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                        <source src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                             type="video/mp4">
                                                     </video>
                                                 @endif
@@ -260,7 +260,7 @@
                                     <div class="ec-t-review-avtar">
                                         <!-- Gambar Profil Pengguna (opsional) -->
                                         @if ($review->user->foto)
-                                            <img src="{{ asset('img/fotouser/' . $review->user->foto) }}">
+                                            <img src="{{ asset('/img/fotouser/' . $review->user->foto) }}">
                                         @else
                                             <img src="/img/avatar.jpg">
                                         @endif
@@ -287,7 +287,7 @@
                                         </div>
 
                                         <!-- Gambar Produk -->
-                                        <img src="{{ asset('img/fotoreview/' . $review->foto) }}" width="150px"
+                                        <img src="{{ asset('/img/fotoreview/' . $review->foto) }}" width="150px"
                                             height="130px">
                                     </div>
                                 </div>

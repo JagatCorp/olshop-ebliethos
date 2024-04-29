@@ -45,6 +45,13 @@ class SettingsController extends Controller
 
         $imageName = $request->gambarLama;
         if ($request->hasFile('logo')) {
+
+            $public_path = public_path('img/logotoko/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('logo');
             $imageName = time() . '_' . $request->file('logo')->getClientOriginalName();
             $image->move(public_path('img/logotoko/'), $imageName);
@@ -64,6 +71,13 @@ class SettingsController extends Controller
     public function delete($id)
     {
         $settings = Settings::find($id);
+
+        $public_path = public_path('img/logotoko/' . $settings->logo);
+        if (file_exists($public_path) && is_file($public_path)) {
+            // Menghapus file jika ada
+            unlink($public_path);
+        }
+
         $settings->delete();
         return redirect()->route('admin.settings-index')->with('toast_success', 'Settings Berhasil Di Hapus');
     }

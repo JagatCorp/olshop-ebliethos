@@ -46,7 +46,7 @@
                                                     {{-- @foreach ($productImages as $productImage)
                                                         @foreach (json_decode($productImage->foto) as $photo) --}}
                                                     @if ($productImage->foto)
-                                                        <img src="{{ asset('img/fotoproducts/' . $productImage->foto) }}"
+                                                        <img src="{{ asset('/img/fotoproducts/' . $productImage->foto) }}"
                                                             alt="Product" width="100px" />
                                                     @endif
 
@@ -58,7 +58,7 @@
                                                     @if ($productImage->video)
                                                         <video width="100" height="100" controls>
                                                             <source
-                                                                src="{{ asset('img/videoproducts/' . $productImage->video) }}"
+                                                                src="{{ asset('/img/videoproducts/' . $productImage->video) }}"
                                                                 type="video/mp4">
                                                         </video>
                                                     @endif

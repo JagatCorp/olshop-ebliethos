@@ -44,6 +44,13 @@ class ArtikelController extends Controller
         ]);
         $imageName = $request->gambarLama;
         if ($request->hasFile('foto')) {
+
+            $public_path = public_path('img/fotoartikel/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('foto');
             $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $image->move(public_path('img/fotoartikel/'), $imageName);
@@ -61,6 +68,13 @@ class ArtikelController extends Controller
     public function delete($id)
     {
         $artikel = Artikel::find($id);
+
+        $public_path = public_path('img/fotoartikel/' . $artikel->foto);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
         $artikel->delete();
         return redirect()->route('admin.artikel-index')->with('toast_success', 'Artikel Berhasil Di Hapus');
     }

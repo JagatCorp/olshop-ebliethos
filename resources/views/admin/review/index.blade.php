@@ -89,7 +89,7 @@
                                                 </td>
                                                 <td>{{ $item->review }}</td>
                                                 <td>
-                                                    <img width="200px" src="{{ asset('img/fotoreview/' . $item->foto) }}"
+                                                    <img width="200px" src="{{ asset('/img/fotoreview/' . $item->foto) }}"
                                                         alt="foto review" />
                                                 </td>
                                                 <td>

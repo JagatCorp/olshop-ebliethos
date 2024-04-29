@@ -43,10 +43,10 @@
                                                         @if ($product->productImages->isNotEmpty())
                                                             <div>
                                                                 <img class="main-image"
-                                                                    src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                                 <img class="hover-image"
-                                                                    src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                             </div>
                                                         @endif
@@ -61,7 +61,7 @@
                                                             product-id="{{ $product->id }}"
                                                             product-type="{{ $product->type }}"
                                                             product-slug="{{ $product->slug }}">
-                                                            <i class="fi-rr-shopping-cart"></i>
+                                                          <i class="fi-rr-shopping-cart"></i>
                                                         </a>
                                                         <a href="{{ auth()->check() ? route('wishlists.store') : route('login') }}"
                                                             class="ec-btn-group wishlist add-to-fav"
@@ -210,32 +210,15 @@
                         <div class="row">
                             <div class="col-md-5 col-sm-12 col-xs-12">
                                 <!-- Swiper -->
-                                {{-- large image --}}
                                 <div class="qty-product-cover">
                                     @if ($product->productImages->isNotEmpty())
                                         <div class="qty-slide">
-                                            @foreach ($product->productImages as $image)
-                                                <div class="easyzoom easyzoom--overlay">
-                                                    @if ($loop->first)
-                                                        @if ($image->foto)
-                                                            <img class="img-responsive cover-image"
-                                                                src="{{ asset('img/fotoproducts/' . $image->foto) }}"
-                                                                alt="Product" />
-                                                        @elseif ($image->video)
-                                                            <video width="100%" height="100%" controls>
-                                                                <source
-                                                                    src="{{ asset('img/videoproducts/' . $image->video) }}"
-                                                                    type="video/mp4">
-                                                            </video>
-                                                        @endif
-                                                    @endif
-                                                </div>
-                                            @endforeach
+                                            <img class="img-responsive cover-image"
+                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                alt="Product" />
                                         </div>
                                     @endif
                                 </div>
-
-                                {{-- small image --}}
                                 <div class="qty-nav-thumb">
                                     @php $count = 0; @endphp
                                     @foreach ($product->productImages as $image)
@@ -244,12 +227,12 @@
                                                 <div class="easyzoom easyzoom--overlay">
                                                     @if ($image->foto)
                                                         <img class="img-responsive thumbnail-image"
-                                                            src="{{ asset('img/fotoproducts/' . $image->foto) }}"
+                                                            src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                             alt="Product" />
                                                     @elseif ($image->video)
                                                         <video width="100%" height="100%" controls>
                                                             <source
-                                                                src="{{ asset('img/videoproducts/' . $image->video) }}"
+                                                                src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                                 type="video/mp4">
                                                         </video>
                                                     @endif
@@ -259,7 +242,6 @@
                                         @endif
                                     @endforeach
                                 </div>
-
 
                             </div>
                             <div class="col-md-7 col-sm-12 col-xs-12">
@@ -294,8 +276,8 @@
                                         <div class="ec-quickview-cart ">
                                             <a href="" class="add-to-cart btn btn-primary"
                                                 product-id="{{ $product->id }}" product-type="{{ $product->type }}"
-                                                product-slug="{{ $product->slug }}" style="background-color: #B42225"><i
-                                                    class="fi-rr-shopping-basket"></i>
+                                                product-slug="{{ $product->slug }}" style="background-color: #B42225">
+                                                 <i class="fi-rr-shopping-cart"></i>
                                                 Add To Cart</a>
                                         </div>
                                     </div>

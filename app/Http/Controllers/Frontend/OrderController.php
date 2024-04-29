@@ -3,27 +3,26 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Models\Coupon;
-use App\Models\CourierWarehousePrices;
-use App\Models\Kurir;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\ProductInventory;
-use App\Models\Province;
 use App\Models\Shipment;
-use App\Models\Tripiel;
-use App\Models\Warehouse;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use App\Models\City;
+use App\Models\Warehouse;
+use App\Models\Province;
+use App\Models\Tripiel;
+use App\Models\Kurir;
+
 class OrderController extends Controller
 {
-
     public function index()
     {
         $orders = Order::forUser(auth()->user())
@@ -70,54 +69,6 @@ class OrderController extends Controller
         return $this->_getShippingCost($destination, $this->_getTotalWeight());
     }
 
-    // Raja Ongkir cek ongkir yang lama
-    // private function _getShippingCost($destination, $weight)
-    // {
-    //     $params = [
-    //         'origin' => $this->rajaOngkirOrigin,
-    //         'destination' => $destination,
-    //         'weight' => $weight,
-    //     ];
-
-    //     $results = [];
-    //     foreach ($this->couriers as $code => $courier) {
-    //         $params['courier'] = $code;
-
-    //         $response = $this->rajaOngkirRequest('cost', $params, 'POST');
-
-    //         if (!empty($response['rajaongkir']['results'])) {
-    //             foreach ($response['rajaongkir']['results'] as $cost) {
-    //                 if (!empty($cost['costs'])) {
-    //                     foreach ($cost['costs'] as $costDetail) {
-    //                         $serviceName = strtoupper($cost['code']) . ' - ' . $costDetail['service'];
-    //                         $costAmount = $costDetail['cost'][0]['value'];
-    //                         $etd = $costDetail['cost'][0]['etd'];
-
-    //                         $result = [
-    //                             'service' => $serviceName,
-    //                             'cost' => $costAmount,
-    //                             'etd' => $etd,
-    //                             'courier' => $code,
-    //                         ];
-
-    //                         $results[] = $result;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     $response = [
-    //         'origin' => $params['origin'],
-    //         'destination' => $destination,
-    //         'weight' => $weight,
-    //         'results' => $results,
-    //     ];
-
-    //     return $response;
-    // }
-
-    // Raja Ongkir cek ongkir yang baru
     private function _getShippingCost($destination, $weight)
     {
         $params = [
@@ -205,34 +156,33 @@ class OrderController extends Controller
         return $response;
     }
 
-    public function checkout(Request $request)
+    public function checkout()
     {
         if (Cart::count() == 0) {
             return redirect('carts');
         }
 
         $items = Cart::content();
-
+        
         $warehouses = Warehouse::get();
         $provinces = Province::get();
         $citys = City::get();
-        // $couriers = Kurir::get();
 
-        // Loop melalui setiap kurir dan tambahkan harga dari CourierWarehousePrices
-        // foreach ($couriers as $courier) {
-        //     $courier->price = CourierWarehousePrices::where('courier_id', $courier->id)->value('price');
-        // }
-        // return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys', 'couriers'));
+        // $totalWeight = $this->_getTotalWeight() / 1000;
+        // $provinces = $this->getProvinces();
+        // $cities = isset(auth()->user()->province_id) ? $this->getCities(auth()->user()->province_id) : [];
+        // return view('frontend.orders.checkout', compact('items', 'totalWeight', 'provinces', 'cities'));
+        
         return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys'));
     }
-
+    
     public function searchShippingCost(Request $request)
     {
-        // return response()->json('coba');
+        
         $request->validate([
             'warehouse_id' => 'required',
-            'province_id' => 'required|exists:tripiel,province_id',
-            'city_id' => 'required|exists:tripiel,city_id',
+            'province_id' => 'required',
+            'city_id' => 'required',
             'kecamatan_id' => 'required',
         ]);
 
@@ -243,30 +193,13 @@ class OrderController extends Controller
 
         // Mencari harga gudang hanya jika semua input valid
         $price = null;
-
-        // Memeriksa apakah warehouse dan courier valid
-        // $validWarehouseCourier = CourierWarehousePrices::where('courier_id', $courier_id)
-        //     ->where('warehouse_id', $warehouse_id)
-        //     ->exists();
-
-        // Jika warehouse dan courier valid, coba cari harga
-        // if ($validWarehouseCourier) {
-            // Memeriksa apakah province dan city valid
-            $price = Tripiel::where('province_id', $province_id)
-                ->where('city_id', $city_id)
-                ->where('warehouse_id', $warehouse_id)
-                ->where('kecamatan_id', $kecamatan_id)
-                ->with('courier')
-                ->get();
-
-            // return response()->json(['price' => $price]);
-            // Jika province dan city valid, cari harga
-            // if ($validProvinceCity) {
-            //     $price = CourierWarehousePrices::where('courier_id', $courier_id)
-            //         ->where('warehouse_id', $warehouse_id)
-            //         ->value('price');
-            // }
-        // }
+        
+        $price = Tripiel::where('province_id', $province_id)
+            ->where('city_id', $city_id)
+            ->where('warehouse_id', $warehouse_id)
+            ->where('kecamatan_id', $kecamatan_id)
+            ->with('courier')
+            ->get();
 
         // Jika harga ditemukan, kirimkan harga sebagai respons
         if ($price !== null) {
@@ -289,13 +222,12 @@ class OrderController extends Controller
         //     'customer_province_id' => 'required',
 
         // ]);
-        // return response()->json($request);
-
+        
         $dataCourier = Kurir::where('id', $request->courier_id)->first();
-        // return response()->json($dataCourier);
-        // return response()->json($request);
         $params = $request->except('_token');
-        $params['service'] = $dataCourier->name . ' | ' . $dataCourier->type;
+        $params['service'] = $dataCourier->name . ($dataCourier->type == null ? '' : ' | ' . $dataCourier->type);
+        $params['shipping_courier'] = $dataCourier->name;
+        // return response()->json($params);
 
         $order = DB::transaction(
             function () use ($params) {
@@ -324,9 +256,9 @@ class OrderController extends Controller
         $shippingOptions = $this->_getShippingCost($destination, $totalWeight);
 
         $selectedShipping = null;
-        if ($shippingOptions && is_array($shippingOptions)) { // Memeriksa apakah $shippingOptions adalah array
-            foreach ($shippingOptions as $shippingOption) {
-                if (isset($shippingOption->service) && str_replace(' ', '', $shippingOption->service) == $shippingService) {
+        if ($shippingOptions['results']) {
+            foreach ($shippingOptions['results'] as $shippingOption) {
+                if (str_replace(' ', '', $shippingOption['service']) == $shippingService) {
                     $selectedShipping = $shippingOption;
                     break;
                 }
@@ -339,17 +271,19 @@ class OrderController extends Controller
     private function _saveOrder($params)
     {
         $destination = !isset($params['ship_to']) ? $params['city_id'] : $params['customer_shipping_city_id'];
-        // $selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
+        $selectedShipping = $this->_getSelectedShipping($destination, $this->_getTotalWeight(), $params['shipping_service']);
 
         $baseTotalPrice = (int) Cart::subtotal(0, '', '');
         $taxAmount = 0;
         $taxPercent = 0;
-        // $shippingCost = $selectedShipping['price'];
+        // $shippingCost = $selectedShipping['cost'];
         $shippingCost = $params['shipping_price'];
         $discountAmount = 0;
         $discountPercent = 0;
         $grandTotal = ($baseTotalPrice + $taxAmount + $shippingCost) - $discountAmount;
         $cod = $params['cod'];
+        $kecamatan_id = $params['kecamatan_id'];
+        $warehouse_id = $params['warehouse_id'];
 
         $orderDate = date('Y-m-d H:i:s');
         $paymentDue = (new \DateTime($orderDate))->modify('+7 day')->format('Y-m-d H:i:s');
@@ -385,6 +319,7 @@ class OrderController extends Controller
             'shipping_cost' => $shippingCost,
             'grand_total' => $grandTotal,
             'cod' => $cod,
+            'warehouse_id' => $warehouse_id,
             'note' => $params['note'],
             'customer_first_name' => $params['first_name'],
             'customer_last_name' => $params['last_name'],
@@ -395,10 +330,11 @@ class OrderController extends Controller
             // 'customer_city_id' => $params['shipping_city_id'],
             'customer_city_id' => $params['city_id'],
             'customer_province_id' => $params['province_id'],
-            'customer_kecamatan_id' => $params['kecamatan_id'],
+            'customer_kecamatan_id' => $kecamatan_id,
             'customer_postcode' => $params['postcode'],
             // 'shipping_courier' => $selectedShipping['courier'],
-            'shipping_courier' => $params['courier_id'],
+            'shipping_courier' => $params['shipping_courier'],
+            // 'shipping_service_name' => $selectedShipping['service'],
             'shipping_service_name' => $params['service'],
         ];
 
@@ -447,44 +383,6 @@ class OrderController extends Controller
         }
     }
 
-    // private function _generatePaymentToken($order)
-    // {
-    //     $this->initPaymentGateway();
-
-    //     // Ambil grand_total setelah diskon kupon diterapkan
-    //     $grandTotalAfterDiscount = $order->grand_total;
-
-    //     $customerDetails = [
-    //         'first_name' => $order->customer_first_name,
-    //         'last_name' => $order->customer_last_name,
-    //         'email' => $order->customer_email,
-    //         'phone' => $order->customer_phone,
-    //     ];
-
-    //     $params = [
-    //         'enable_payments' => Payment::PAYMENT_CHANNELS,
-    //         'transaction_details' => [
-    //             'order_id' => $order->code,
-    //             'gross_amount' => $grandTotalAfterDiscount,
-    //         ],
-    //         'customer_details' => $customerDetails,
-    //         'expiry' => [
-    //             'start_time' => date('Y-m-d H:i:s T'),
-    //             'unit' => Payment::EXPIRY_UNIT,
-    //             'duration' => Payment::EXPIRY_DURATION,
-    //         ],
-    //     ];
-
-    //     $snap = \Midtrans\Snap::createTransaction($params);
-
-    //     if ($snap->token) {
-    //         $order->payment_token = $snap->token;
-    //         $order->save();
-    //     }
-    //     dd($snap);
-
-    //     return redirect()->route('orders.received', $order->id);
-    // }
     private function _generatePaymentToken($order)
     {
         $this->initPaymentGateway();
@@ -560,8 +458,8 @@ class OrderController extends Controller
 
         // Terapkan diskon pada grand_total
         $order->grand_total -= $discount;
-
-        // Hitung persentase diskon dan masukkan ke order discount_percent
+        
+          // Hitung persentase diskon dan masukkan ke order discount_percent
         $order->discount_percent = $coupon->discount;
 
         // Tandai kupon sebagai digunakan
@@ -585,11 +483,10 @@ class OrderController extends Controller
     //     return view('frontend.orders.ordersucces', compact('orderId'));
     // }
 
-    public function successOrder(Order $orderId)
+  public function successOrder(Order $orderId)
     {
-        // return response()->json($orderId->cod);
-        // Ubah status pembayaran menjadi 'PAID' langsung bila pembayaran melalui transfer
-        if($orderId->cod == 'yes'){
+        // Ubah status pembayaran menjadi 'PAID'
+        if($orderId->cod == 'no'){
             $orderId->payment_status = 'PAID';
             $orderId->save();
         }
@@ -614,6 +511,7 @@ class OrderController extends Controller
         // Tampilkan halaman sukses pembayaran kepada pengguna
         return view('frontend.orders.ordersucces', compact('orderId'));
     }
+
 
     private function _saveShipment($order, $params)
     {
@@ -657,8 +555,6 @@ class OrderController extends Controller
         $order = Order::where('id', $orderId)
             ->where('user_id', auth()->id())
             ->firstOrFail();
-
-        // return response()->json($order);
 
         return view('frontend.orders.received', compact('order', 'orderId'));
     }

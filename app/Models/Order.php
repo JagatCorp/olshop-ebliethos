@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use App\Models\City;
 
 class Order extends Model
 {
@@ -144,5 +145,32 @@ class Order extends Model
     {
         return $query->where('user_id', $user->id);
     }
+    
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'customer_city_id', 'city_id');
+    }
+    
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'customer_province_id', 'province_id');
+    }
+    
+    public function kecamatan()
+    {
+        return $this->belongsTo(Kecamatan::class, 'customer_kecamatan_id', 'id');
+    }
+    
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');
+    }
+    
+    
+    
+    
+    
+    
+    
 
 }

@@ -9,7 +9,14 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 class KecamatanController extends Controller
 {
-    public function index(Request $request)
+    // public function index()
+    // {
+    //     $kecamatan = Kecamatan::limit(500)->get();
+    //     $city = City::all();
+    //     return view('admin.kecamatan.index', compact('kecamatan', 'city'));
+    // }
+    
+        public function index(Request $request)
     {
         $city = City::all();
 

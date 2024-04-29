@@ -85,7 +85,7 @@
                                         style="background-color: #B42225; color: white; border-radius: 0; font-size: x-large"
                                         value="login">Masuk</button>
                                 </div>
-                                @if (Route::has('password.request'))
+                                 @if (Route::has('password.request'))
                                     <p class="mb-1 text-right">
                                         <a href="{{ route('password.request') }}">{{ __('Lupa Password?') }}</a>
                                     </p>

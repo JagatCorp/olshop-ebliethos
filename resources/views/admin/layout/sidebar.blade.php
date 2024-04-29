@@ -4,14 +4,8 @@
             $settings = App\Models\Settings::first();
         @endphp
         <div class="ec-brand">
-            @if ($settings->logo)
-                <img class="ec-brand-icon" src="{{ asset('img/logotoko/' . $settings->logo) }}" alt=""
-                    style="width: auto; height: 40px; margin-left: 30px" />
-            @else
-                <img class="ec-brand-icon" src="{{ asset('img/default-logo.jpg') }}" alt="Default Logo"
-                    style="width: auto; height: 40px; margin-left: 30px" />
-            @endif
-
+            <img class="ec-brand-icon" src="{{ asset('/img/logotoko/' . $settings->logo) }}" alt=""
+                style="width: auto; height: 40px; margin-left: 30px" />
             {{-- <a href="index.html" title="Ekka">
 
                 <span class="ec-brand-name text-truncate">Ekka</span>
@@ -77,7 +71,8 @@
                                     <span class="nav-text">Testimoni</span>
                                 </a>
                             </li>
-                            <li class="@yield('ActiveSettings')">
+
+                             <li class="@yield('ActiveSettings')">
                                 <a class="sidenav-item-link" href="{{ url('admin/settings') }}">
                                     <span class="nav-text">Settings</span>
                                 </a>
@@ -126,7 +121,7 @@
                     <hr>
                 </li>
 
-                <li class="has-sub @yield('Active3PL')">
+                 <li class="has-sub @yield('Active3PL')">
                     <a class="sidenav-item-link" href="javascript:void(0)">
                         <i class="mdi mdi-archive"></i>
                         <span class="nav-text">Master 3PL</span> <b class="caret"></b>
@@ -153,7 +148,7 @@
                                     <span class="nav-text">City</span>
                                 </a>
                             </li>
-                            <li class="">
+                              <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/kecamatan') }}">
                                     <span class="nav-text">Kecamatan</span>
                                 </a>
@@ -164,15 +159,17 @@
                                 </a>
                             </li>
 
-                            <li class="">
-                                <a class="sidenav-item-link" href="{{ url('admin/courierwarehouseprices') }}">
-                                    <span class="nav-text">Courierwarehouseprices</span>
-                                </a>
-                            </li>
+                            <!--<li class="">-->
+                            <!--    <a class="sidenav-item-link" href="{{ url('admin/courierwarehouseprices') }}">-->
+                            <!--        <span class="nav-text">Courierwarehouseprices</span>-->
+                            <!--    </a>-->
+                            <!--</li>-->
 
                         </ul>
                     </div>
                 </li>
+
+
 
                 <!-- Products -->
                 <li class="has-sub @yield('ActiveProduct')">
@@ -219,7 +216,7 @@
                                     <span class="nav-text">Pengiriman</span>
                                 </a>
                             </li>
-                            <li class="">
+                             <li class="">
                                 <a class="sidenav-item-link" href="{{ url('admin/track-paket-admin') }}">
                                     <span class="nav-text">Track Paket</span>
                                 </a>
@@ -262,30 +259,30 @@
                                     <span class="nav-text">Stok Produk</span>
                                 </a>
                             </li>
-                            {{-- <li class="">
-                                <a class="sidenav-item-link" href="{{ url('admin/reports/payment') }}">
-                                    <span class="nav-text">Pembayaran</span>
-                                </a>
-                            </li> --}}
+                            <!--<li class="">-->
+                            <!--    <a class="sidenav-item-link" href="{{ url('admin/reports/payment') }}">-->
+                            <!--        <span class="nav-text">Pembayaran</span>-->
+                            <!--    </a>-->
+                            <!--</li>-->
                         </ul>
                     </div>
                 </li>
                 <!-- Authentication -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="fa fa-database"></i>
-                        <span class="nav-text">Basis Data</span> <b class="caret"></b>
-                    </a>
-                    <div class="collapse">
-                        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
-                            <li class="">
-                                <a href="{{ url('admin/database') }}">
-                                    <span class="nav-text">Basis Data</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                <!--<li class="has-sub">-->
+                <!--    <a class="sidenav-item-link" href="javascript:void(0)">-->
+                <!--        <i class="fa fa-database"></i>-->
+                <!--        <span class="nav-text">Basis Data</span> <b class="caret"></b>-->
+                <!--    </a>-->
+                <!--    <div class="collapse">-->
+                <!--        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">-->
+                <!--            <li class="">-->
+                <!--                <a href="{{ url('admin/database') }}">-->
+                <!--                    <span class="nav-text">Basis Data</span>-->
+                <!--                </a>-->
+                <!--            </li>-->
+                <!--        </ul>-->
+                <!--    </div>-->
+                <!--</li>-->
             </ul>
         </div>
     </div>

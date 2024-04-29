@@ -22,11 +22,10 @@
                                         <tr>
                                             <th scope="col">Order ID</th>
                                             <th scope="col">Grand Total</th>
-                                            {{-- <th scope="col">Nomor Resi</th> --}}
+                                          
                                             <th scope="col">Status</th>
-
                                             <th scope="col">Payment</th>
-                                            <th scope="col">Nomor Resi</th>
+                                              <th scope="col">Nomor Resi</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
@@ -39,6 +38,8 @@
                                                 </td>
                                                 <td><span>Rp {{ number_format($order->grand_total, 0, ',', '.') }}</span>
                                                 </td>
+                                                             
+                                              
                                                 {{-- <td><span>{{ $order->shipment->track_number }}</span></td> --}}
                                                 <td>
                                                     <span>{{ $order->status }}</span>
@@ -49,10 +50,9 @@
 
 
                                                 <td><span>{{ $order->payment_status }}</span></td>
-                                                <td><span>{{ $order->nomor_resi }}</span></td>
+                                                 <td><span>{{ $order->nomor_resi }}</span></td>
                                                 <td><span class="tbl-btn"><a class="btn btn-lg btn-primary"
-                                                            href="{{ url('orders/' . $order->id) }}">View</a></span></td>
-
+                                                            href="{{ url('orders/received/' . $order->id) }}">View</a></span></td>
                                             </tr>
                                         @empty
                                             <tr>

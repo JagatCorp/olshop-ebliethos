@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
         $totalPenjualan = Order::sum('grand_total');
 
-        $customers = Order::where('status', 'created')->count();
+          $customers = Order::where('status', 'created')->count();
 
         $newestTransaction = Order::with('orderItems')->orderBy('order_date', 'desc')->get();
         $product = OrderItem::whereHas('order', function ($query) {
@@ -48,7 +48,7 @@ class DashboardController extends Controller
         });
 
         // penjualan per product
-        $listProd = Product::get();
+        $listProd = Product::paginate(5);
 
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();
@@ -109,24 +109,24 @@ class DashboardController extends Controller
             ->count();
 
         // pembelian product
-        // $pembelianData = OrderItem::select('product_id', DB::raw('COUNT(*) as total_order'), 'p.name')
-        //     ->join('products as p', 'product_id', '=', 'p.id')
-        //     ->groupBy('product_id')
-        //     ->get();
+        $pembelianData = OrderItem::select('product_id', DB::raw('COUNT(*) as total_order'))
+          ->join('products as p', 'product_id', '=', 'p.id')
+          ->groupBy('product_id')
+          ->get();
 
-        // $pembelians = [];
+        foreach($pembelianData as $item) {
+          $name = Product::where('id', $item->product_id)->first()->name;
 
-        // foreach ($pembelianData as $item) {
-        //     $pembelians[$item->name] = $item->total_order;
-        // }
-
+          $pembelians[$name] = $item->total_order;
+        }
 
             // transaksi perbulan
             $transaksiBulanan = Order::whereYear('order_date', Carbon::now()->year)
         ->whereMonth('order_date', Carbon::now()->month)
         ->get();
 
-// start Product Penjualan Berdasarkan Customer
+
+        // start Product Penjualan Berdasarkan Customer
     // Ambil semua pesanan dengan relasi OrderItem dan Product
     $orders = Order::with('orderItems.product')->get();
 
@@ -178,7 +178,8 @@ class DashboardController extends Controller
     }
 // end Product Penjualan Berdasarkan Customer
 
-        return view('admin.dashboard.index', compact('orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData', 'transaksiBulanan', 'chartData'));
+
+        return view('admin.dashboard.index', compact('pembelians', 'orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData','transaksiBulanan','chartData'));
 
     }
 

@@ -1,5 +1,4 @@
-<form action="{{ Request::url() }}" method="get" class="row">
-    {{-- <form action="{{ url()->current() }}" method="get" class="row"> --}}
+<form action="{{ url()->current() }}" method="get" class="row">
     <div class="col-lg-3">
         <div class="form-group mb-2">
             <label for="">dari</label>

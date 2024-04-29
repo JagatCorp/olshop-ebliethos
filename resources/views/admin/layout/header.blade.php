@@ -23,7 +23,7 @@
                 <li class="dropdown user-menu">
                     <button class="dropdown-toggle nav-link ec-drop" data-bs-toggle="dropdown" aria-expanded="false">
                         @if (Auth()->user()->foto)
-                            <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="user-image"
+                            <img src="{{ asset('/img/fotouser/' . auth()->user()->foto) }}" class="user-image"
                                 alt="" />
                         @else
                             <img class="user-image" src="/img/avatar.jpg">
@@ -34,7 +34,7 @@
                         <li class="dropdown-header">
 
                             @if (Auth()->user()->foto)
-                                <img src="{{ asset('img/fotouser/' . auth()->user()->foto) }}" class="img-circle"
+                                <img src="{{ asset('/img/fotouser/' . auth()->user()->foto) }}" class="img-circle"
                                     alt="" />
                             @else
                                 <img class="img-circle" src="/img/avatar.jpg">
