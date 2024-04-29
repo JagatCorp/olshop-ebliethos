@@ -14,4 +14,19 @@ class Warehouse extends Model
         'name',
     ];
 
+    /**
+     * Get all of the comments for the Warehouse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tripiel(): HasMany
+    {
+        return $this->hasMany(Tripiel::class, 'warehouse_id', 'id');
+    }
+    
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'warehouse_id', 'warehouse_id');
+    }
+
 }

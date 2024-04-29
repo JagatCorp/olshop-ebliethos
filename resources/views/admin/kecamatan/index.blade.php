@@ -39,38 +39,9 @@
                                     </thead>
 
                                     <tbody>
-                                        {{-- @foreach ($kecamatan as $item)
-                                            <tr>
-                                                <td>{{ $loop->iteration }}</td>
-
-                                                <td>{{ $item->name }}</td>
-
-                                                <td>{{ $item->city->city_name }}</td>
-                                                <td>
-                                                    <div class="btn-group mb-1">
-                                                        <button type="button"
-                                                            class="btn btn-outline-success">Action</button>
-                                                        <button type="button"
-                                                            class="btn btn-outline-success dropdown-toggle dropdown-toggle-split"
-                                                            data-bs-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false" data-display="static">
-                                                            <span class="sr-only">Info</span>
-                                                        </button>
-
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item" style="cursor:pointer"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ModalEdit{{ $item->id }}">Edit</a>
-                                                            <a class="dropdown-item" style="cursor:pointer"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ModalDelete{{ $item->id }}">Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach --}}
-
-                                        <script type="text/javascript">
+                                       
+                                        
+                                          <script type="text/javascript">
                                             $(function() {
                                                 var table = $('.data-table').DataTable({
                                                     processing: true,

@@ -43,7 +43,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <img width="200px"
-                                                        src="{{ asset('img/fototestimoni/' . $item->image) }}"
+                                                        src="{{ asset('core/public/img/fototestimoni/' . $item->image) }}"
                                                         alt="foto testimoni" />
                                                 </td>
                                                 <td>{!! $item->testimoni !!}</td>

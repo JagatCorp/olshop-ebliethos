@@ -100,7 +100,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group mb-4">
                                             <label for="userName">Type</label>
-                                            <input type="text" class="form-control" name="type" required />
+                                            <input type="text" class="form-control" name="type"  />
                                         </div>
                                     </div>
 

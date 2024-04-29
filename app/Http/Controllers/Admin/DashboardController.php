@@ -27,7 +27,7 @@ class DashboardController extends Controller
 
         $totalPenjualan = Order::sum('grand_total');
 
-        $customers = User::where('is_admin', 0)->count();
+          $customers = Order::where('status', 'created')->count();
 
         $newestTransaction = Order::with('orderItems')->orderBy('order_date', 'desc')->get();
         $product = OrderItem::whereHas('order', function ($query) {
@@ -42,13 +42,13 @@ class DashboardController extends Controller
         // $paidOrders = Order::where('payment_status', 'PAID')->get();
         $paidOrders = Order::where('status', 'created')->orWhere('status', 'completed')->get();
         $salesData = $paidOrders->groupBy(function ($order) {
-            return $order->created_at->format('D M Y');
+            return $order->created_at->format('M');
         })->map(function ($groupedOrders) {
             return $groupedOrders->sum('grand_total');
         });
 
         // penjualan per product
-        $listProd = Product::get();
+        $listProd = Product::paginate(5);
 
         $monthStart = Carbon::now()->startOfMonth();
         $monthEnd = Carbon::now()->endOfMonth();
@@ -109,23 +109,77 @@ class DashboardController extends Controller
             ->count();
 
         // pembelian product
-        $pembelianData = OrderItem::select('product_id', DB::raw('COUNT(*) as total_order'), 'p.name')
-            ->join('products as p', 'product_id', '=', 'p.id')
-            ->groupBy('product_id')
-            ->get();
-
-        $pembelians = [];
-
-        foreach ($pembelianData as $item) {
-            $pembelians[$item->name] = $item->total_order;
+        $pembelianData = OrderItem::select('product_id', DB::raw('COUNT(*) as total_order'))
+          ->join('products as p', 'product_id', '=', 'p.id')
+          ->groupBy('product_id')
+          ->get();
+        
+        foreach($pembelianData as $item) {
+          $name = Product::where('id', $item->product_id)->first()->name;
+          
+          $pembelians[$name] = $item->total_order;
         }
-
-
+         
             // transaksi perbulan
             $transaksiBulanan = Order::whereYear('order_date', Carbon::now()->year)
         ->whereMonth('order_date', Carbon::now()->month)
         ->get();
-        return view('admin.dashboard.index', compact('pembelians','orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData', 'transaksiBulanan'));
+        
+        
+        // start Product Penjualan Berdasarkan Customer
+    // Ambil semua pesanan dengan relasi OrderItem dan Product
+    $orders = Order::with('orderItems.product')->get();
+
+    // Inisialisasi array untuk menyimpan data penjualan
+    $salesProduct = [];
+
+    // Iterasi melalui setiap pesanan
+    foreach ($orders as $order) {
+        // Ambil nama pelanggan dari pesanan
+        $customerName = $order->customer_first_name;
+
+        // Iterasi melalui setiap item dalam pesanan
+        foreach ($order->orderItems as $orderItem) {
+            // Ambil nama produk dan id produk
+            $productName = $orderItem->product->name;
+            $productId = $orderItem->product_id;
+
+            // Gunakan nama pelanggan dan nama produk sebagai kunci dalam array data penjualan
+            $key = $customerName . '_' . $productName;
+
+            // Jika kunci sudah ada, tambahkan jumlah pembelian
+            if (isset($salesProduct[$key])) {
+                $salesProduct[$key]['count']++;
+            } else {
+                // Jika tidak, inisialisasikan jumlah pembelian menjadi 1
+                $salesProduct[$key] = [
+                    'customer' => $customerName,
+                    'product' => $productName,
+                    'product_id' => $productId,
+                    'count' => 1,
+                    // Tambahkan properti untuk menyimpan jumlah total pembelian
+                    'total_orders' => $orderItem->product->getTotalOrders()
+                ];
+            }
+        }
+    }
+
+    // Siapkan data untuk chart
+    $chartData = [];
+    foreach ($salesProduct as $sale) {
+        $chartData[] = [
+            'customer' => $sale['customer'],
+            'product' => $sale['product'],
+            // Hapus properti 'percentage' dari data yang diteruskan ke chart
+            'percentage' => $sale['total_orders'] * 100,
+            // Tetap menyertakan properti 'total_orders' sebagai informasi tambahan
+            'total_orders_customer' => $sale['total_orders']
+        ];
+    }
+// end Product Penjualan Berdasarkan Customer
+
+
+        return view('admin.dashboard.index', compact('pembelians', 'orderToday', 'productTerjual', 'totalPenjualan', 'customers', 'newestTransaction', 'product', 'totalPenjualan', 'statuses', 'salesData', 'prodTerjual', 'listProd', 'dataCust', 'transCust', 'created', 'confirmed', 'delivered', 'completed', 'cancelled', 'paid', 'unpaid', 'diskon', 'activeUsers', 'visitorData','transaksiBulanan','chartData'));
 
     }
 }

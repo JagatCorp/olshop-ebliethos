@@ -62,7 +62,7 @@ protected function sendVerificationCode($phone, $verificationCode)
 {
     $client = new Client();
 
-    $response = $client->post('https://wa.kop-dayalisna.online/send-message', [
+    $response = $client->post('https://wa.eblieshop.online/send-message', [
         'body' => json_encode([
             'number' => $phone, // Nomor telepon penerima
             'message' => 'Kode verifikasi Anda: ' . $verificationCode, // Pesan dengan kode verifikasi

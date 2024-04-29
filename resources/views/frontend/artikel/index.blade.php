@@ -13,12 +13,12 @@
                         <div class="ec-blogs-inner">
                             <div class="row">
                                 @forelse ($artikel as $item)
-                                    <div class="col-lg-4 col-md-6 col-sm-12 mb-6 ec-blog-block">
+                                      <div class="col-lg-6 col-md-6 col-sm-6 mb-6 ec-blog-block">
                                         <div class="ec-blog-inner">
                                             <div class="ec-blog-image">
                                                 <a href="{{ url('/detail-artikel', $item->slug) }}">
                                                     <img class="blog-image"
-                                                        src="{{ asset('img/fotoartikel/' . $item->foto) }}"
+                                                        src="{{ asset('core/public/img/fotoartikel/' . $item->foto) }}"
                                                         alt="Blog" />
                                                 </a>
                                             </div>

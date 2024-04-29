@@ -76,6 +76,10 @@
                                                 <p>Tujuan: {{ $result['data']['detail']['destination'] }}</p>
                                                 <p>Pengirim: {{ $result['data']['detail']['shipper'] }}</p>
                                             </li>
+                                            <!-- <li class="event" data-date="">-->
+                                            <!--   <h3>Riwayat Pelacakan Paket:</h3>-->
+                                            <!--</li>-->
+                                           
                                             @foreach ($result['data']['history'] as $history)
                                                 <li class="event" data-date="">
                                                     {{-- <h3>Riwayat Pelacakan Paket:</h3> --}}

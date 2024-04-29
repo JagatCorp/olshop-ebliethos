@@ -89,7 +89,8 @@ class Product extends Model
             ->where('parent_id', null);
     }
 
-    public function orderItems()
+    
+       public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -98,6 +99,13 @@ class Product extends Model
     {
         return $this->orderItems()->count();
     }
+    
+       public function getTotalOrders()
+{
+    return $this->orderItems()->count();
+}
+
+    
     public function scopePopular($query, $limit = 10)
     {
         $month = now()->format('m');

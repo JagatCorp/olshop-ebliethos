@@ -1,39 +1,37 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\AboutController;
-use App\Http\Controllers\Admin\NinjaController;
+use App\Http\Controllers\Admin\ArtikelController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CouponController;
-use App\Http\Controllers\Admin\ReviewController;
-use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\ArtikelController;
-use App\Http\Controllers\Admin\CourierController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\TripielController;
-use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Admin\DatabaseController;
-use App\Http\Controllers\Admin\ProvinceController;
-use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Frontend\OrderController;
-use App\Http\Controllers\Frontend\ReplyController;
-use App\Http\Controllers\Admin\KecamatanController;
-use App\Http\Controllers\Admin\TestimoniController;
-use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\KonsultasiController;
-use App\Http\Controllers\Frontend\PaymentController;
-use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TestimoniController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CommentsController;
 use App\Http\Controllers\Frontend\HomepageController;
+use App\Http\Controllers\Admin\KecamatanController;
+use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\ReplyController;
+use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
 use App\Http\Controllers\Frontend\WishListController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\TripielController;
+use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\Admin\CourierController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CourierwarehousepricesController;
+use App\Http\Controllers\Admin\ProvinceController;
 use App\Http\Controllers\Frontend\TrackpaketController;
 use App\Http\Controllers\Admin\AdminTrackPaketController;
-use App\Http\Controllers\Admin\CourierwarehousepricesController;
 use App\Http\Controllers\Auth\OtpController;
-use App\Http\Controllers\Frontend\ReviewController as FrontendReviewController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,11 +66,12 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('orders/restore/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'restore'])->name('orders.restore');
     Route::resource('orders', \App\Http\Controllers\Admin\OrderController::class);
     Route::post('orders/complete/{order}', [\App\Http\Controllers\Admin\OrderController::class, 'doComplete'])->name('orders.complete');
-    Route::get('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
+    Route::get('orders/{order:id}/cancel', [\App\Http\Controllers\Admin\OrderController::class, 'cancel'])->name('orders.cancels');
     Route::put('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'doCancel'])->name('orders.cancel');
     Route::post('orders/edit-status', [\App\Http\Controllers\Admin\OrderController::class, 'update'])->name('orders.status.edit');
     // Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);
-    Route::get('shipments', [\App\Http\Controllers\Admin\ShipmentController::class,'index'])->name('shipments.index');
+    
+       Route::get('shipments', [\App\Http\Controllers\Admin\ShipmentController::class,'index'])->name('shipments.index');
     Route::post('shipments-update', [\App\Http\Controllers\Admin\ShipmentController::class,'update'])->name('shipments.update');
 
     Route::get('reports/revenue', [\App\Http\Controllers\Admin\ReportController::class, 'revenue'])->name('reports.revenue');
@@ -139,11 +138,8 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-coupon', [CouponController::class, 'store'])->name('create-coupon');
     Route::post('edit-coupon', [CouponController::class, 'update'])->name('edit-coupon');
     Route::get('delete-coupon/{id}', [CouponController::class, 'delete'])->name('delete-coupon');
-    // Ninja
-    Route::get('ninja', [NinjaController::class, 'index'])->name('ninja-index');
-    Route::post('/import-excel', [NinjaController::class, 'importExcel'])->name('import.excel');
-
-    //warehouse
+    
+      //warehouse
     Route::get('warehouse', [WarehouseController::class, 'index'])->name('warehouse-index');
     Route::post('create-warehouse', [WarehouseController::class, 'store'])->name('create-warehouse');
     Route::post('edit-warehouse', [WarehouseController::class, 'update'])->name('edit-warehouse');
@@ -161,16 +157,15 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('edit-city', [CityController::class, 'update'])->name('edit-city');
     Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
     //jquery fetch city by province
-    Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
-
-    Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
-    Route::get('/admin/city/edit-modal/{id}', 'CityController@editModal')->name('city.edit-modal');
-    //kecamatan
+    // Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
+    // Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
+    
+     //kecamatan
     Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
     Route::post('edit-kecamatan', [KecamatanController::class, 'update'])->name('edit-kecamatan');
     Route::get('delete-kecamatan/{id}', [KecamatanController::class, 'delete'])->name('delete-kecamatan');
-
+    
     //courier
     Route::get('courier', [CourierController::class, 'index'])->name('courier-index');
     Route::post('create-courier', [CourierController::class, 'store'])->name('create-courier');
@@ -188,10 +183,11 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-tripiel', [TripielController::class, 'store'])->name('create-tripiel');
     Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
     Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
-
-    // tranking paket by resi
+    
+     // tranking paket by resi
     Route::get('track-paket-admin', [AdminTrackPaketController::class, 'showTrackForm'])->name('track.form.admin');
     Route::get('track-paket-result-admin', [AdminTrackPaketController::class, 'trackPaket'])->name('track.paket');
+
 
     // database
     Route::get('database', [DatabaseController::class, 'index'])->name('database-index');
@@ -200,7 +196,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
 
 });
 
-Route::group(['middleware' => 'cek_visit_token'], function () {
+Route::group(['middleware' => 'cek_visit_token'], function() {
     // home
     Route::get('/', [HomepageController::class, 'index']);
     // products
@@ -223,17 +219,16 @@ Route::group(['middleware' => 'cek_visit_token'], function () {
     Route::post('carts', [CartController::class, 'store'])->name('carts.store');
     Route::post('carts/update', [CartController::class, 'update']);
     Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
-
+    
     // reviews
     Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
     // Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
-
+    
     Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
-
+    
     Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
-
-
 });
+
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('orders/checkout', [OrderController::class, 'checkout'])->middleware('auth');
@@ -261,7 +256,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
     // search shipping cost sesuai excel eblie
     Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
-// tranking paket by resi
+    
+    //jquery fetch city by province
+    Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
+    Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
+    
+    // tranking paket by resi
     Route::get('track-paket', [TrackpaketController::class, 'showTrackForm'])->name('track.form');
     Route::get('track-paket-result', [TrackpaketController::class, 'trackPaket'])->name('track.paket');
 
@@ -271,9 +271,9 @@ Route::post('payments/notification', [PaymentController::class, 'notification'])
 Route::get('payments/completed', [PaymentController::class, 'completed']);
 Route::get('payments/failed', [PaymentController::class, 'failed']);
 Route::get('payments/unfinish', [PaymentController::class, 'unfinish']);
+
 // otp verifikasi
 Route::get('verify', [OtpController::class, 'verify'])->name('verify');
 Route::post('send-otp', [OtpController::class, 'sendOTP'])->name('send.otp');
 Route::get('cek-otp', [OtpController::class, 'cekOTP'])->name('cek.otp');
 Route::post('verify-otp', [OtpController::class, 'verifyOTP'])->name('verify.otp');
-

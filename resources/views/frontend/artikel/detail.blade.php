@@ -13,7 +13,7 @@
                     <div class="ec-blogs-content">
                         <div class="ec-blogs-inner">
                             <div class="ec-blog-main-img">
-                                <img class="blog-image" src="{{ asset('img/fotoartikel/' . $artikelSelengkapnya->foto) }}"
+                                <img class="blog-image" src="{{ asset('core/public/img/fotoartikel/' . $artikelSelengkapnya->foto) }}"
                                     alt="Blog" />
                             </div>
                             <div class="ec-blog-date">
@@ -35,7 +35,7 @@
 
                                             <div class="ec-single-comment-wrapper mt-35">
                                                 <div class="ec-blog-user-img">
-                                                    <img src="{{ asset('img/fotouser/' . $comment->user->foto) }}">
+                                                    <img src="{{ asset('core/public/img/fotouser/' . $comment->user->foto) }}">
                                                 </div>
                                                 <div class="ec-blog-comment-content">
                                                     <h5>{{ $comment->user->name }}</h5>
@@ -66,7 +66,7 @@
                                             @foreach ($comment->replies as $reply)
                                                 <div class=" ec-single-comment-wrapper mt-50 ml-150 ">
                                                     <div class="ec-blog-user-img">
-                                                        <img src="{{ asset('img/fotouser/' . $reply->user->foto) }}">
+                                                        <img src="{{ asset('core/public/img/fotouser/' . $reply->user->foto) }}">
                                                     </div>
                                                     <div class="ec-blog-comment-content">
                                                         <h5>{{ $reply->user->name }}</h5>

@@ -1,19 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\City;
-use App\Models\Province;
-use App\Models\Kecamatan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Kecamatan;
+use App\Models\Province;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
 {
-
-
-    public function index(Request $request)
+    // public function index()
+    // {
+    //     $city = City::get();
+    //     $province = Province::all();
+    //     return view('admin.city.index', compact('city', 'province'));
+    // }
+     public function index(Request $request)
     {
         $province = Province::all();
         $city = City::all();
@@ -41,36 +45,6 @@ class CityController extends Controller
 
         return view('admin.city.index', compact('province', 'city'));
     }
-    public function editModal(Request $request)
-    {
-        $province = Province::all();
-        $city = City::all();
-        if ($request->ajax()) {
-            $data = City::with('province')->select('*'); // Menggunakan Eloquent relationship untuk mengambil data provinsi
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    return '
-                    <div class="btn-group mb-1">
-                        <button type="button" class="btn btn-outline-success">Action</button>
-                        <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                            <span class="sr-only">Info</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalEdit'.$row->city_id.'">Edit</a>
-                            <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->city_id.'">Delete</a>
-                        </div>
-                    </div>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('admin.city.edit', compact('province', 'city'));
-    }
-
-
-
     public function fetchCities(Request $request)
     {
         // Ambil province_id dari permintaan Ajax
@@ -82,7 +56,8 @@ class CityController extends Controller
         // Return data kota/kabupaten dalam format JSON
         return response()->json($cities);
     }
-    public function fetchDistrictsByCity(Request $request)
+    
+        public function fetchDistrictsByCity(Request $request)
 {
     // Ambil city_id dari permintaan Ajax
     $cityId = $request->input('city_id');
@@ -93,7 +68,6 @@ class CityController extends Controller
     // Return data kecamatan dalam format JSON
     return response()->json($districts);
 }
-
     public function store(Request $request)
     {
         $request->validate([

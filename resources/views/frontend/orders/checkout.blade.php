@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('themes/ezone/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('themes/ezone/assets/css/responsive.css') }}">
     <script src="{{ asset('themes/ezone/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
-    @include('sweetalert::alert')
+
     <!-- checkout-area start -->
     <div class="checkout-area ptb-100">
         <div class="container">
@@ -53,50 +53,8 @@
                                             value="{{ old('address2', auth()->user()->address2) }}">
                                     </div>
                                 </div>
-
-
-                                {{-- <div class="col-md-12">
-                                    <div class="checkout-form-list">
-                                        <label>Provinsi<span class="required">*</span></label>
-                                        <select name="province_id" id="shipping-province" required>
-                                            <option value="">-- Pilih Provinsi --</option>
-                                            @foreach ($provinces as $id => $province)
-                                                <option {{ auth()->user()->province_id == $id ? 'selected' : null }}
-                                                    value="{{ $id }}">{{ $province }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="checkout-form-list">
-                                        <label>Kota/Kab<span class="required">*</span></label>
-                                        <select name="shipping_city_id" id="shipping-city" required>
-                                            <option value="">-- Pilih Kota --</option>
-                                            @if ($cities)
-                                                @foreach ($cities as $id => $city)
-                                                    <option value="{{ $id }}">{{ $city }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                {{-- pake ajax --}}
-
-
-                                {{-- <div class="col-md-12 ">
-                                    <div class="checkout-form-list">
-                                        <label>Warehouse<span class="required">*</span></label><br>
-                                        <input type="checkbox" name="jakarta" id="jakarta" value="jakarta">
-                                        <label for="jakarta">Jakarta</label><br>
-                                        <input type="checkbox" name="surabaya" id="surabaya" value="surabaya">
-                                        <label for="surabaya">Surabaya</label><br>
-                                        <input type="checkbox" name="cilacap" id="cilacap" value="cilacap">
-                                        <label for="cilacap">Cilacap</label><br>
-                                        <input type="checkbox" name="medan" id="medan" value="medan">
-                                        <label for="medan">Medan</label><br>
-                                    </div>
-                                </div> --}}
-
+                                
+                                <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Gudang Pengiriman<span class="required">*</span></label>
@@ -109,20 +67,21 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                
+                                <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Provinsi<span class="required">*</span></label>
-                                        <select id="province" name="province_id" required>
+                                        <select id="province" name="province_id">
                                             <option value="">-- Pilih Provinsi --</option>
-                                            @foreach ($provinces as $province)
-                                                <option value="{{ $province->province_id }}">
-                                                    {{ $province->province_name }}
-                                                </option>
+                                            @foreach ($provinces as $id => $province)
+                                                <option value="{{ $province->province_id }}">{{ $province->province_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kota/Kab<span class="required">*</span></label>
@@ -131,7 +90,8 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                
+                                <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kecamatan<span class="required">*</span></label>
@@ -140,7 +100,8 @@
                                         </select>
                                     </div>
                                 </div>
-
+                                
+                                <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Courier<span class="required">*</span></label>
@@ -149,48 +110,7 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                {{-- <div class="col-md-6">
-                                    <div class="checkout-form-list">
-                                        <label>Provinsi<span class="required">*</span></label>
-                                        <select name="province_id" id="shipping-province" required>
-                                            <option value="">-- Pilih Provinsi --</option>
-                                            @foreach ($provinces as $id => $province)
-                                                <option {{ auth()->user()->province_id == $id ? 'selected' : null }}
-                                                    value="{{ $id }}">{{ $province }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="checkout-form-list">
-                                        <label>Kota/Kab<span class="required">*</span></label>
-                                        <select name="shipping_city_id" id="shipping-city" required>
-                                            <option value="">-- Pilih Kota --</option>
-                                            @if ($cities)
-                                                @foreach ($cities as $id => $city)
-                                                    <option value="{{ $id }}">{{ $city }}</option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="checkout-form-list">
-                                        <label>Courier<span class="required">*</span></label>
-                                        <select name="kurir" id="shipping-courier" required>
-
-                                            <option value="">-- Pilih Kurir --</option>
-
-                                            <option value="jne">jne</option>
-                                            <option value="jnt">jnt</option>
-                                            <option value="pos">pos</option>
-                                            <option value="tiki">tiki</option>
-                                            <option value="ninja">ninja</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-
+                                
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kode Pos<span class="required">*</span></label>
@@ -249,7 +169,6 @@
                                                     value="{{ old('address2') }}">
                                             </div>
                                         </div>
-
                                         <div class="col-md-12">
                                             <div class="checkout-form-list">
                                                 <label>Province<span class="required">*</span></label>
@@ -278,7 +197,7 @@
                                         <div class="col-md-6">
                                             <div class="checkout-form-list">
                                                 <label>Phone<span class="required">*</span></label>
-                                                <input type="text" name="customer_phone"
+                                                <input type="text" name="customer_phone" placeholder="08xxxxxxx"
                                                     value="{{ old('customer_phone') }}">
                                             </div>
                                         </div>
@@ -291,15 +210,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="order-notes">
                                     <div class="checkout-form-list mrg-nn">
                                         <label>Catatan Pesanan</label>
                                         <input type="text" name="note" value="{{ old('note') }}">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -317,12 +233,8 @@
                                     <tbody>
                                         @forelse ($items as $item)
                                             @php
-                                                $product = isset($item->model->parent)
-                                                    ? $item->model->parent
-                                                    : $item->model;
-                                                $image = !empty($product->productImages->first())
-                                                    ? asset('storage/' . $product->productImages->first()->path)
-                                                    : asset('themes/ezone/assets/img/cart/3.jpg');
+                                                $product = isset($item->model->parent) ? $item->model->parent : $item->model;
+                                                $image = !empty($product->productImages->first()) ? asset('storage/' . $product->productImages->first()->path) : asset('themes/ezone/assets/img/cart/3.jpg');
                                             @endphp
                                             <tr class="cart_item">
                                                 <td class="product-name">
@@ -345,17 +257,9 @@
                                             <td><span class="amount">Rp{{ Cart::subtotal(0, ',', '.') }}</span></td>
                                         </tr>
                                         <!-- <tr class="cart-subtotal">
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <th>Tax</th>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <td><span class="amount">jnfjk</span></td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </tr> -->
-                                        {{-- <tr class="cart-subtotal">
-                                            <th>Biaya Ongkir</th>
-                                            <td><select id="shipping-cost-option" required name="shipping_service">
-
-                                                </select></td>
-                                        </tr> --}}
-
+                                                                                  <th>Tax</th>
+                                                                                  <td><span class="amount">jnfjk</span></td>
+                                                                                 </tr> -->
                                         <tr class="cart-subtotal">
                                             <th>Biaya Ongkir</th>
                                             <td>
@@ -363,7 +267,7 @@
                                                     required></select>
                                             </td>
                                         </tr>
-
+                                        
                                         <tr class="cart-subtotal">
                                             <th>Type Pembayaran</th>
                                             <td>
@@ -371,7 +275,7 @@
                                                 </select>
                                             </td>
                                         </tr>
-
+                                        
                                         <tr class="order-total">
                                             <th>Order Total</th>
                                             <td><strong>Rp<span
@@ -379,11 +283,8 @@
                                             </td>
                                             <input type="text" hidden readonly name="shipping_price" class="shipping_price">
                                         </tr>
-
-
                                     </tfoot>
                                 </table>
-
                             </div>
                             <div class="payment-method">
                                 <div class="payment-accordion">
@@ -414,10 +315,10 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
-    {{-- ajax search shipping cost --}}
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             function createObjectHandler() {
@@ -451,6 +352,12 @@
                 var selectOngkir = $('#shipping-cost-options');
                 var selectCod = $('select[name="cod"]');
                 updateOrderTotal(0);
+                
+            
+                console.log($('select[name="warehouse_id"]').val());
+                console.log($('select[name="province_id"]').val());
+                console.log($('select[name="city_id"]').val());
+                console.log($('select[name="kecamatan_id"]').val());
 
                 // Periksa apakah semua bidang telah diisi dengan benar
                 if (warehouse_id && province_id && city_id && kecamatan_id) {
@@ -467,6 +374,7 @@
                         },
                         success: function(response) {
                             // Tampilkan harga jika berhasil ditemukan
+                                console.log(response);
                             if (response.price.length != 0) {
                                 // Update opsi biaya pengiriman
                                 selectOngkir.empty();
@@ -474,7 +382,6 @@
                                 courier_id.html(
                                     '<option value="">-- Pilih Kurir --</option>'
                                 );
-                                console.log(response.price);
 
                                 var arrayCod = [];
                                 response.price.forEach(function(item) {
@@ -482,7 +389,7 @@
                                     // console.log(valueOngkir);
                                     courier_id.append('<option value="' +
                                         item.courier.id +
-                                        '">' + item.courier.name + ' | ' + item.courier.type + ' | Rp. ' + parseInt(item.price) +
+                                        '">' + item.courier.name + (item.courier.type == null ? '' : ' | ' + item.courier.type) + ' | Rp. ' + parseInt(item.price) +
                                         '</option>');
                                     let dataCodHarga = [item.cod, item.price];
                                     // console.log('2', dataCodHarga)
@@ -535,23 +442,15 @@
                 $('.total-amount').text(newTotal.toLocaleString());
             }
 
-            // Ketika select province, city, courier, atau warehouse diubah, lakukan validasi dan kirimkan permintaan Ajax
-            // $('select[name="province_id"], select[name="city_id"], select[name="courier_id"], select[name="warehouse_id"]')
-            //     .change(function() {
-            //         console.log('coba');
-            //         $('select[name="province_id"]').empty();
-            //         $('select[name="city_id"]').empty();
-            //         $('select[name="courier_id"]').empty();
-            //         $('select[name="warehouse_id"]').empty();
-            //         validateAndSendRequest();
-            //     });
-
             $('select[name="courier_id"]').on('change', function() {
                 var selectOngkir = $('#shipping-cost-options');
                 var selectCod = $('select[name="cod"]');
                 selectOngkir.empty();
                 selectCod.empty();
+                
                 var selectCourier = $(this).find('option:selected');
+                console.log('selectOngkir', selectOngkir);
+                console.log('selectCod', selectCod);
                 var valueSelectCourier = codValue.getProperty(selectCourier.val());
                 var cloneCourier = selectCourier.clone();
                 updateOrderTotal(valueSelectCourier[1]);
@@ -590,7 +489,7 @@
         });
     </script>
     {{-- jquery fetch city based on province --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         $(document).ready(function() {
             $('#province').change(function() {
@@ -600,12 +499,13 @@
                 $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
 
                 $.ajax({
-                    url: '/admin/fetch-cities',
+                    url: '/fetch-cities',
                     method: 'GET',
                     data: {
                         province_id: provinceId
                     },
                     success: function(response) {
+                        // console.log(response);
                         $.each(response, function(index, city) {
                             $('#city').append('<option value="' + city.city_id + '">' +
                                 city.type + ' ' + city.city_name + '</option>');
@@ -628,12 +528,13 @@
                 $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
 
                 $.ajax({
-                    url: '/admin/fetch-districts-by-city',
+                    url: '/fetch-districts-by-city',
                     method: 'GET',
                     data: {
                         city_id: cityId
                     },
                     success: function(response) {
+                        console.log(response);
                         $.each(response, function(index, district) {
                             $('#district').append('<option value="' + district.id +
                                 '">' +
@@ -647,4 +548,5 @@
             });
         });
     </script>
+    
 @endsection

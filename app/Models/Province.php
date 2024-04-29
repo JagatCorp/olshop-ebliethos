@@ -20,4 +20,16 @@ class Province extends Model
     {
         return $this->hasMany(City::class, 'province_id', 'province_id');
     }
+    
+    public function tripiel()
+    {
+        return $this->hasMany(Tripiel::class, 'province_id', 'province_id');
+    }
+    
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_province_id', 'customer_province_id');
+    }
+    
+    
 }

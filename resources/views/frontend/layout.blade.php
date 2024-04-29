@@ -12,9 +12,9 @@
 
     </title>
     <meta name="keywords"
-        content="apparel, catalog, clean, ecommerce, ecommerce HTML, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
-    <meta name="description" content="Best ecommerce html template for single and multi vendor store.">
-    <meta name="author" content="ashishmaraviya">
+        content="herbal,susu,madu,jahe,apparel, catalog, clean, ecommerce, electronics, fashion, html eCommerce, html store, minimal, multipurpose, multipurpose ecommerce, online store, responsive ecommerce template, shops" />
+    <meta name="description" content="eblie shop">
+    <meta name="author" content="angga gumilang">
 
     <!-- site Favicon -->
     <link rel="icon" href="{{ asset('/images/ebli2.png') }}" sizes="32x32" />
@@ -49,8 +49,6 @@
 
     <!-- CSRF Token Penting  BuatAdd Cart -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <style>
     .btn-custom-outline {
@@ -135,9 +133,9 @@
                             </div>
                             <!-- Ec Header Search End -->
                             <!-- Header User Start -->
-                            {{-- <a href="{{ url('profile') }}" class="ec-header-btn ec-side-toggle">
-                                <div class="header-icon"><i class="fi-rr-user"></i></div>
-                            </a> --}}
+                            <!--<a href="/account" class="ec-header-btn ec-side-toggle">-->
+                            <!--    <div class="header-icon"><i class="fi-rr-user"></i></div>-->
+                            <!--</a>-->
                             <!-- Header User End -->
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
@@ -185,29 +183,23 @@
                                 </ul>
                             </div>
                         </div>
-                        @php
+                           @php
                             $settings = App\Models\Settings::first();
                         @endphp
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center col-3 " style="margin-left: -100px">
                             <div class="header-logo">
-                                @if (optional($settings)->logo)
-                                    <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
-                                            class="main-logo" alt="" /></a>
-                                @else
-                                    <a href="/"><img src="{{ asset('images/logoebli.png') }}"
-                                            class="main-logo" alt="" /></a>
-                                @endif
-
+                                <a href="/"><img
+                                        src="{{ asset('core/public/img/logotoko/' . $settings->logo) }}"  class="main-logo" /></a>
                             </div>
-                        </div>
-                        <style>
+                               <style>
                             .main-logo {
                                 width: 200px !important;
                                 height: 50px;
 
                             }
                         </style>
+                        </div>
                         <!-- Ec Header Logo End -->
 
                         <!-- Ec Header Button Start -->
@@ -278,13 +270,8 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            @if (optional($settings)->logo)
-                                <a href="/"><img src="{{ asset('img/logotoko/' . $settings->logo) }}"
-                                        alt="Site Logo" class="main-logo" /></a>
-                            @else
-                                <a href="/"><img src="{{ asset('images/logoebli.png') }}" alt="Site Logo"
-                                        class="main-logo" /></a>
-                            @endif
+                            <a href="/"><img src="{{ asset('core/public/img/logotoko/' . $settings->logo) }}"  class="main-logo"
+                                    alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -370,7 +357,7 @@
 
                                 @if ($product->productImages->isNotEmpty())
                                     <div>
-                                        <img src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                        <img src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                             alt="Product Image">
 
                                     </div>
@@ -485,12 +472,9 @@
                                 <h4 class="ec-footer-heading">TOKO KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link"><a href="{{ $settings->link_shopee }}">Shopee</a>
-                                        </li>
-                                        <li class="ec-footer-link"><a
-                                                href="{{ $settings->link_tokped }}">Tokopedia</a></li>
-                                        <li class="ec-footer-link"><a href="{{ $settings->link_tiktokshop }}">TikTok
-                                                Shop</a></li>
+                                        <li class="ec-footer-link"><a href="{{ $settings->link_shopee }}">Shopee</a></li>
+                                        <li class="ec-footer-link"><a href="{{ $settings->link_tokped }}">Tokopedia</a></li>
+                                        <li class="ec-footer-link"><a href="{{ $settings->link_tiktokshop }}">TikTok Shop</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -545,7 +529,7 @@
                             class="ec-cart-noti ec-header-count cart-count-lable">{{ Cart::count() }}</span></a>
                 </div>
                 <div class="ec-nav-panel-icons">
-                    <a href="{{ url('/') }}" class="ec-header-btn"><i class="fi-rr-home"></i></a>
+                    <a href="/" class="ec-header-btn"><i class="fi-rr-home"></i></a>
                 </div>
                 {{-- <div class="ec-nav-panel-icons">
                     <a href="wishlist.html" class="ec-header-btn"><i class="fi-rr-search"></i></a>
@@ -562,20 +546,22 @@
     <!-- Cart Floating Button -->
     <div class="ec-cart-float">
         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
-            <div class="header-icon"><i class="fi-rr-shopping-cart"></i>fgsd
+            <div class="header-icon"><i class="fi-rr-shopping-basket"></i>fgsd
             </div>
             <span class="ec-cart-count cart-count-lable">{{ Cart::count() }}</span>
         </a>
     </div>
     <!-- Cart Floating Button end -->
 
-    {{-- icon live chat --}}
+       {{-- icon live chat --}}
     <div class="ec-style ec-right-bottom d-flex  gap-2">
         <a href="https://chat.eblieshop.online/login">
             <img src="{{ asset('images/logochat.png') }}" alt="" width="40"
                 style="margin-right: 110px">
         </a>
     </div>
+     
+     
     <!-- Whatsapp -->
     <div class="ec-style ec-right-bottom">
         <!-- Start Floating Panel Container -->
@@ -590,20 +576,25 @@
                 <ul>
                     <!-- Start Single Contact List -->
                     <li>
+                    
                         <a class="ec-list" data-number="918866774266"
                             data-message="Please help me! I have got wrong product - ORDER ID is : #654321485">
+                           
                             <div class="d-flex bd-highlight">
+                                   
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
                                     <img src="{{ asset('/assets-user/images/whatsapp/profile_01.jpg') }}"
                                         class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon"></span>
                                 </div>
+                                
                                 <!-- Display Name & Last Seen -->
                                 <div class="ec-user-info">
                                     <span>Admin</span>
                                     <p>Admin aktif 7 menit yang lalu</p>
                                 </div>
+                                
                                 <!-- Chat iCon -->
                                 <div class="ec-chat-icon">
                                     <i class="fa fa-whatsapp"></i>

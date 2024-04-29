@@ -18,7 +18,7 @@
     <div class="shop-page-wrapper shop-page-padding ptb-100">
         <div class="container-fluid">
             <div class="row">
-                @include('frontend.partials.user_menu')
+                   @include('frontend.partials.user_menu')
                 <div class="col-lg-9">
                     <div class="d-flex justify-content-between">
                         <h2 class="text-dark font-weight-medium">Order ID #{{ $order->code }}</h2>

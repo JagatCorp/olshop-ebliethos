@@ -38,7 +38,7 @@
                                                     @if ($product->productImages->isNotEmpty())
                                                         <div>
                                                             <img class="prod-img"
-                                                                src="{{ asset('img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                 alt="Product Image">
 
                                                         </div>

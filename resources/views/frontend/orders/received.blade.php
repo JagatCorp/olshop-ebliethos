@@ -17,7 +17,7 @@
     <script src="{{ asset('themes/ezone/assets/js/vendor/modernizr-2.8.3.min.js') }}"></script>
 
     <!-- checkout-area start -->
-    @include('sweetalert::alert')
+        @include('sweetalert::alert')
     <div class="cart-main-area  ptb-100">
         <div class="container">
             <div class="row">
@@ -56,7 +56,6 @@
                                     Pengiriman
                                 </p>
                                 <address>
-                                    {{-- {{ $order->shipment->first_name }} {{ $order->shipment->last_name }} --}}
                                     {{ $order->shipment->first_name }} {{ $order->shipment->last_name }}
                                     <br> {{ $order->shipment->address1 }}
                                     <br> {{ $order->shipment->address2 }}
@@ -93,7 +92,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @php
+                                    @php
                                         function showAttributes($jsonAttributes)
                                         {
                                             $jsonAttr = (string) $jsonAttributes;
@@ -114,11 +113,11 @@
                                             }
                                             return $showAttributes;
                                         }
-                                    @endphp --}}
+                                    @endphp
                                     @forelse ($order->orderItems as $item)
                                         <tr>
                                             <td>{{ $item->id }}</td>
-                                            <td>{{ $item->product->name }}</td>
+                                            <td>{{ $item->name }}</td>
                                             {{-- <td>{!! showAttributes($item->attributes) !!}</td> --}}
                                             <td>{{ $item->qty }}</td>
                                             <td>Rp{{ number_format($item->base_price, 0, ',', '.') }}</td>
@@ -135,14 +134,12 @@
                         <div class="row">
                             <div class="col-md-5 ml-auto">
                                 <div class="cart-page-total">
-
-                                    {{-- <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span> --}}
                                     @php
                                         $jumlahTotal = $order->shipping_cost + $order->base_total_price;
                                         $jumlahDiskon = ($order->discount_percent / 100) * $jumlahTotal;
                                         $diskon = intval($order->discount_percent);
                                     @endphp
-                                    @if ($diskon === 0)
+                                     @if ($diskon === 0)
                                         <div class="ec-checkout-coupan-content hidden ">
                                             <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form"
                                                 method="POST"
@@ -181,7 +178,7 @@
                                     {{-- @if (!$order->isPaid())
                                         <a href="{{ $order->payment_url }}">Proceed to payment</a>
                                     @endif --}}
-
+                                    
                                     @if ($order->cod === 'yes')
                                         <form action={{ route('order-success', $order->id) }} method="get">
                                             <button type="submit"
@@ -190,7 +187,6 @@
                                     @else
                                         <a class="rounded-5 text-white" id="pay-button">Bayar</a>
                                     @endif
-
                                 </div>
                             </div>
                         </div>
@@ -200,9 +196,9 @@
     </div>
 @endsection
 
-
 @section('scripts')
-    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}">
+    </script>
     <script type="text/javascript">
         document.getElementById('pay-button').onclick = function() {
             // SnapToken acquired from previous step

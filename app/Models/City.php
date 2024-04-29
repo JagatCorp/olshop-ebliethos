@@ -23,5 +23,23 @@ class City extends Model
     {
         return $this->belongsTo(Province::class, 'province_id', 'province_id');
     }
+    
+    
+    /**
+     * Get all of the comments for the Warehouse
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tripiel(): HasMany
+    {
+        return $this->hasMany(Tripiel::class, 'city_id', 'city_id');
+    }
+    
+    public function order(): HasMany
+    {
+        return $this->hasMany(Order::class, 'customer_city_id', 'customer_city_id');
+    }
+    
+    
 
 }

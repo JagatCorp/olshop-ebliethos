@@ -11,9 +11,21 @@ use App\Models\Tripiel;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+
 class TripielController extends Controller
 {
-    public function index(Request $request)
+    // public function index()
+    // {
+    //     $tripiel = Tripiel::all();
+    //     $province = Province::all();
+    //     $city = City::all();
+    //     $courier = Kurir::all();
+    //     $warehouse = Warehouse::all();
+    //     $kecamatan = Kecamatan::all();
+    //     return view('admin.tripiel.index', compact('tripiel', 'province', 'city', 'courier', 'warehouse', 'kecamatan'));
+    // }
+    
+        public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = Tripiel::with(['province', 'city', 'courier', 'warehouse', 'kecamatan'])->select('*');
@@ -39,7 +51,7 @@ class TripielController extends Controller
         // Jika bukan permintaan Ajax, tampilkan tampilan biasa
         $province = Province::all();
         $city = City::all();
-        $tripiel = Tripiel::all();
+        $tripiel = Tripiel::limit(10)->get();
         $courier = Kurir::all();
         $warehouse = Warehouse::all();
         $kecamatan = Kecamatan::all();
@@ -49,22 +61,24 @@ class TripielController extends Controller
 
     public function store(Request $request)
     {
+        
+        // return response()->json($request);
         $request->validate([
-
             'courier_id' => 'required',
             'province_id' => 'required',
             'city_id' => 'required',
             'warehouse_id' => 'required',
+            'cod' => 'required',
 
         ]);
 
         Tripiel::create([
-
             'courier_id' => $request->courier_id,
             'province_id' => $request->province_id,
             'city_id' => $request->city_id,
             'warehouse_id' => $request->warehouse_id,
             'kecamatan_id' => $request->kecamatan_id,
+            'cod' => $request->cod,
             'price' => $request->price,
 
         ]);
@@ -79,6 +93,7 @@ class TripielController extends Controller
             'province_id' => 'required',
             'city_id' => 'required',
             'warehouse_id' => 'required',
+            'cod' => 'required',
 
         ]);
 
@@ -88,6 +103,7 @@ class TripielController extends Controller
             'city_id' => $request->city_id,
             'warehouse_id' => $request->warehouse_id,
             'kecamatan_id' => $request->kecamatan_id,
+            'cod' => $request->cod,
             'price' => $request->price,
 
         ]);
