@@ -154,7 +154,12 @@
                                         <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Type</label>
-                                                <input type="text" class="form-control" name="type" required />
+                                                {{-- <input type="text" class="form-control" name="type" required /> --}}
+                                                <select name="type" id="type" class="form-control" required>
+                                                    <option value="">-- pilih type --</option>
+                                                    <option value="Kabupaten">Kabupaten</option>
+                                                    <option value="Kota">Kota</option>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -222,8 +227,12 @@
                                         <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Type</label>
-                                                <input type="text" class="form-control" name="type"
-                                                    value="{{ $item->type }}" />
+                                                {{-- <input type="text" class="form-control" name="type"
+                                                    value="{{ $item->type }}" /> --}}
+                                                <select name="type" id="type" class="form-control" required>
+                                                    <option value="Kabupaten" {{ $item->type == "Kabupaten" ? 'selected' : '' }}>Kabupaten</option>
+                                                    <option value="Kota" {{ $item->type == "Kota" ? 'selected' : '' }}>Kota</option>
+                                                </select>
                                             </div>
                                         </div>
 
