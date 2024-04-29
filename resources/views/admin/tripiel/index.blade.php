@@ -26,7 +26,7 @@
                     <div class="ec-vendor-list card card-default">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table data-table">
+                                <table  class="table data-table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -35,6 +35,7 @@
                                             <th>Destination Kecamatan</th>
                                             <th>Courier</th>
                                             <th>Warehouse</th>
+                                            <th>Tipe Pembayaran</th>
                                             <th>Price</th>
                                             <th>Action</th>
                                         </tr>
@@ -74,6 +75,13 @@
                                                             data: 'warehouse.name',
                                                             name: 'warehouse.name'
                                                         },
+                                                         { 
+                                                           data: 'cod',
+                                                           name: 'cod',
+                                                           render: function(data) {
+                                                           return data === 'yes' ? 'COD' : 'Transfer';
+                                                             }
+                                                         },
                                                         {
                                                             data: 'price',
                                                             name: 'price'
@@ -88,7 +96,6 @@
                                                 });
                                             });
                                         </script>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -159,7 +166,7 @@
                                                 </option>
                                                 @foreach ($courier as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->name }} {{ $item->type }}
+                                                        {{ $item->name }} {{$item->type}}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -180,7 +187,19 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="code">Tipe Pembayaran</label>
+                                            <select name="cod" class="form-control" required>
+                                                <option value="">-- Select Type Pembayaran --
+                                                </option>
+                                                    <option value="yes">COD</option>
+                                                    <option value="no">Transfer</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  
                                     <div class="col-lg-6">
                                         <div class="form-group mb-4">
                                             <label for="userName">Price</label>
@@ -203,11 +222,12 @@
             </div>
             {{-- Edit Modal --}}
             @foreach ($tripiel as $item)
-                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1"
+                    role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
-                            <form action="{{ route('admin.edit-tripiel') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('admin.edit-tripiel') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-header px-4">
                                     <h5 class="modal-title" id="exampleModalCenterTitle">Edit Tripiel</h5>
@@ -252,7 +272,7 @@
                                                     @foreach ($courier as $courier_item)
                                                         <option value="{{ $courier_item->id }}"
                                                             {{ $courier_item->id == $item->id ? 'selected' : '' }}>
-                                                            {{ $courier_item->name }} {{ $item->type }}
+                                                            {{ $courier_item->name }} {{$item->type}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -287,6 +307,20 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        
+                                        
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="code">Tipe Pembayaran</label>
+                                                <select name="cod" class="form-control" required>
+                                                    <option value="">-- Select Type Pembayaran --
+                                                    </option>
+                                                        <option value="yes" {{ $item->cod == 'yes' ? 'selected' : '' }} >COD</option>
+                                                        <option value="no" {{ $item->cod == 'no' ? 'selected' : '' }} >Transfer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Price</label>
@@ -339,63 +373,62 @@
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
 
-    {{-- jquery fetch city based on province --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#province').change(function() {
-                var provinceId = $(this).val();
+      {{-- jquery fetch city based on province --}}
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $('#province').change(function() {
+                  var provinceId = $(this).val();
+  
+                  // Clear existing options and add default option
+                  $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
+  
+                  $.ajax({
+                      url: '/fetch-cities',
+                      method: 'GET',
+                      data: {
+                          province_id: provinceId
+                      },
+                      success: function(response) {
+                          $.each(response, function(index, city) {
+                              $('#city').append('<option value="' + city.city_id + '">' +
+                                  city.type + ' ' + city.city_name + '</option>');
+                          });
+                      },
+                      error: function(xhr, status, error) {
+                          console.error(error);
+                      }
+                  });
+              });
+          });
+      </script>
 
-                // Clear existing options and add default option
-                $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
+<script>
+    $(document).ready(function() {
+        $('#city').change(function() {
+            var cityId = $(this).val();
 
-                $.ajax({
-                    url: '/admin/fetch-cities',
-                    method: 'GET',
-                    data: {
-                        province_id: provinceId
-                    },
-                    success: function(response) {
-                        $.each(response, function(index, city) {
-                            $('#city').append('<option value="' + city.city_id + '">' +
-                                city.type + ' ' + city.city_name + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
+            // Clear existing options and add default option
+            $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+
+            $.ajax({
+                url: '/fetch-districts-by-city',
+                method: 'GET',
+                data: {
+                    city_id: cityId
+                },
+                success: function(response) {
+                    $.each(response, function(index, district) {
+                        $('#district').append('<option value="' + district.id + '">' +
+                            district.name + '</option>');
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
             });
         });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#city').change(function() {
-                var cityId = $(this).val();
-
-                // Clear existing options and add default option
-                $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
-
-                $.ajax({
-                    url: '/admin/fetch-districts-by-city',
-                    method: 'GET',
-                    data: {
-                        city_id: cityId
-                    },
-                    success: function(response) {
-                        $.each(response, function(index, district) {
-                            $('#district').append('<option value="' + district.id +
-                                '">' +
-                                district.name + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
-        });
-    </script>
+    });
+</script>
 
 @endsection

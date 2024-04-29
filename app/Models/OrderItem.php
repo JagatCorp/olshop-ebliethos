@@ -22,6 +22,12 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
 
+    public function getTotalOrders()
+    {
+    return $this->where('product_id', $this->product_id)->count();
+    }
+
+
     public function coupon()
     {
         return $this->belongsTo(Coupon::class);

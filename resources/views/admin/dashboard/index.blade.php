@@ -124,6 +124,20 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="col-xl-12 col-md-12 p-b-15">
+                <!-- Doughnut Chart -->
+                <div class="card card-default">
+                    <div class="card-header justify-content-center">
+                        <h2>Product Penjualan Berdasarkan Customer</h2>
+                    </div>
+                    <div class="card-body justify-content-center">
+                        <div id="productCustomerSales" style="width: 600px; height: 400px;"></div>
+
+                    </div>
+                </div>
             </div>
 
 
@@ -199,6 +213,92 @@
                     </div>
                 </div>
             </div> --}}
+
+            {{-- transaksi bulanan --}}
+            <div class="row">
+                <div class="col-12 p-b-15">
+                    <!-- Recent Order Table -->
+                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                        <div class="card-header justify-content-between">
+                            <h2>Transaksi pada bulan {{ \Carbon\Carbon::now()->monthName }}</h2>
+
+                            <div class="date-range-report">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0 pb-5">
+                            <div class="table-responsive">
+                                <table id="responsive-data-table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Product</th>
+                                            <th>Grand Total</th>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            <th>Diskon</th>
+                                            <th>Payment</th>
+                                            <th>Biaya Ongkir</th>
+                                            <th>Jasa Pengiriman</th>
+                                            <th>Customer Note</th>
+                                            <th>Customer Phone</th>
+                                            <th>Customer Kode Pos</th>
+                                            <th>Customer Address</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse ($transaksiBulanan as $order)
+                                            <tr>
+                                                <td>{{ $order->code }}<br>{{ $order->order_date }}</td>
+                                                <td>
+                                                    @foreach ($order->orderItems as $item)
+                                                        @if ($item->product)
+                                                            {{ $item->product->name }}<br>
+                                                            pembelian ke: {{ $item->product->totalOrders() }} kali
+                                                        @else
+                                                            {{ $item->name }}<br>
+                                                        @endif
+                                                        <br />
+                                                        <span style="font-size: 12px; font-weight: normal">
+                                                            qty: {{ $item->qty }}</span>
+                                                    @endforeach
+                                                </td>
+                                                <td>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $order->customer_full_name }}<br>
+                                                    <span
+                                                        style="font-size: 12px; font-weight: normal">{{ $order->customer_email }}</span>
+                                                </td>
+                                                <td>{{ $order->status }}</td>
+                                                <td>Diskon: {{ $order->discount_percent }}%</td>
+                                                <td>{{ $order->payment_status }}</td>
+                                                <td>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
+                                                <td>
+                                                    {{ $order->shipping_courier }}<br>
+                                                    <span
+                                                        style="font-size: 12px; font-weight: normal">{{ $order->shipping_service_name }}</span>
+                                                </td>
+                                                <td>{{ $order->note }}</td>
+                                                <td>{{ $order->customer_phone }}</td>
+                                                <td>{{ $order->customer_postcode }}</td>
+                                                <td>{{ $order->customer_address1 }}</td>
+
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="14">Tidak ada data pesanan</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
 
             {{-- <div class="row">
                 <div class="col-6 p-b-15">
@@ -297,7 +397,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="row">
+            <div class="row">
                 <div class="col-6 p-b-15">
                     <!-- Recent Order Table -->
                     <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
@@ -382,93 +482,9 @@
                         </div>
                     </div>
                 </div>
-            </div> --}}
-
-            {{-- transaksi bulanan --}}
-            <div class="row">
-                <div class="col-12 p-b-15">
-                    <!-- Recent Order Table -->
-                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
-                        <div class="card-header justify-content-between">
-                            <h2>Transaksi pada bulan {{ \Carbon\Carbon::now()->monthName }}</h2>
-
-                            <div class="date-range-report">
-                                <span></span>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0 pb-5">
-                            <div class="table-responsive">
-                                <table id="responsive-data-table" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Product</th>
-                                            <th>Grand Total</th>
-                                            <th>Name</th>
-                                            <th>Status</th>
-                                            <th>Diskon</th>
-                                            <th>Payment</th>
-                                            <th>Biaya Ongkir</th>
-                                            <th>Jasa Pengiriman</th>
-                                            <th>Customer Note</th>
-                                            <th>Customer Phone</th>
-                                            <th>Customer Kode Pos</th>
-                                            <th>Customer Address</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($transaksiBulanan as $order)
-                                            <tr>
-                                                <td>{{ $order->code }}<br>{{ $order->order_date }}</td>
-                                                <td>
-                                                    @foreach ($order->orderItems as $item)
-                                                        @if ($item->product)
-                                                            {{ $item->product->name }}<br>
-                                                            pembelian ke: {{ $item->product->totalOrders() }} kali
-                                                        @else
-                                                            {{ $item->name }}<br>
-                                                        @endif
-                                                        <br />
-                                                        <span style="font-size: 12px; font-weight: normal">
-                                                            qty: {{ $item->qty }}</span>
-                                                    @endforeach
-                                                </td>
-                                                <td>Rp{{ number_format($order->grand_total, 0, ',', '.') }}</td>
-                                                <td>
-                                                    {{ $order->customer_full_name }}<br>
-                                                    <span
-                                                        style="font-size: 12px; font-weight: normal">{{ $order->customer_email }}</span>
-                                                </td>
-                                                <td>{{ $order->status }}</td>
-                                                <td>Diskon: {{ $order->discount_percent }}%</td>
-                                                <td>{{ $order->payment_status }}</td>
-                                                <td>Rp{{ number_format($order->shipping_cost, 0, ',', '.') }}</td>
-                                                <td>
-                                                    {{ $order->shipping_courier }}<br>
-                                                    <span
-                                                        style="font-size: 12px; font-weight: normal">{{ $order->shipping_service_name }}</span>
-                                                </td>
-                                                <td>{{ $order->note }}</td>
-                                                <td>{{ $order->customer_phone }}</td>
-                                                <td>{{ $order->customer_postcode }}</td>
-                                                <td>{{ $order->customer_address1 }}</td>
-
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="14">Tidak ada data pesanan</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
+
+
 
 
         </div> <!-- End Content -->
@@ -652,8 +668,50 @@
     </script>
     {{-- end chart --}}
 
-    {{-- chart pembelian product --}}
+    {{-- start chart Product Penjualan Berdasarkan Customer --}}
     <script>
+        var chartData = {!! json_encode($chartData) !!};
+
+        // Persiapan data untuk chart
+        var chartSeries = chartData.map(function(data) {
+            // Menambahkan simbol persentase (%) di sini
+            return data.percentage;
+        });
+
+        var chartLabels = chartData.map(function(data) {
+            // Menambahkan informasi total order customer pada label chart
+            return data.customer + ': ' + data.product + ' (Sudah Beli: ' + data.total_orders_customer + ')';
+        });
+
+        // Konfigurasi chart
+        var options = {
+            series: chartSeries,
+            chart: {
+                width: 850,
+                type: 'pie',
+            },
+            labels: chartLabels,
+            responsive: [{
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200
+                    },
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }]
+        };
+
+        // Render chart
+        var chart = new ApexCharts(document.querySelector("#productCustomerSales"), options);
+        chart.render();
+    </script>
+    {{-- end chart Product Penjualan Berdasarkan Customer --}}
+
+    {{-- chart pembelian product --}}
+    {{-- <script>
         var options = {
             series: {!! json_encode(array_values($pembelians)) !!},
             labels: {!! json_encode(array_keys($pembelians)) !!},
@@ -676,7 +734,7 @@
 
         var chart = new ApexCharts(document.querySelector("#PembelianOverview"), options);
         chart.render();
-    </script>
+    </script> --}}
     {{-- end pembelian product --}}
 
 @endsection
