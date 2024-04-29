@@ -92,6 +92,22 @@ class ProductImageController extends Controller
      */
     public function destroy(Product $product, ProductImage $product_image)
     {
+        // dd(file_exists(public_path('img/fotoproducts/' . $product_image->foto)));
+        // dd($product_image->foto != null);
+
+        $public_path_video = public_path('img/videoproducts/' . $product_image->video);
+        $public_path_foto = public_path('img/fotoproducts/' . $product_image->foto);
+
+        if (file_exists($public_path_foto) && $product_image->foto != null && is_file($public_path_foto)) {
+            // Menghapus file jika ada
+            unlink($public_path_foto);
+        }
+
+        if (file_exists($public_path_video) && $product_image->video != null && is_file($public_path_video)) {
+            // Menghapus video jika ada
+            unlink($public_path_video);
+        }
+
         File::delete('storage/' . $product_image->path);
         $product_image->delete();
 

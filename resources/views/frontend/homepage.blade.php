@@ -57,7 +57,7 @@
             <!-- Main slider -->
             <div class="swiper-wrapper">
                 @foreach ($slider as $item)
-                    <div style="background: url('{{ asset('core/public/img/fotoslider/' . $item->foto) }}') no-repeat; background-size: cover; margin-bottom:0px; background-position: center center;"
+                    <div style="background: url('{{ asset('/img/fotoslider/' . $item->foto) }}') no-repeat; background-size: cover; margin-bottom:0px; background-position: center center;"
                         class="ec-slide-item swiper-slide d-flex ec-slide-1 ">
                         <div class="container align-self-center">
                             <div class="row">
@@ -148,7 +148,7 @@
                         @foreach ($banner as $item)
                             <div class="ec-insta-item" style="width: 600px !important;height: 160px !important">
                                 <div class="">
-                                    <a href="/special-deal"><img src="{{ asset('core/public/img/fotobanner/' . $item->foto) }}"
+                                    <a href="/special-deal"><img src="{{ asset('/img/fotobanner/' . $item->foto) }}"
                                             alt="insta"></a>
                                 </div>
                             </div>
@@ -208,10 +208,10 @@
                                                             @if ($product->productImages->isNotEmpty())
                                                                 <div>
                                                                     <img class="main-image"
-                                                                        src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                         alt="Product Image">
                                                                     <img class="hover-image"
-                                                                        src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                         alt="Product Image">
                                                                 </div>
                                                             @endif
@@ -319,10 +319,10 @@
                                                     @if ($product->productImages->isNotEmpty())
                                                         <div>
                                                             <img class="main-image"
-                                                                src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                 alt="Product Image">
                                                             <img class="hover-image"
-                                                                src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                 alt="Product Image">
                                                         </div>
                                                     @endif
@@ -408,7 +408,7 @@
                                     @if ($product->productImages->isNotEmpty())
                                         <div class="qty-slide">
                                             <img class="img-responsive cover-image"
-                                                src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                 alt="Product" />
                                         </div>
                                     @endif
@@ -421,12 +421,12 @@
                                                 <div class="easyzoom easyzoom--overlay">
                                                     @if ($image->foto)
                                                         <img class="img-responsive thumbnail-image"
-                                                            src="{{ asset('core/public/img/fotoproducts/' . $image->foto) }}"
+                                                            src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                             alt="Product" />
                                                     @elseif ($image->video)
                                                         <video width="100%" height="100%" controls>
                                                             <source
-                                                                src="{{ asset('core/public/img/videoproducts/' . $image->video) }}"
+                                                                src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                                 type="video/mp4">
                                                         </video>
                                                     @endif
@@ -523,7 +523,7 @@
                         @foreach ($testimoni as $item)
                             <li class="ec-test-item">
                                 <div class="ec-test-inner">
-                                   <img  <img src="{{ asset('core/public/img/fototestimoni/' . $item->image) }}"
+                                   <img  <img src="{{ asset('/img/fototestimoni/' . $item->image) }}"
                                         style="border-radius: 50%; width:150px; height:150px" class="mx-auto" />/>
                                     <div class="ec-test-content">
                                         <div class="ec-test-desc"><i class="fi-rr-quote-right top"></i>

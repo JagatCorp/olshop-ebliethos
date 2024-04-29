@@ -190,7 +190,7 @@
                         <div class="align-self-center col-3 " style="margin-left: -100px">
                             <div class="header-logo">
                                 <a href="/"><img
-                                        src="{{ asset('core/public/img/logotoko/' . $settings->logo) }}"  class="main-logo" /></a>
+                                        src="{{ asset('/img/logotoko/' . $settings->logo) }}"  class="main-logo" /></a>
                             </div>
                                <style>
                             .main-logo {
@@ -270,7 +270,7 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="/"><img src="{{ asset('core/public/img/logotoko/' . $settings->logo) }}"  class="main-logo"
+                            <a href="/"><img src="{{ asset('/img/logotoko/' . $settings->logo) }}"  class="main-logo"
                                     alt="Site Logo" /></a>
                         </div>
                     </div>
@@ -357,7 +357,7 @@
 
                                 @if ($product->productImages->isNotEmpty())
                                     <div>
-                                        <img src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                        <img src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                             alt="Product Image">
 
                                     </div>
@@ -560,8 +560,8 @@
                 style="margin-right: 110px">
         </a>
     </div>
-     
-     
+
+
     <!-- Whatsapp -->
     <div class="ec-style ec-right-bottom">
         <!-- Start Floating Panel Container -->
@@ -576,25 +576,25 @@
                 <ul>
                     <!-- Start Single Contact List -->
                     <li>
-                    
+
                         <a class="ec-list" data-number="918866774266"
                             data-message="Please help me! I have got wrong product - ORDER ID is : #654321485">
-                           
+
                             <div class="d-flex bd-highlight">
-                                   
+
                                 <!-- Profile Picture -->
                                 <div class="ec-img-cont">
                                     <img src="{{ asset('/assets-user/images/whatsapp/profile_01.jpg') }}"
                                         class="ec-user-img" alt="Profile image">
                                     <span class="ec-status-icon"></span>
                                 </div>
-                                
+
                                 <!-- Display Name & Last Seen -->
                                 <div class="ec-user-info">
                                     <span>Admin</span>
                                     <p>Admin aktif 7 menit yang lalu</p>
                                 </div>
-                                
+
                                 <!-- Chat iCon -->
                                 <div class="ec-chat-icon">
                                     <i class="fa fa-whatsapp"></i>

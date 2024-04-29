@@ -31,6 +31,13 @@ class ProfileController extends Controller
         $imageName = $user->foto ?: $defaultImageName; // Jika foto tidak ada, gunakan foto default
 
         if ($request->hasFile('foto')) {
+
+            $public_path = public_path('img/fotouser/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('foto');
             $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $image->move(public_path('img/fotouser/'), $imageName);

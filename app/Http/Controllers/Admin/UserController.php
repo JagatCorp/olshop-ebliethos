@@ -58,6 +58,13 @@ class UserController extends Controller
 
         $imageName = $request->gambarLama;
         if ($request->hasFile('foto')) {
+
+            $public_path = public_path('img/fotouser/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('foto');
             $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $image->move(public_path('img/fotouser/'), $imageName);
@@ -99,6 +106,13 @@ class UserController extends Controller
     public function delete($id)
     {
         $user = User::find($id);
+
+        $public_path = public_path('img/fotouser/' . $user->foto);
+        if (file_exists($public_path) && is_file($public_path)) {
+            // Menghapus file jika ada
+            unlink($public_path);
+        }
+
         $user->delete();
         return redirect('/admin/users')->with('toast_success', 'User Berhasil Di Hapus');
     }

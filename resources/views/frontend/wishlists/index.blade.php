@@ -54,10 +54,10 @@
                                                                             @if ($product->productImages->isNotEmpty())
                                                                                 <div>
                                                                                     <img class="main-image"
-                                                                                        src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                                         alt="Product Image">
                                                                                     <img class="hover-image"
-                                                                                        src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                                        src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                                         alt="Product Image">
                                                                                 </div>
                                                                             @endif
@@ -86,7 +86,7 @@
                                                                     <h5 class="ec-pro-title"><a
                                                                             href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
                                                                     </h5>
-                                              
+
 
 
                                                                     <span class="ec-price">

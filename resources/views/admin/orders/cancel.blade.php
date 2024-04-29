@@ -18,7 +18,7 @@
                             </div>
                             <div class="form-footer pt-5 border-top">
                                 <button type="submit" class="btn btn-danger">Cancel Order</button>
-                                <a href="{{ url('admin/orders') }}" class="btn btn-primary">Kembali</a>
+                                <a href="{{ url('admin/shipments') }}" class="btn btn-primary">Kembali</a>
                             </div>
                         </form>
                     </div>

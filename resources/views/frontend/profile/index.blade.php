@@ -35,7 +35,7 @@
                                                     @if (Auth()->user()->foto)
                                                         {{-- Tampilkan foto pengguna jika tersedia --}}
                                                         <img class="v-img mt-2"
-                                                            src="{{ asset('core/public/img/fotouser/' . Auth()->user()->foto) }}">
+                                                            src="{{ asset('/img/fotouser/' . Auth()->user()->foto) }}">
                                                     @else
                                                         {{-- Tampilkan gambar default jika foto pengguna kosong --}}
                                                         <img class="v-img mt-2" src="/img/avatar.jpg">
@@ -162,7 +162,7 @@
                                                 @if (Auth()->user()->foto)
                                                     {{-- Tampilkan foto pengguna jika tersedia --}}
                                                     <img class="image-thumb-preview ec-image-preview v-img mt-3"
-                                                        src="{{ asset('core/public/img/fotouser/' . Auth()->user()->foto) }}" />
+                                                        src="{{ asset('/img/fotouser/' . Auth()->user()->foto) }}" />
                                                 @else
                                                     {{-- Tampilkan gambar default jika foto pengguna kosong --}}
                                                     <img class="image-thumb-preview ec-image-preview v-img mt-3"

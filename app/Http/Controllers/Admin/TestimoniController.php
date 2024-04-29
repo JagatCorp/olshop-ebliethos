@@ -38,6 +38,13 @@ class TestimoniController extends Controller
 
         $imageName = $request->gambarLama;
         if ($request->hasFile('image')) {
+
+            $public_path = public_path('img/fototestimoni/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('image');
             $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
             $image->move(public_path('img/fototestimoni/'), $imageName);
@@ -55,6 +62,13 @@ class TestimoniController extends Controller
     public function delete($id)
     {
         $slider = Testimoni::find($id);
+
+        $public_path = public_path('img/fototestimoni/' . $slider->image);
+        if (file_exists($public_path) && is_file($public_path)) {
+            // Menghapus file jika ada
+            unlink($public_path);
+        }
+
         $slider->delete();
         return redirect()->route('admin.testimoni-index')->with('toast_success', 'Testimoni Berhasil Di Hapus');
     }

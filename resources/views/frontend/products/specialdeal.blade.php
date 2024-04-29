@@ -44,10 +44,10 @@
                                                         @if ($product->productImages->isNotEmpty())
                                                             <div>
                                                                 <img class="main-image"
-                                                                    src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                                 <img class="hover-image"
-                                                                    src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                                    src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                                     alt="Product Image">
                                                             </div>
                                                         @endif
@@ -156,7 +156,7 @@
                                 </div>
                             @endif
 
-                           
+
                         </div>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                                     @if ($product->productImages->isNotEmpty())
                                         <div class="qty-slide">
                                             <img class="img-responsive cover-image"
-                                                src="{{ asset('core/public/img/fotoproducts/' . $product->productImages->first()->foto) }}"
+                                                src="{{ asset('/img/fotoproducts/' . $product->productImages->first()->foto) }}"
                                                 alt="Product" />
                                         </div>
                                     @endif
@@ -192,12 +192,12 @@
                                                 <div class="easyzoom easyzoom--overlay">
                                                     @if ($image->foto)
                                                         <img class="img-responsive thumbnail-image"
-                                                            src="{{ asset('core/public/img/fotoproducts/' . $image->foto) }}"
+                                                            src="{{ asset('/img/fotoproducts/' . $image->foto) }}"
                                                             alt="Product" />
                                                     @elseif ($image->video)
                                                         <video width="100%" height="100%" controls>
                                                             <source
-                                                                src="{{ asset('core/public/img/videoproducts/' . $image->video) }}"
+                                                                src="{{ asset('/img/videoproducts/' . $image->video) }}"
                                                                 type="video/mp4">
                                                         </video>
                                                     @endif
@@ -262,7 +262,7 @@
         thumbnailImages.forEach(function(thumbnailImage) {
             // Tambahkan event listener untuk setiap thumbnail-image
             thumbnailImage.addEventListener('click', function() {
-                // Ambil sumber gambar dari thumbnail-image yang diklik 
+                // Ambil sumber gambar dari thumbnail-image yang diklik
                 var clickedImageSrc = this.getAttribute('src');
                 // Ambil elemen cover-image di dalam modal yang sedang aktif
                 var activeModalCoverImage = document.querySelector('.modal.fade.show .cover-image');

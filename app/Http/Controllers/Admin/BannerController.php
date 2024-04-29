@@ -37,6 +37,13 @@ class BannerController extends Controller
 
         $imageName = $request->gambarLama;
         if ($request->hasFile('foto')) {
+
+            $public_path = public_path('img/fotobanner/' . $imageName);
+            if (file_exists($public_path) && is_file($public_path)) {
+                // Menghapus file jika ada
+                unlink($public_path);
+            }
+
             $image = $request->file('foto');
             $imageName = time() . '_' . $request->file('foto')->getClientOriginalName();
             $image->move(public_path('img/fotobanner/'), $imageName);
@@ -53,6 +60,13 @@ class BannerController extends Controller
     public function delete($id)
     {
         $banner = Banner::find($id);
+
+        $public_path = public_path('img/fotobanner/' . $banner->foto);
+        if (file_exists($public_path) && is_file($public_path)) {
+            // Menghapus file jika ada
+            unlink($public_path);
+        }
+
         $banner->delete();
         return redirect()->route('admin.banner-index')->with('toast_success', 'Banner Berhasil Di Hapus');
     }

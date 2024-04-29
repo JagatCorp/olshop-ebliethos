@@ -43,7 +43,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>
                                                     <img width="200px"
-                                                        src="{{ asset('core/public/img/fototestimoni/' . $item->image) }}"
+                                                        src="{{ asset('/img/fototestimoni/' . $item->image) }}"
                                                         alt="foto testimoni" />
                                                 </td>
                                                 <td>{!! $item->testimoni !!}</td>
@@ -183,7 +183,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <a href="{{ route('admin.delete-slider', $item->id) }}" class="btn btn-danger"
+                                <a href="{{ route('admin.delete-testimoni', $item->id) }}" class="btn btn-danger"
                                     id="confirmDelete">Hapus</a>
                             </div>
                         </div>

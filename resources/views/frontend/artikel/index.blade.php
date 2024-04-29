@@ -18,7 +18,7 @@
                                             <div class="ec-blog-image">
                                                 <a href="{{ url('/detail-artikel', $item->slug) }}">
                                                     <img class="blog-image"
-                                                        src="{{ asset('core/public/img/fotoartikel/' . $item->foto) }}"
+                                                        src="{{ asset('/img/fotoartikel/' . $item->foto) }}"
                                                         alt="Blog" />
                                                 </a>
                                             </div>

@@ -28,7 +28,7 @@
                                             @forelse($orders as $order)
                                                 <div class="ec-single-comment-wrapper mt-35">
                                                     <div class=" ec-blog-user-img">
-                                                        <img src="{{ asset('core/public/img/fotoproducts/' . $order->orderItems->first()->product->productImages->first()->foto) }}"
+                                                        <img src="{{ asset('/img/fotoproducts/' . $order->orderItems->first()->product->productImages->first()->foto) }}"
                                                             alt="image">
                                                     </div>
                                                     <div class="ec-blog-comment-content">

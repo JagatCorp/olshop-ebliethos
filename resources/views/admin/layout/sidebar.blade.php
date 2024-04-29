@@ -4,7 +4,7 @@
             $settings = App\Models\Settings::first();
         @endphp
         <div class="ec-brand">
-            <img class="ec-brand-icon" src="{{ asset('core/public/img/logotoko/' . $settings->logo) }}" alt=""
+            <img class="ec-brand-icon" src="{{ asset('/img/logotoko/' . $settings->logo) }}" alt=""
                 style="width: auto; height: 40px; margin-left: 30px" />
             {{-- <a href="index.html" title="Ekka">
 
@@ -71,7 +71,7 @@
                                     <span class="nav-text">Testimoni</span>
                                 </a>
                             </li>
-                            
+
                              <li class="@yield('ActiveSettings')">
                                 <a class="sidenav-item-link" href="{{ url('admin/settings') }}">
                                     <span class="nav-text">Settings</span>
