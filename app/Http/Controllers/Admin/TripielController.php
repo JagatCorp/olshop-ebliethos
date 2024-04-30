@@ -24,7 +24,7 @@ class TripielController extends Controller
     //     $kecamatan = Kecamatan::all();
     //     return view('admin.tripiel.index', compact('tripiel', 'province', 'city', 'courier', 'warehouse', 'kecamatan'));
     // }
-    
+
         public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -51,7 +51,8 @@ class TripielController extends Controller
         // Jika bukan permintaan Ajax, tampilkan tampilan biasa
         $province = Province::all();
         $city = City::all();
-        $tripiel = Tripiel::limit(10)->get();
+        $tripiel = Tripiel::all();
+        // $tripiel = Tripiel::limit(10)->get();
         $courier = Kurir::all();
         $warehouse = Warehouse::all();
         $kecamatan = Kecamatan::all();
@@ -61,7 +62,7 @@ class TripielController extends Controller
 
     public function store(Request $request)
     {
-        
+
         // return response()->json($request);
         $request->validate([
             'courier_id' => 'required',

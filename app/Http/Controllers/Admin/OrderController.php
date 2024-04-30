@@ -23,10 +23,15 @@ class OrderController extends Controller
         $orders = Order::latest();
 
         $q = $request->input('q');
-        if ($q) {
-            $orders = $orders->where('code', 'like', '%' . $q . '%')
-                ->orWhere('customer_first_name', 'like', '%' . $q . '%')
-                ->orWhere('customer_last_name', 'like', '%' . $q . '%');
+        if ($q !== '') {
+            $orders = $orders->where(function ($query) use ($q) {
+                $query->where('code', 'like', '%' . $q . '%')
+                    ->orWhereHas('orderItems.product', function ($query) use ($q) {
+                        $query->where('name', 'like', '%' . $q . '%');
+                    })
+                    ->orWhere('customer_first_name', 'like', '%' . $q . '%')
+                    ->orWhere('customer_last_name', 'like', '%' . $q . '%');
+            });
         }
 
         if ($request->input('status') && in_array($request->input('status'), array_keys(Order::STATUSES))) {
@@ -52,7 +57,7 @@ class OrderController extends Controller
                 return redirect('admin/orders');
             }
 
-            $order = $orders->whereRaw("DATE(order_date) >= ?", $startDate)
+            $orders = $orders->whereRaw("DATE(order_date) >= ?", $startDate)
                 ->whereRaw("DATE(order_date) <= ? ", $endDate);
         }
 
