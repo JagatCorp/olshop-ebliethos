@@ -472,9 +472,9 @@
                                 <h4 class="ec-footer-heading">TOKO KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link"><a href="{{ $settings->link_shopee }}">Shopee</a></li>
-                                        <li class="ec-footer-link"><a href="{{ $settings->link_tokped }}">Tokopedia</a></li>
-                                        <li class="ec-footer-link"><a href="{{ $settings->link_tiktokshop }}">TikTok Shop</a></li>
+                                        <li class="ec-footer-link"><a href="https://shopee.co.id/{{ $settings->link_shopee }}">Shopee</a></li>
+                                        <li class="ec-footer-link"><a href="https://www.tokopedia.com/{{ $settings->link_tokped }}">Tokopedia</a></li>
+                                        <li class="ec-footer-link"><a href="https://www.tiktok.com/{{ '@' . $settings->link_tiktokshop }}">TikTok Shop</a></li>
                                     </ul>
                                 </div>
                             </div>
