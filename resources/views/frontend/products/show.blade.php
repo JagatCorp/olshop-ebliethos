@@ -215,7 +215,7 @@
                             <li class="categories-title">Categories :</li>
                             @foreach ($product->categories as $category)
                                 <li><a
-                                        href="{{ url('products/category/' . $category->slug) }}">{{ $category->name }}</a>
+                                        href="{{ url('products?category=' . $category->slug) }}">{{ $category->name }}</a>
                                 </li>
                             @endforeach
                         </ul>
