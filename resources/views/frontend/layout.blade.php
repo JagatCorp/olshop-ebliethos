@@ -183,22 +183,22 @@
                                 </ul>
                             </div>
                         </div>
-                           @php
+                        @php
                             $settings = App\Models\Settings::first();
                         @endphp
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center col-3 " style="margin-left: -100px">
                             <div class="header-logo">
-                                <a href="/"><img
-                                        src="{{ asset('/img/logotoko/' . $settings->logo) }}"  class="main-logo" /></a>
+                                <a href="/"><img src="{{ asset('/img/logotoko/' . $settings->logo) }}"
+                                        class="main-logo" /></a>
                             </div>
-                               <style>
-                            .main-logo {
-                                width: 200px !important;
-                                height: 50px;
+                            <style>
+                                .main-logo {
+                                    width: 200px !important;
+                                    height: 50px;
 
-                            }
-                        </style>
+                                }
+                            </style>
                         </div>
                         <!-- Ec Header Logo End -->
 
@@ -270,8 +270,8 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="/"><img src="{{ asset('/img/logotoko/' . $settings->logo) }}"  class="main-logo"
-                                    alt="Site Logo" /></a>
+                            <a href="/"><img src="{{ asset('/img/logotoko/' . $settings->logo) }}"
+                                    class="main-logo" alt="Site Logo" /></a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -472,9 +472,15 @@
                                 <h4 class="ec-footer-heading">TOKO KAMI</h4>
                                 <div class="ec-footer-links">
                                     <ul class="align-items-center">
-                                        <li class="ec-footer-link"><a href="https://shopee.co.id/{{ $settings->link_shopee }}">Shopee</a></li>
-                                        <li class="ec-footer-link"><a href="https://www.tokopedia.com/{{ $settings->link_tokped }}">Tokopedia</a></li>
-                                        <li class="ec-footer-link"><a href="https://www.tiktok.com/{{ '@' . $settings->link_tiktokshop }}">TikTok Shop</a></li>
+                                        <li class="ec-footer-link"><a
+                                                href="https://shopee.co.id/{{ $settings->link_shopee }}">Shopee</a>
+                                        </li>
+                                        <li class="ec-footer-link"><a
+                                                href="https://www.tokopedia.com/{{ $settings->link_tokped }}">Tokopedia</a>
+                                        </li>
+                                        <li class="ec-footer-link"><a
+                                                href="https://www.tiktok.com/{{ '@' . $settings->link_tiktokshop }}">TikTok
+                                                Shop</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -553,9 +559,9 @@
     </div>
     <!-- Cart Floating Button end -->
 
-       {{-- icon live chat --}}
+    {{-- icon live chat --}}
     <div class="ec-style ec-right-bottom d-flex  gap-2">
-        <a href="https://chat.eblieshop.online/login">
+        <a href="https://chat.mendjamu.com">
             <img src="{{ asset('images/logochat.png') }}" alt="" width="40"
                 style="margin-right: 110px">
         </a>
