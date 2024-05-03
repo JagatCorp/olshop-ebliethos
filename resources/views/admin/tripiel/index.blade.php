@@ -352,8 +352,8 @@
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form enctype="multipart/form-data">
-
+                        <form enctype="multipart/form-data" action="{{ route('admin.edit-tripiel') }}" method="POST">
+                            @csrf
                             <div class="modal-header px-4">
                                 <h5 class="modal-title" id="exampleModalCenterTitle">Edit Tripiel</h5>
                             </div>
@@ -401,12 +401,7 @@
                                         <div class="form-group mb-4">
                                             <label for="userName">Kecamatan</label>
                                             <select name="kecamatan_id" class="form-control kecamatan">
-                                                {{-- @foreach ($kecamatan as $kecamatan_item)
-                                                    <option value="{{ $kecamatan_item->id }}"
-                                                        {{ $kecamatan_item->id == $item->id ? 'selected' : '' }}>
-                                                        {{ $kecamatan_item->name }}
-                                                    </option>
-                                                @endforeach --}}
+                                                {{-- pake ajax --}}
                                             </select>
                                         </div>
                                     </div>
@@ -416,12 +411,7 @@
                                         <div class="form-group">
                                             <label for="code">Tipe Pembayaran</label>
                                             <select name="cod" class="form-control type_pem" required>
-                                                {{-- <option value="">-- Select Type Pembayaran --
-                                                </option>
-                                                <option value="yes" {{ $item->cod == 'yes' ? 'selected' : '' }}>COD
-                                                </option>
-                                                <option value="no" {{ $item->cod == 'no' ? 'selected' : '' }}>Transfer
-                                                </option> --}}
+                                                {{-- pake ajax --}}
                                             </select>
                                         </div>
                                     </div>

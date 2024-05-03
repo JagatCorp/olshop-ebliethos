@@ -71,7 +71,6 @@ class TripielController extends Controller
 
     public function store(Request $request)
     {
-
         // return response()->json($request);
         $request->validate([
             'courier_id' => 'required',

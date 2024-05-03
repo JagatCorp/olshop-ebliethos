@@ -17,7 +17,7 @@ $(document).ready(function () {
             type: "GET",
             url: url + "/" + tripiel_id,
             success: function (data) {
-                console.log('data', data);
+                // console.log('data', data);
                 $("#tripiel_id").val(data.id);
                 $("#price").val(data.price);
                 var selectProvince = $(".province")[0]; // Mengakses elemen DOM asli
@@ -61,7 +61,6 @@ $(document).ready(function () {
                     },
                 });
 
-
                 // CITY
                 $.ajax({
                     type: "GET",
@@ -89,7 +88,6 @@ $(document).ready(function () {
                     },
                 });
 
-
                 // COURIER
                 $.ajax({
                     type: "GET",
@@ -115,7 +113,6 @@ $(document).ready(function () {
                         console.log("Error:", courierData);
                     },
                 });
-
 
                 // WAREHOUSE
                 $.ajax({
@@ -143,7 +140,6 @@ $(document).ready(function () {
                         console.log("Error:", warehouseData);
                     },
                 });
-
 
                 // KECAMATAN
                 $.ajax({
@@ -188,13 +184,12 @@ $(document).ready(function () {
                     selectType.appendChild(optionElement);
                 });
 
-
                 $("#updateModal").modal("show"); // Menampilkan modal
             },
             error: function (data) {
                 console.log("Error:", data);
             },
-        });
+        })
     });
 
     //create new product / update existing product ***************************
