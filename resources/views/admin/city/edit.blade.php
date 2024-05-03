@@ -50,13 +50,13 @@
                                      </div>
                                  </div>
 
-                                 <div class="col-lg-6">
+                                 {{-- <div class="col-lg-6">
                                      <div class="form-group mb-4">
                                          <label for="userName">Postal Code</label>
                                          <input type="number" class="form-control" name="postal_code"
                                              value="{{ $item->postal_code }}" />
                                      </div>
-                                 </div>
+                                 </div> --}}
 
 
                              </div>

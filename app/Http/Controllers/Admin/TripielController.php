@@ -40,6 +40,7 @@ class TripielController extends Controller
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item edit-btn"  style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#updateModal'.$row->id.'">Edit</a>
+                                <a class="dropdown-item duplikat-btn"  style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#duplikatModal'.$row->id.'">Duplikat</a>
                                 <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->id.'">Delete</a>
                             </div>
                         </div>';
@@ -116,6 +117,31 @@ class TripielController extends Controller
             'price' => $request->price,
 
         ]);
+        return redirect()->route('admin.tripiel-index')->with('toast_success', 'Tripiel Berhasil Di Ubah');
+    }
+
+    public function duplikat(Request $request)
+    {
+        // dd('masuk');
+        $request->validate([
+            'courier_id' => 'required',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'warehouse_id' => 'required',
+            'cod' => 'required',
+        ]);
+
+        Tripiel::create([
+            'courier_id' => $request->courier_id,
+            'province_id' => $request->province_id,
+            'city_id' => $request->city_id,
+            'warehouse_id' => $request->warehouse_id,
+            'kecamatan_id' => $request->kecamatan_id,
+            'cod' => $request->cod,
+            'price' => $request->price,
+
+        ]);
+
         return redirect()->route('admin.tripiel-index')->with('toast_success', 'Tripiel Berhasil Di Ubah');
     }
 

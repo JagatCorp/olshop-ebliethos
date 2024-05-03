@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('tripiel/{id}', [TripielController::class, 'show'])->name('tripiel-show');
     Route::post('create-tripiel', [TripielController::class, 'store'])->name('create-tripiel');
     Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
+    Route::post('duplikat-tripiel', [TripielController::class, 'duplikat'])->name('duplikat-tripiel');
     Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
 
      // tranking paket by resi

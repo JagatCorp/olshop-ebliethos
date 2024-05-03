@@ -33,7 +33,7 @@
                                             <th>Province Name</th>
                                             <th>city name</th>
                                             <th>Type</th>
-                                            <th>Postal Code</th>
+                                            {{-- <th>Postal Code</th> --}}
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -95,10 +95,10 @@
                                                     data: 'type',
                                                     name: 'type'
                                                 },
-                                                {
-                                                    data: 'postal_code',
-                                                    name: 'postal_code'
-                                                },
+                                                // {
+                                                //     data: 'postal_code',
+                                                //     name: 'postal_code'
+                                                // },
                                                 {
                                                     data: 'action',
                                                     name: 'action',
@@ -163,12 +163,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Postal Code</label>
                                                 <input type="number" class="form-control" name="postal_code" required />
                                             </div>
-                                        </div>
+                                        </div> --}}
 
 
                                     </div>
@@ -236,13 +236,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Postal Code</label>
                                                 <input type="number" class="form-control" name="postal_code"
                                                     value="{{ $item->postal_code }}" />
                                             </div>
-                                        </div>
+                                        </div> --}}
 
 
                                     </div>

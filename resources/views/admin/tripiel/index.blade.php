@@ -439,6 +439,96 @@
                 </div>
             </div>
 
+            <div class="modal fade modal-add-contact" id="duplikatModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitles" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data" action="{{ route('admin.duplikat-tripiel') }}" method="POST">
+                            @csrf
+                            <div class="modal-header px-4">
+                                <h5 class="modal-title" id="exampleModalCenterTitles">Duplikat Tripiel</h5>
+                            </div>
+                            <input type="hidden" name="id" value="" id="tripiel_ids">
+                            <div class="modal-body px-4">
+                                <div class="row mb-2">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Province</label>
+                                            <select name="province_id" class="form-control provinces" required>
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">City</label>
+                                            <select name="city_id" class="form-control citys" required>
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">courier Name</label>
+                                            <select name="courier_id" class="form-control couriers">
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Warehouse Name</label>
+                                            <select name="warehouse_id" class="form-control warehouses">
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Kecamatan</label>
+                                            <select name="kecamatan_id" class="form-control kecamatans">
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="code">Tipe Pembayaran</label>
+                                            <select name="cod" class="form-control type_pems" required>
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Price</label>
+                                            <input type="number" name="price" id="prices" class="form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer px-4">
+                                <button type="button" class="btn btn-secondary btn-pill"
+                                    data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             {{-- Delete Modal --}}
             @foreach ($tripiel as $item)
                 <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
