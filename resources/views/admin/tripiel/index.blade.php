@@ -3,6 +3,7 @@
 @section('ActiveTripiel', 'active')
 @section('Active3PL', 'active')
 @section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CONTENT WRAPPER -->
     <div class="ec-content-wrapper">
@@ -119,7 +120,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="firstName">Province Name</label>
-                                            <select id="province" name="province_id" class="form-control" required>
+                                            <select id="provinces" name="province_id" class="form-control" required>
                                                 <option value="">-- Select Province --
                                                 </option>
                                                 @foreach ($province as $item)
@@ -471,9 +472,9 @@
 
     {{-- jquery fetch city based on province --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script> 
+    <script>
         $(document).ready(function() {
-            $('#province').change(function() {
+            $('#provinces').change(function() {
                 var provinceId = $(this).val();
 
                 // Clear existing options and add default option
@@ -482,6 +483,9 @@
                 $.ajax({
                     url: '/fetch-cities',
                     method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: {
                         province_id: provinceId
                     },

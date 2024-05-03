@@ -263,9 +263,6 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     // search shipping cost sesuai excel eblie
     Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
 
-    //jquery fetch city by province
-    Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
-    Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
 
     // tranking paket by resi
     Route::get('track-paket', [TrackpaketController::class, 'showTrackForm'])->name('track.form');
@@ -283,3 +280,7 @@ Route::get('verify', [OtpController::class, 'verify'])->name('verify');
 Route::post('send-otp', [OtpController::class, 'sendOTP'])->name('send.otp');
 Route::get('cek-otp', [OtpController::class, 'cekOTP'])->name('cek.otp');
 Route::post('verify-otp', [OtpController::class, 'verifyOTP'])->name('verify.otp');
+
+//jquery fetch city by province
+Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
+Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
