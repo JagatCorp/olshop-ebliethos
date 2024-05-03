@@ -26,7 +26,7 @@
                     <div class="ec-vendor-list card card-default">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table  class="table data-table">
+                                <table class="table data-table">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -75,13 +75,13 @@
                                                             data: 'warehouse.name',
                                                             name: 'warehouse.name'
                                                         },
-                                                         { 
-                                                           data: 'cod',
-                                                           name: 'cod',
-                                                           render: function(data) {
-                                                           return data === 'yes' ? 'COD' : 'Transfer';
-                                                             }
-                                                         },
+                                                        {
+                                                            data: 'cod',
+                                                            name: 'cod',
+                                                            render: function(data) {
+                                                                return data === 'yes' ? 'COD' : 'Transfer';
+                                                            }
+                                                        },
                                                         {
                                                             data: 'price',
                                                             name: 'price'
@@ -166,7 +166,7 @@
                                                 </option>
                                                 @foreach ($courier as $item)
                                                     <option value="{{ $item->id }}">
-                                                        {{ $item->name }} {{$item->type}}
+                                                        {{ $item->name }} {{ $item->type }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -187,19 +187,19 @@
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label for="code">Tipe Pembayaran</label>
                                             <select name="cod" class="form-control" required>
                                                 <option value="">-- Select Type Pembayaran --
                                                 </option>
-                                                    <option value="yes">COD</option>
-                                                    <option value="no">Transfer</option>
+                                                <option value="yes">COD</option>
+                                                <option value="no">Transfer</option>
                                             </select>
                                         </div>
                                     </div>
-                                  
+
                                     <div class="col-lg-6">
                                         <div class="form-group mb-4">
                                             <label for="userName">Price</label>
@@ -221,7 +221,7 @@
                 </div>
             </div>
             {{-- Edit Modal --}}
-            @foreach ($tripiel as $item)
+            {{-- @foreach ($tripiel as $item)
                 <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1"
                     role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -307,8 +307,8 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="code">Tipe Pembayaran</label>
@@ -320,7 +320,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Price</label>
@@ -343,7 +343,111 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            @endforeach --}}
+
+            <!-- Passing BASE URL to AJAX -->
+            <input id="url" type="hidden" value="{{ \Request::url() }}">
+
+            <div class="modal fade modal-add-contact" id="updateModal" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form enctype="multipart/form-data">
+
+                            <div class="modal-header px-4">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Tripiel</h5>
+                            </div>
+                            <input type="hidden" name="id" value="" id="tripiel_id">
+                            <div class="modal-body px-4">
+                                <div class="row mb-2">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Province</label>
+                                            <select name="province_id" class="form-control province" required>
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">City</label>
+                                            <select name="city_id" class="form-control city" required>
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">courier Name</label>
+                                            <select name="courier_id" class="form-control courier">
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Warehouse Name</label>
+                                            <select name="warehouse_id" class="form-control warehouse">
+                                                {{-- pake ajax --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Kecamatan</label>
+                                            <select name="kecamatan_id" class="form-control kecamatan">
+                                                {{-- @foreach ($kecamatan as $kecamatan_item)
+                                                    <option value="{{ $kecamatan_item->id }}"
+                                                        {{ $kecamatan_item->id == $item->id ? 'selected' : '' }}>
+                                                        {{ $kecamatan_item->name }}
+                                                    </option>
+                                                @endforeach --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="code">Tipe Pembayaran</label>
+                                            <select name="cod" class="form-control type_pem" required>
+                                                {{-- <option value="">-- Select Type Pembayaran --
+                                                </option>
+                                                <option value="yes" {{ $item->cod == 'yes' ? 'selected' : '' }}>COD
+                                                </option>
+                                                <option value="no" {{ $item->cod == 'no' ? 'selected' : '' }}>Transfer
+                                                </option> --}}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Price</label>
+                                            <input type="number" name="price" id="price" class="form-control"
+                                                value="">
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                            <div class="modal-footer px-4">
+                                <button type="button" class="btn btn-secondary btn-pill"
+                                    data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             {{-- Delete Modal --}}
             @foreach ($tripiel as $item)
                 <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
@@ -373,62 +477,69 @@
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
 
-      {{-- jquery fetch city based on province --}}
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-      <script>
-          $(document).ready(function() {
-              $('#province').change(function() {
-                  var provinceId = $(this).val();
-  
-                  // Clear existing options and add default option
-                  $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
-  
-                  $.ajax({
-                      url: '/fetch-cities',
-                      method: 'GET',
-                      data: {
-                          province_id: provinceId
-                      },
-                      success: function(response) {
-                          $.each(response, function(index, city) {
-                              $('#city').append('<option value="' + city.city_id + '">' +
-                                  city.type + ' ' + city.city_name + '</option>');
-                          });
-                      },
-                      error: function(xhr, status, error) {
-                          console.error(error);
-                      }
-                  });
-              });
-          });
-      </script>
 
-<script>
-    $(document).ready(function() {
-        $('#city').change(function() {
-            var cityId = $(this).val();
 
-            // Clear existing options and add default option
-            $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+    {{-- jquery fetch city based on province --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#province').change(function() {
+                var provinceId = $(this).val();
 
-            $.ajax({
-                url: '/fetch-districts-by-city',
-                method: 'GET',
-                data: {
-                    city_id: cityId
-                },
-                success: function(response) {
-                    $.each(response, function(index, district) {
-                        $('#district').append('<option value="' + district.id + '">' +
-                            district.name + '</option>');
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
+                // Clear existing options and add default option
+                $('#city').empty().append('<option value="">-- Pilih Kota/Kab --</option>');
+
+                $.ajax({
+                    url: '/fetch-cities',
+                    method: 'GET',
+                    data: {
+                        province_id: provinceId
+                    },
+                    success: function(response) {
+                        $.each(response, function(index, city) {
+                            $('#city').append('<option value="' + city.city_id + '">' +
+                                city.type + ' ' + city.city_name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#city').change(function() {
+                var cityId = $(this).val();
+
+                // Clear existing options and add default option
+                $('#district').empty().append('<option value="">-- Pilih Kecamatan --</option>');
+
+                $.ajax({
+                    url: '/fetch-districts-by-city',
+                    method: 'GET',
+                    data: {
+                        city_id: cityId
+                    },
+                    success: function(response) {
+                        $.each(response, function(index, district) {
+                            $('#district').append('<option value="' + district.id +
+                                '">' +
+                                district.name + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/modaltripiel.js') }}"></script>
 
 @endsection

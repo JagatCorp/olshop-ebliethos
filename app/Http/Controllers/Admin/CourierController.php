@@ -14,6 +14,12 @@ class CourierController extends Controller
         return view('admin.courier.index', compact('courier'));
     }
 
+    public function indexApi()
+    {
+        $courier = Kurir::all();
+        return response()->json($courier);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

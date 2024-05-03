@@ -70,7 +70,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::put('orders/cancel/{order:id}', [\App\Http\Controllers\Admin\OrderController::class, 'doCancel'])->name('orders.cancel');
     Route::post('orders/edit-status', [\App\Http\Controllers\Admin\OrderController::class, 'update'])->name('orders.status.edit');
     // Route::resource('shipments', \App\Http\Controllers\Admin\ShipmentController::class);
-    
+
        Route::get('shipments', [\App\Http\Controllers\Admin\ShipmentController::class,'index'])->name('shipments.index');
     Route::post('shipments-update', [\App\Http\Controllers\Admin\ShipmentController::class,'update'])->name('shipments.update');
 
@@ -138,36 +138,41 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('create-coupon', [CouponController::class, 'store'])->name('create-coupon');
     Route::post('edit-coupon', [CouponController::class, 'update'])->name('edit-coupon');
     Route::get('delete-coupon/{id}', [CouponController::class, 'delete'])->name('delete-coupon');
-    
+
       //warehouse
     Route::get('warehouse', [WarehouseController::class, 'index'])->name('warehouse-index');
+    Route::get('warehouse/api', [WarehouseController::class, 'indexApi'])->name('warehouse-index-api');
     Route::post('create-warehouse', [WarehouseController::class, 'store'])->name('create-warehouse');
     Route::post('edit-warehouse', [WarehouseController::class, 'update'])->name('edit-warehouse');
     Route::get('delete-warehouse/{id}', [WarehouseController::class, 'delete'])->name('delete-warehouse');
 
     //province
     Route::get('province', [ProvinceController::class, 'index'])->name('province-index');
+    Route::get('province/api', [ProvinceController::class, 'indexApi'])->name('province-index-api');
     Route::post('create-province', [ProvinceController::class, 'store'])->name('create-province');
     Route::post('edit-province', [ProvinceController::class, 'update'])->name('edit-province');
     Route::get('delete-province/{province_id}', [ProvinceController::class, 'delete'])->name('delete-province');
 
     //city
     Route::get('city', [CityController::class, 'index'])->name('city-index');
+    Route::get('city/api', [CityController::class, 'indexApi'])->name('city-index-api');
     Route::post('create-city', [CityController::class, 'store'])->name('create-city');
     Route::post('edit-city', [CityController::class, 'update'])->name('edit-city');
     Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
     //jquery fetch city by province
     // Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
     // Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
-    
+
      //kecamatan
     Route::get('kecamatan', [KecamatanController::class, 'index'])->name('kecamatan-index');
+    Route::get('kecamatan/api', [KecamatanController::class, 'indexApi'])->name('kecamatan-index-api');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
     Route::post('edit-kecamatan', [KecamatanController::class, 'update'])->name('edit-kecamatan');
     Route::get('delete-kecamatan/{id}', [KecamatanController::class, 'delete'])->name('delete-kecamatan');
-    
+
     //courier
     Route::get('courier', [CourierController::class, 'index'])->name('courier-index');
+    Route::get('courier/api', [CourierController::class, 'indexApi'])->name('courier-index-api');
     Route::post('create-courier', [CourierController::class, 'store'])->name('create-courier');
     Route::post('edit-courier', [CourierController::class, 'update'])->name('edit-courier');
     Route::get('delete-courier/{id}', [CourierController::class, 'delete'])->name('delete-courier');
@@ -180,10 +185,11 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
 
     //tripiel
     Route::get('tripiel', [TripielController::class, 'index'])->name('tripiel-index');
+    Route::get('tripiel/{id}', [TripielController::class, 'show'])->name('tripiel-show');
     Route::post('create-tripiel', [TripielController::class, 'store'])->name('create-tripiel');
     Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
     Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
-    
+
      // tranking paket by resi
     Route::get('track-paket-admin', [AdminTrackPaketController::class, 'showTrackForm'])->name('track.form.admin');
     Route::get('track-paket-result-admin', [AdminTrackPaketController::class, 'trackPaket'])->name('track.paket');
@@ -219,13 +225,13 @@ Route::group(['middleware' => 'cek_visit_token'], function() {
     Route::post('carts', [CartController::class, 'store'])->name('carts.store');
     Route::post('carts/update', [CartController::class, 'update']);
     Route::get('carts/remove/{cartId}', [CartController::class, 'destroy']);
-    
+
     // reviews
     Route::get('reviews', [FrontendReviewController::class, 'reviews'])->name('reviews');
     // Route::get('reviews-index', [FrontendReviewController::class, 'index'])->name('reviews-index');
-    
+
     Route::get('/reviews/create/{product_id}', [FrontendReviewController::class, 'index'])->name('reviews.create');
-    
+
     Route::post('reviews-create', [FrontendReviewController::class, 'store'])->name('reviews-create');
 });
 
@@ -256,11 +262,11 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::post('/orders/{orderId}/apply-coupon', [OrderController::class, 'applyCoupon'])->name('apply.coupon');
     // search shipping cost sesuai excel eblie
     Route::post('/search-shipping-cost', [OrderController::class, 'searchShippingCost']);
-    
+
     //jquery fetch city by province
     Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);
     Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
-    
+
     // tranking paket by resi
     Route::get('track-paket', [TrackpaketController::class, 'showTrackForm'])->name('track.form');
     Route::get('track-paket-result', [TrackpaketController::class, 'trackPaket'])->name('track.paket');

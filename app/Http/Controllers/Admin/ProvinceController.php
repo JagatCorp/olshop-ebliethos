@@ -14,6 +14,12 @@ class ProvinceController extends Controller
         return view('admin.province.index', compact('province'));
     }
 
+    public function indexApi()
+    {
+        $province = Province::all();
+        return response()->json($province);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

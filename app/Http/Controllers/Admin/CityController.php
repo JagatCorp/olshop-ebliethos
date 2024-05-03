@@ -11,12 +11,13 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
 {
-    // public function index()
-    // {
-    //     $city = City::get();
-    //     $province = Province::all();
-    //     return view('admin.city.index', compact('city', 'province'));
-    // }
+    public function indexApi()
+    {
+        $city = City::get();
+        // $province = Province::all();
+        // return view('admin.city.index', compact('city'));
+        return response()->json($city);
+    }
      public function index(Request $request)
     {
         $province = Province::all();
@@ -56,7 +57,7 @@ class CityController extends Controller
         // Return data kota/kabupaten dalam format JSON
         return response()->json($cities);
     }
-    
+
         public function fetchDistrictsByCity(Request $request)
 {
     // Ambil city_id dari permintaan Ajax

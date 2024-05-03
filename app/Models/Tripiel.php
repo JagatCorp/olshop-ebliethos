@@ -10,7 +10,7 @@ class Tripiel extends Model
     use HasFactory;
     protected $table = 'tripiel';
     public $timestamps = false;
-    protected $guarded = [];
+    protected $guarded = ['id'];
     public function warehouse()
     {
         return $this->belongsTo(Warehouse::class, 'warehouse_id', 'id');

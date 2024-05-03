@@ -39,7 +39,7 @@ class TripielController extends Controller
                                 <span class="sr-only">Info</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalEdit'.$row->id.'">Edit</a>
+                                <a class="dropdown-item edit-btn"  style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#updateModal'.$row->id.'">Edit</a>
                                 <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->id.'">Delete</a>
                             </div>
                         </div>';
@@ -59,6 +59,15 @@ class TripielController extends Controller
 
         return view('admin.tripiel.index', compact('province', 'city', 'tripiel', 'courier', 'warehouse', 'kecamatan'));
     }
+
+
+    public function show($id)
+    {
+        $tripiel = Tripiel::with(['province', 'city', 'courier', 'warehouse', 'kecamatan'])->find($id); // Mengambil tripiel berdasarkan id
+        return response()->json($tripiel); // Mengirimkan data tripiel dalam format JSON
+    }
+
+
 
     public function store(Request $request)
     {

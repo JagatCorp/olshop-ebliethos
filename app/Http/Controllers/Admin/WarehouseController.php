@@ -14,6 +14,12 @@ class WarehouseController extends Controller
         return view('admin.warehouse.index', compact('warehouse'));
     }
 
+    public function indexApi()
+    {
+        $warehouse = Warehouse::all();
+        return response()->json($warehouse);
+    }
+
     public function store(Request $request)
     {
         $request->validate([

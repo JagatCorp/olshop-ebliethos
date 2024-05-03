@@ -15,7 +15,7 @@ class KecamatanController extends Controller
     //     $city = City::all();
     //     return view('admin.kecamatan.index', compact('kecamatan', 'city'));
     // }
-    
+
         public function index(Request $request)
     {
         $city = City::all();
@@ -45,6 +45,11 @@ class KecamatanController extends Controller
         }
 
         return view('admin.kecamatan.index', compact('kecamatan', 'city'));
+    }
+
+    public function indexApi(){
+        $kecamatan = kecamatan::all();
+        return response()->json($kecamatan);
     }
 
     public function store(Request $request)
