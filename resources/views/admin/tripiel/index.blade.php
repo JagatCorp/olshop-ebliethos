@@ -471,7 +471,7 @@
 
     {{-- jquery fetch city based on province --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script> 
         $(document).ready(function() {
             $('#province').change(function() {
                 var provinceId = $(this).val();
