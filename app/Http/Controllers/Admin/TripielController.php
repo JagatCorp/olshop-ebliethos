@@ -28,7 +28,7 @@ class TripielController extends Controller
         public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Tripiel::with(['province', 'city', 'courier', 'warehouse', 'kecamatan'])->select('*');
+            $data = Tripiel::with(['province', 'city', 'courier', 'warehouse', 'kecamatan'])->select('*')->orderBy('id', 'desc');
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
