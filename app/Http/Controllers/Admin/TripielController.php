@@ -41,7 +41,7 @@ class TripielController extends Controller
                             <div class="dropdown-menu">
                                 <a class="dropdown-item edit-btn"  style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#updateModal'.$row->id.'">Edit</a>
                                 <a class="dropdown-item duplikat-btn"  style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#duplikatModal'.$row->id.'">Duplikat</a>
-                                <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->id.'">Delete</a>
+                                <a class="dropdown-item delete-btn" style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#ModalDelete'.$row->id.'">Delete</a>
                             </div>
                         </div>';
                 })
@@ -150,5 +150,11 @@ class TripielController extends Controller
         $tripiel = Tripiel::find($id);
         $tripiel->delete();
         return redirect()->route('admin.tripiel-index')->with('toast_success', 'Tripiel Berhasil Di Hapus');
+    }
+
+    public function deleteshow($id)
+    {
+        $tripiel = Tripiel::findOrFail($id); // Mengambil tripiel berdasarkan id
+        return response()->json($tripiel); // Mengirimkan data tripiel dalam format JSON
     }
 }

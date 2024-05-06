@@ -443,7 +443,8 @@
                 aria-labelledby="exampleModalCenterTitles" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">
-                        <form enctype="multipart/form-data" action="{{ route('admin.duplikat-tripiel') }}" method="POST">
+                        <form enctype="multipart/form-data" action="{{ route('admin.duplikat-tripiel') }}"
+                            method="POST">
                             @csrf
                             <div class="modal-header px-4">
                                 <h5 class="modal-title" id="exampleModalCenterTitles">Duplikat Tripiel</h5>
@@ -530,28 +531,27 @@
             </div>
 
             {{-- Delete Modal --}}
-            @foreach ($tripiel as $item)
-                <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Apakah anda yakin ingin menghapus data ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <a href="{{ route('admin.delete-tripiel', $item->id) }}" class="btn btn-danger"
-                                    id="confirmDelete">Hapus</a>
-                            </div>
+            <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah anda yakin ingin menghapus data ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            {{-- <a href="{{ route('admin.delete-tripiel', $item->id) }}" class="btn btn-danger"
+                                    id="confirmDelete">Hapus</a> --}}
+                            <button type="button" class="btn btn-danger" id="confirmDelete">Hapus</button>
                         </div>
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
 

@@ -29,11 +29,11 @@ $(document).ready(function () {
 
                 // Bersihkan elemen <select> sebelum menambahkan opsi baru
                 selectProvince.innerHTML = "";
-                selectCity .innerHTML = "";
-                selectCourier .innerHTML = "";
-                selectWarehouse .innerHTML = "";
-                selectKecamatan .innerHTML = "";
-                selectType .innerHTML = "";
+                selectCity.innerHTML = "";
+                selectCourier.innerHTML = "";
+                selectWarehouse.innerHTML = "";
+                selectKecamatan.innerHTML = "";
+                selectType.innerHTML = "";
 
                 // Lakukan permintaan AJAX tambahan untuk mendapatkan detail kelas
                 // PROVINCE
@@ -74,10 +74,7 @@ $(document).ready(function () {
                             option.value = city.city_id;
                             option.textContent = city.city_name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                city.city_id ===
-                                data.city_id
-                            ) {
+                            if (city.city_id === data.city_id) {
                                 option.selected = true;
                             }
                             selectCity.appendChild(option);
@@ -100,10 +97,7 @@ $(document).ready(function () {
                             option.value = courier.id;
                             option.textContent = courier.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                courier.id ===
-                                data.courier_id
-                            ) {
+                            if (courier.id === data.courier_id) {
                                 option.selected = true;
                             }
                             selectCourier.appendChild(option);
@@ -127,10 +121,7 @@ $(document).ready(function () {
                             option.value = warehouse.id;
                             option.textContent = warehouse.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                warehouse.id ===
-                                data.warehouse_id
-                            ) {
+                            if (warehouse.id === data.warehouse_id) {
                                 option.selected = true;
                             }
                             selectWarehouse.appendChild(option);
@@ -153,10 +144,7 @@ $(document).ready(function () {
                             option.value = kecamatan.id;
                             option.textContent = kecamatan.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                kecamatan.id ===
-                                data.kecamatan_id
-                            ) {
+                            if (kecamatan.id === data.kecamatan_id) {
                                 option.selected = true;
                             }
                             selectKecamatan.appendChild(option);
@@ -169,11 +157,11 @@ $(document).ready(function () {
 
                 var options = [
                     { value: "yes", text: "COD" },
-                    { value: "no", text: "Transfer" }
+                    { value: "no", text: "Transfer" },
                 ];
 
                 // Buat dan tambahkan opsi ke dalam elemen select
-                options.forEach(function(option) {
+                options.forEach(function (option) {
                     var optionElement = document.createElement("option");
                     optionElement.value = option.value;
                     optionElement.text = option.text;
@@ -189,7 +177,7 @@ $(document).ready(function () {
             error: function (data) {
                 console.log("Error:", data);
             },
-        })
+        });
     });
 
     $(document).on("click", ".duplikat-btn", function () {
@@ -211,11 +199,11 @@ $(document).ready(function () {
 
                 // Bersihkan elemen <select> sebelum menambahkan opsi baru
                 selectProvince.innerHTML = "";
-                selectCity .innerHTML = "";
-                selectCourier .innerHTML = "";
-                selectWarehouse .innerHTML = "";
-                selectKecamatan .innerHTML = "";
-                selectType .innerHTML = "";
+                selectCity.innerHTML = "";
+                selectCourier.innerHTML = "";
+                selectWarehouse.innerHTML = "";
+                selectKecamatan.innerHTML = "";
+                selectType.innerHTML = "";
 
                 // Lakukan permintaan AJAX tambahan untuk mendapatkan detail kelas
                 // PROVINCE
@@ -256,10 +244,7 @@ $(document).ready(function () {
                             option.value = city.city_id;
                             option.textContent = city.city_name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                city.city_id ===
-                                data.city_id
-                            ) {
+                            if (city.city_id === data.city_id) {
                                 option.selected = true;
                             }
                             selectCity.appendChild(option);
@@ -282,10 +267,7 @@ $(document).ready(function () {
                             option.value = courier.id;
                             option.textContent = courier.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                courier.id ===
-                                data.courier_id
-                            ) {
+                            if (courier.id === data.courier_id) {
                                 option.selected = true;
                             }
                             selectCourier.appendChild(option);
@@ -309,10 +291,7 @@ $(document).ready(function () {
                             option.value = warehouse.id;
                             option.textContent = warehouse.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                warehouse.id ===
-                                data.warehouse_id
-                            ) {
+                            if (warehouse.id === data.warehouse_id) {
                                 option.selected = true;
                             }
                             selectWarehouse.appendChild(option);
@@ -335,10 +314,7 @@ $(document).ready(function () {
                             option.value = kecamatan.id;
                             option.textContent = kecamatan.name;
                             // Tetapkan atribut selected jika province_id sesuai dengan selectedProvinceId
-                            if (
-                                kecamatan.id ===
-                                data.kecamatan_id
-                            ) {
+                            if (kecamatan.id === data.kecamatan_id) {
                                 option.selected = true;
                             }
                             selectKecamatan.appendChild(option);
@@ -351,11 +327,11 @@ $(document).ready(function () {
 
                 var options = [
                     { value: "yes", text: "COD" },
-                    { value: "no", text: "Transfer" }
+                    { value: "no", text: "Transfer" },
                 ];
 
                 // Buat dan tambahkan opsi ke dalam elemen select
-                options.forEach(function(option) {
+                options.forEach(function (option) {
                     var optionElement = document.createElement("option");
                     optionElement.value = option.value;
                     optionElement.text = option.text;
@@ -371,7 +347,7 @@ $(document).ready(function () {
             error: function (data) {
                 console.log("Error:", data);
             },
-        })
+        });
     });
 
     //create new product / update existing product ***************************
@@ -446,11 +422,11 @@ $(document).ready(function () {
         // Populate Data in Delete Modal
         $.ajax({
             type: "GET",
-            url: baseUrl + "/delete-show/" + tripiel_id,
+            url: "/admin/delete-show/" + tripiel_id,
             success: function (data) {
                 console.log(data);
-                $("#delete-siswa-name").text(data.nama);
-                $("#delete-modal").modal("show");
+                // $("#delete-siswa-name").text(data.nama);
+                $("#ModalDelete").modal("show");
             },
             error: function (data) {
                 console.log("Error:", data);
@@ -458,15 +434,15 @@ $(document).ready(function () {
         });
 
         // Submit form when "Yes" button is clicked
-        $(document).on("click", "#confirm-delete", function () {
-            var deleteUrl = baseUrl + "/delete-tripiel/" + tripiel_id;
+        $(document).on("click", "#confirmDelete", function () {
+            var deleteUrl = "/admin/delete-tripiel/" + tripiel_id;
             $.ajax({
                 type: "GET",
                 url: deleteUrl,
                 success: function (response) {
                     alert("Data tripiel Berhasil Dihapus.");
                     $(".data-table").DataTable().ajax.reload();
-                    $("#delete-modal").modal("hide");
+                    $("#ModalDelete").modal("hide");
                 },
                 error: function (data) {
                     console.log("Error:", data);

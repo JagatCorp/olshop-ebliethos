@@ -190,6 +190,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::post('edit-tripiel', [TripielController::class, 'update'])->name('edit-tripiel');
     Route::post('duplikat-tripiel', [TripielController::class, 'duplikat'])->name('duplikat-tripiel');
     Route::get('delete-tripiel/{id}', [TripielController::class, 'delete'])->name('delete-tripiel');
+    Route::get('delete-show/{id}', [TripielController::class, 'deleteshow'])->name('delete-show');
 
      // tranking paket by resi
     Route::get('track-paket-admin', [AdminTrackPaketController::class, 'showTrackForm'])->name('track.form.admin');
