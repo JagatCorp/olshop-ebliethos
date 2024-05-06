@@ -163,7 +163,7 @@ class OrderController extends Controller
         }
 
         $items = Cart::content();
-        
+
         $warehouses = Warehouse::get();
         $provinces = Province::get();
         $citys = City::get();
@@ -172,13 +172,13 @@ class OrderController extends Controller
         // $provinces = $this->getProvinces();
         // $cities = isset(auth()->user()->province_id) ? $this->getCities(auth()->user()->province_id) : [];
         // return view('frontend.orders.checkout', compact('items', 'totalWeight', 'provinces', 'cities'));
-        
+
         return view('frontend.orders.checkout', compact('items', 'warehouses', 'provinces', 'citys'));
     }
-    
+
     public function searchShippingCost(Request $request)
     {
-        
+
         $request->validate([
             'warehouse_id' => 'required',
             'province_id' => 'required',
@@ -193,12 +193,13 @@ class OrderController extends Controller
 
         // Mencari harga gudang hanya jika semua input valid
         $price = null;
-        
+
         $price = Tripiel::where('province_id', $province_id)
             ->where('city_id', $city_id)
             ->where('warehouse_id', $warehouse_id)
             ->where('kecamatan_id', $kecamatan_id)
             ->with('courier')
+            ->orderBy('price', 'asc')
             ->get();
 
         // Jika harga ditemukan, kirimkan harga sebagai respons
@@ -222,7 +223,7 @@ class OrderController extends Controller
         //     'customer_province_id' => 'required',
 
         // ]);
-        
+
         $dataCourier = Kurir::where('id', $request->courier_id)->first();
         $params = $request->except('_token');
         $params['service'] = $dataCourier->name . ($dataCourier->type == null ? '' : ' | ' . $dataCourier->type);
@@ -458,7 +459,7 @@ class OrderController extends Controller
 
         // Terapkan diskon pada grand_total
         $order->grand_total -= $discount;
-        
+
           // Hitung persentase diskon dan masukkan ke order discount_percent
         $order->discount_percent = $coupon->discount;
 
