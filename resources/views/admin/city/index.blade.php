@@ -39,7 +39,8 @@
                                     </thead>
 
                                     <tbody>
-                                        <!--@foreach ($city as $item)-->
+                                        <!--@foreach ($city as $item)
+    -->
                                         <!--    <tr>-->
                                         <!--        <td>{{ $loop->iteration }}</td>-->
                                         <!--        <td>{{ $item->province->province_name }}</td>-->
@@ -70,45 +71,46 @@
                                         <!--            </div>-->
                                         <!--        </td>-->
                                         <!--    </tr>-->
-                                        <!--@endforeach-->
-                                           <script type="text/javascript">
-                                    $(function() {
-                                        var table = $('.data-table').DataTable({
-                                            processing: true,
-                                            serverSide: true,
-                                            ajax: "{{ route('admin.city-index') }}",
-                                            columns: [{
-                                                    data: 'DT_RowIndex', // Menampilkan nomor urut
-                                                    name: 'DT_RowIndex',
-                                                    orderable: false, // Kolom ini tidak bisa diurutkan
-                                                    searchable: false // Kolom ini tidak bisa dicari
-                                                },
-                                                {
-                                                    data: 'province.province_name',
-                                                    name: 'province.province_name'
-                                                },
-                                                {
-                                                    data: 'city_name',
-                                                    name: 'city_name'
-                                                },
-                                                {
-                                                    data: 'type',
-                                                    name: 'type'
-                                                },
-                                                // {
-                                                //     data: 'postal_code',
-                                                //     name: 'postal_code'
-                                                // },
-                                                {
-                                                    data: 'action',
-                                                    name: 'action',
-                                                    orderable: false,
-                                                    searchable: false
-                                                },
-                                            ]
-                                        });
-                                    });
-                                </script>
+                                        <!--
+    @endforeach-->
+                                        <script type="text/javascript">
+                                            $(function() {
+                                                var table = $('.data-table').DataTable({
+                                                    processing: true,
+                                                    serverSide: true,
+                                                    ajax: "{{ route('admin.city-index') }}",
+                                                    columns: [{
+                                                            data: 'DT_RowIndex', // Menampilkan nomor urut
+                                                            name: 'DT_RowIndex',
+                                                            orderable: false, // Kolom ini tidak bisa diurutkan
+                                                            searchable: false // Kolom ini tidak bisa dicari
+                                                        },
+                                                        {
+                                                            data: 'province.province_name',
+                                                            name: 'province.province_name'
+                                                        },
+                                                        {
+                                                            data: 'city_name',
+                                                            name: 'city_name'
+                                                        },
+                                                        {
+                                                            data: 'type',
+                                                            name: 'type'
+                                                        },
+                                                        // {
+                                                        //     data: 'postal_code',
+                                                        //     name: 'postal_code'
+                                                        // },
+                                                        {
+                                                            data: 'action',
+                                                            name: 'action',
+                                                            orderable: false,
+                                                            searchable: false
+                                                        },
+                                                    ]
+                                                });
+                                            });
+                                        </script>
                                     </tbody>
                                 </table>
                             </div>
@@ -187,56 +189,49 @@
                 </div>
             </div>
             {{-- Edit Modal --}}
-            @foreach ($city as $item)
-                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->city_id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.edit-city') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-header px-4">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit City</h5>
-                                </div>
-                                <input type="hidden" name="city_id" value="{{ $item->city_id }}">
-                                <div class="modal-body px-4">
-                                    <div class="row mb-2">
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">Province</label>
-                                                <select name="province_id" class="form-control" required>
-
-                                                    @foreach ($province as $province_item)
-                                                        <option value="{{ $province_item->province_id }}"
-                                                            {{ $province_item->province_id == $item->province_id ? 'selected' : '' }}>
-                                                            {{ $province_item->province_name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+            <div class="modal fade modal-add-contact" id="ModalEdit" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form action="{{ route('admin.edit-city') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-header px-4">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit City</h5>
+                            </div>
+                            <input type="hidden" name="city_id" id="city_id">
+                            <div class="modal-body px-4">
+                                <div class="row mb-2">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Province</label>
+                                            <select name="province_id" class="form-control province" required>
+                                                {{-- dari ajax public/js/modalcity.js --}}
+                                            </select>
                                         </div>
+                                    </div>
 
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">Name City</label>
-                                                <input type="text" class="form-control" name="city_name"
-                                                    value="{{ $item->city_name }}" />
-                                            </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Name City</label>
+                                            <input type="text" class="form-control" name="city_name"
+                                                id="city_name" />
                                         </div>
+                                    </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">Type</label>
-                                                {{-- <input type="text" class="form-control" name="type"
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Type</label>
+                                            {{-- <input type="text" class="form-control" name="type"
                                                     value="{{ $item->type }}" /> --}}
-                                                <select name="type" id="type" class="form-control" required>
-                                                    <option value="Kabupaten" {{ $item->type == "Kabupaten" ? 'selected' : '' }}>Kabupaten</option>
-                                                    <option value="Kota" {{ $item->type == "Kota" ? 'selected' : '' }}>Kota</option>
-                                                </select>
-                                            </div>
+                                            <select name="type" id="type" class="form-control typeCity" required>
+                                                {{-- <option value="Kabupaten" {{ $item->type == "Kabupaten" ? 'selected' : '' }}>Kabupaten</option>
+                                                    <option value="Kota" {{ $item->type == "Kota" ? 'selected' : '' }}>Kota</option> --}}
+                                            </select>
                                         </div>
+                                    </div>
 
-                                        {{-- <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                             <div class="form-group mb-4">
                                                 <label for="userName">Postal Code</label>
                                                 <input type="number" class="form-control" name="postal_code"
@@ -245,46 +240,47 @@
                                         </div> --}}
 
 
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="modal-footer px-4">
-                                    <button type="button" class="btn btn-secondary btn-pill"
-                                        data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
-                                </div>
+                            <div class="modal-footer px-4">
+                                <button type="button" class="btn btn-secondary btn-pill"
+                                    data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Delete Modal --}}
+            <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah anda yakin ingin menghapus data ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <form action="{{ route('admin.delete-city') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" id="delete_id">
+                                <button type="submit" class="btn btn-danger" id="confirmDelete">Hapus</button>
                             </form>
                         </div>
                     </div>
                 </div>
-            @endforeach
-
-            {{-- Delete Modal --}}
-            @foreach ($city as $item)
-                <div class="modal fade" id="ModalDelete{{ $item->city_id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Apakah anda yakin ingin menghapus data ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <a href="{{ route('admin.delete-city', $item->city_id) }}" class="btn btn-danger"
-                                    id="confirmDelete">Hapus</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
+            </div>
         </div>
     </div>
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+    <script src="{{ asset('js/modalcity.js') }}"></script>
 @endsection

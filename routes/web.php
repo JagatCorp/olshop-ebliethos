@@ -158,7 +158,8 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('city/api', [CityController::class, 'indexApi'])->name('city-index-api');
     Route::post('create-city', [CityController::class, 'store'])->name('create-city');
     Route::post('edit-city', [CityController::class, 'update'])->name('edit-city');
-    Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
+    // Route::get('delete-city/{city_id}', [CityController::class, 'delete'])->name('delete-city');
+    Route::post('delete-city', [CityController::class, 'delete'])->name('delete-city');
     //jquery fetch city by province
     // Route::get('/fetch-cities', [CityController::class, 'fetchCities']);
     // Route::get('/fetch-districts-by-city', [CityController::class, 'fetchDistrictsByCity']);

@@ -35,8 +35,8 @@ class CityController extends Controller
                             <span class="sr-only">Info</span>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalEdit'.$row->city_id.'">Edit</a>
-                            <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->city_id.'">Delete</a>
+                            <a class="dropdown-item edit-btn" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-name-city="'.$row->city_name.'" data-type="'.$row->type.'" data-province-id="'.$row->province_id.'" data-id="'.$row->city_id.'" data-bs-target="#ModalEdit'.$row->city_id.'">Edit</a>
+                            <a class="dropdown-item delete-btn" style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->city_id.'" data-bs-target="#ModalDelete'.$row->city_id.'">Delete</a>
                         </div>
                     </div>';
                 })
@@ -108,9 +108,9 @@ class CityController extends Controller
         return redirect()->route('admin.city-index')->with('toast_success', 'City Berhasil Di Ubah');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-        $city = City::find($id);
+        $city = City::find($request->id);
         $city->delete();
         return redirect()->route('admin.city-index')->with('toast_success', 'City Berhasil Di Hapus');
     }
