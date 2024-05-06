@@ -168,7 +168,7 @@ Route::group(['middleware' => ['auth', 'is_admin'], 'prefix' => 'admin', 'as' =>
     Route::get('kecamatan/api', [KecamatanController::class, 'indexApi'])->name('kecamatan-index-api');
     Route::post('create-kecamatan', [KecamatanController::class, 'store'])->name('create-kecamatan');
     Route::post('edit-kecamatan', [KecamatanController::class, 'update'])->name('edit-kecamatan');
-    Route::get('delete-kecamatan/{id}', [KecamatanController::class, 'delete'])->name('delete-kecamatan');
+    Route::post('delete-kecamatan', [KecamatanController::class, 'delete'])->name('delete-kecamatan');
 
     //courier
     Route::get('courier', [CourierController::class, 'index'])->name('courier-index');

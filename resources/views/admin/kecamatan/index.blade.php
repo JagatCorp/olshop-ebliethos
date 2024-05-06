@@ -41,7 +41,7 @@
                                     <tbody>
 
 
-                                          <script type="text/javascript">
+                                        <script type="text/javascript">
                                             $(function() {
                                                 var table = $('.data-table').DataTable({
                                                     processing: true,
@@ -128,79 +128,76 @@
                 </div>
             </div>
             {{-- Edit Modal --}}
-            {{-- @foreach ($kecamatan as $item) --}}
-                <div class="modal fade modal-add-contact" id="ModalEdit" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.edit-kecamatan') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-header px-4">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Edit Kecamatan</h5>
-                                </div>
-                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                <div class="modal-body px-4">
-                                    <div class="row mb-2">
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">Name Kecamatan</label>
-                                                <input type="text" class="form-control" name="name"
-                                                    value="{{ $item->name }}" />
-                                            </div>
+
+            <input id="url" type="hidden" value="{{ \Request::url() }}">
+
+            <div class="modal fade modal-add-contact" id="ModalEdit" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <form action="{{ route('admin.edit-kecamatan') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="modal-header px-4">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Kecamatan</h5>
+                            </div>
+                            <input type="hidden" name="id" id="kecamatan_id">
+                            <div class="modal-body px-4">
+                                <div class="row mb-2">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">Name Kecamatan</label>
+                                            <input type="text" class="form-control" name="name" id="namaKecamatan" />
                                         </div>
-
-                                        <div class="col-lg-6">
-                                            <div class="form-group mb-4">
-                                                <label for="userName">City</label>
-                                                <select name="city_id" class="form-control" required>
-
-                                                    {{-- @foreach ($city as $city_item)
-                                                        <option value="{{ $city_item->city_id }}"
-                                                            {{ $city_item->city_id == $item->city_id ? 'selected' : '' }}>
-                                                            {{ $city_item->city_name }}
-                                                        </option>
-                                                    @endforeach --}}
-                                                </select>
-                                            </div>
-                                        </div>
-
-
                                     </div>
-                                </div>
 
-                                <div class="modal-footer px-4">
-                                    <button type="button" class="btn btn-secondary btn-pill"
-                                        data-bs-dismiss="modal">Tutup</button>
-                                    <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb-4">
+                                            <label for="userName">City</label>
+                                            <select name="city_id" class="form-control city" required>
+
+                                                {{-- dari ajax - public/js/modalkecamatan.js --}}
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
                                 </div>
+                            </div>
+
+                            <div class="modal-footer px-4">
+                                <button type="button" class="btn btn-secondary btn-pill"
+                                    data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" class="btn btn-primary btn-pill">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {{-- Delete Modal --}}
+            <div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah anda yakin ingin menghapus data ini?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <form action="{{ route('admin.delete-kecamatan') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" id="delete_id">
+                                <button type="submit" class="btn btn-danger" id="confirmDelete">Hapus</button>
                             </form>
                         </div>
                     </div>
                 </div>
-            {{-- @endforeach --}}
-            {{-- Delete Modal --}}
-            {{-- @foreach ($kecamatan as $item) --}}
-                {{-- <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Apakah anda yakin ingin menghapus data ini?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                <a href="{{ route('admin.delete-kecamatan', $item->id) }}" class="btn btn-danger"
-                                    id="confirmDelete">Hapus</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-            {{-- @endforeach --}}
+            </div>
         </div>
     </div>
 

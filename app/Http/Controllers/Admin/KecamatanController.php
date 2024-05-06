@@ -35,8 +35,8 @@ class KecamatanController extends Controller
                             <span class="sr-only">Info</span>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item edit-btn" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-id data-bs-target="#ModalEdit'.$row->kecamatan_id.'">Edit</a>
-                            <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->kecamatan_id.'">Delete</a>
+                            <a class="dropdown-item edit-btn" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-kecamatan-name="'.$row->name.'" data-city-id="'.$row->city_id.'" data-id="'.$row->id.'" data-bs-target="#ModalEdit'.$row->kecamatan_id.'">Edit</a>
+                            <a class="dropdown-item delete-btn" style="cursor:pointer" data-bs-toggle="modal" data-id="'.$row->id.'" data-bs-target="#ModalDelete'.$row->kecamatan_id.'">Delete</a>
                         </div>
                     </div>';
                 })
@@ -88,10 +88,11 @@ class KecamatanController extends Controller
         return redirect()->route('admin.kecamatan-index')->with('toast_success', 'Kecamatan Berhasil Di Ubah');
     }
 
-    public function delete($id)
+    public function delete(Request $request)
     {
-        $kecamatan = Kecamatan::find($id);
+        $kecamatan = Kecamatan::find($request->id);
         $kecamatan->delete();
+
         return redirect()->route('admin.kecamatan-index')->with('toast_success', 'Kecamatan Berhasil Di Hapus');
     }
 }
