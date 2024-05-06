@@ -39,8 +39,8 @@
                                     </thead>
 
                                     <tbody>
-                                       
-                                        
+
+
                                           <script type="text/javascript">
                                             $(function() {
                                                 var table = $('.data-table').DataTable({
@@ -128,8 +128,8 @@
                 </div>
             </div>
             {{-- Edit Modal --}}
-            @foreach ($kecamatan as $item)
-                <div class="modal fade modal-add-contact" id="ModalEdit{{ $item->id }}" tabindex="-1" role="dialog"
+            {{-- @foreach ($kecamatan as $item) --}}
+                <div class="modal fade modal-add-contact" id="ModalEdit" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
@@ -154,12 +154,12 @@
                                                 <label for="userName">City</label>
                                                 <select name="city_id" class="form-control" required>
 
-                                                    @foreach ($city as $city_item)
+                                                    {{-- @foreach ($city as $city_item)
                                                         <option value="{{ $city_item->city_id }}"
                                                             {{ $city_item->city_id == $item->city_id ? 'selected' : '' }}>
                                                             {{ $city_item->city_name }}
                                                         </option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
                                         </div>
@@ -177,10 +177,10 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+            {{-- @endforeach --}}
             {{-- Delete Modal --}}
-            @foreach ($kecamatan as $item)
-                <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
+            {{-- @foreach ($kecamatan as $item) --}}
+                {{-- <div class="modal fade" id="ModalDelete{{ $item->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -199,11 +199,14 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                </div> --}}
+            {{-- @endforeach --}}
         </div>
     </div>
 
     </div> <!-- End Content -->
     </div> <!-- End Content Wrapper -->
+
+    <script src="{{ asset('js/modalkecamatan.js') }}"></script>
+
 @endsection

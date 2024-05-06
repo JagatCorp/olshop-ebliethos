@@ -35,7 +35,7 @@ class KecamatanController extends Controller
                             <span class="sr-only">Info</span>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalEdit'.$row->kecamatan_id.'">Edit</a>
+                            <a class="dropdown-item edit-btn" id="editModalContainer" style="cursor:pointer" data-bs-toggle="modal" data-id data-bs-target="#ModalEdit'.$row->kecamatan_id.'">Edit</a>
                             <a class="dropdown-item" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#ModalDelete'.$row->kecamatan_id.'">Delete</a>
                         </div>
                     </div>';
