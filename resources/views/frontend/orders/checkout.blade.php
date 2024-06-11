@@ -53,7 +53,7 @@
                                             value="{{ old('address2', auth()->user()->address2) }}">
                                     </div>
                                 </div>
-                                
+
                                 <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
@@ -67,7 +67,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
@@ -80,7 +80,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
@@ -90,7 +90,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
@@ -100,7 +100,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!--##-->
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
@@ -110,7 +110,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Kode Pos<span class="required">*</span></label>
@@ -267,7 +267,7 @@
                                                     required></select>
                                             </td>
                                         </tr>
-                                        
+
                                         <tr class="cart-subtotal">
                                             <th>Type Pembayaran</th>
                                             <td>
@@ -275,7 +275,7 @@
                                                 </select>
                                             </td>
                                         </tr>
-                                        
+
                                         <tr class="order-total">
                                             <th>Order Total</th>
                                             <td><strong>Rp<span
@@ -317,7 +317,7 @@
             </form>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -352,8 +352,8 @@
                 var selectOngkir = $('#shipping-cost-options');
                 var selectCod = $('select[name="cod"]');
                 updateOrderTotal(0);
-                
-            
+
+
                 console.log($('select[name="warehouse_id"]').val());
                 console.log($('select[name="province_id"]').val());
                 console.log($('select[name="city_id"]').val());
@@ -447,7 +447,7 @@
                 var selectCod = $('select[name="cod"]');
                 selectOngkir.empty();
                 selectCod.empty();
-                
+
                 var selectCourier = $(this).find('option:selected');
                 console.log('selectOngkir', selectOngkir);
                 console.log('selectCod', selectCod);
@@ -461,13 +461,13 @@
                     selectCod.append(
                         '<option value="yes">COD</option>'
                     );
-                    selectCod.append(
-                        '<option value="no">Transfer</option>'
-                    );
+                    // selectCod.append(
+                    //     '<option value="no">Transfer</option>'
+                    // );
                 } else {
-                    selectCod.append(
-                        '<option value="no">Transfer</option>'
-                    );
+                    // selectCod.append(
+                    //     '<option value="no">Transfer</option>'
+                    // );
                 }
             })
 
@@ -489,7 +489,7 @@
         });
     </script>
     {{-- jquery fetch city based on province --}}
-    
+
     <script>
         $(document).ready(function() {
             $('#province').change(function() {
@@ -548,5 +548,5 @@
             });
         });
     </script>
-    
+
 @endsection

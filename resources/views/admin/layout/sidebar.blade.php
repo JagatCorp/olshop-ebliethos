@@ -268,21 +268,21 @@
                     </div>
                 </li>
                 <!-- Authentication -->
-                <!--<li class="has-sub">-->
-                <!--    <a class="sidenav-item-link" href="javascript:void(0)">-->
-                <!--        <i class="fa fa-database"></i>-->
-                <!--        <span class="nav-text">Basis Data</span> <b class="caret"></b>-->
-                <!--    </a>-->
-                <!--    <div class="collapse">-->
-                <!--        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">-->
-                <!--            <li class="">-->
-                <!--                <a href="{{ url('admin/database') }}">-->
-                <!--                    <span class="nav-text">Basis Data</span>-->
-                <!--                </a>-->
-                <!--            </li>-->
-                <!--        </ul>-->
-                <!--    </div>-->
-                <!--</li>-->
+                {{-- <li class="has-sub">
+                    <a class="sidenav-item-link" href="javascript:void(0)">
+                        <i class="fa fa-database"></i>
+                        <span class="nav-text">Basis Data</span> <b class="caret"></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
+                            <li class="">
+                                <a href="{{ url('admin/database') }}">
+                                    <span class="nav-text">Basis Data</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li> --}}
             </ul>
         </div>
     </div>

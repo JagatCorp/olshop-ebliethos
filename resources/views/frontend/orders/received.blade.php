@@ -139,7 +139,7 @@
                                         $jumlahDiskon = ($order->discount_percent / 100) * $jumlahTotal;
                                         $diskon = intval($order->discount_percent);
                                     @endphp
-                                     @if ($diskon === 0)
+                                     @if ($diskon === 0 && $order->status == 'created')
                                         <div class="ec-checkout-coupan-content hidden ">
                                             <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form"
                                                 method="POST"
@@ -178,14 +178,16 @@
                                     {{-- @if (!$order->isPaid())
                                         <a href="{{ $order->payment_url }}">Proceed to payment</a>
                                     @endif --}}
-                                    
-                                    @if ($order->cod === 'yes')
-                                        <form action={{ route('order-success', $order->id) }} method="get">
-                                            <button type="submit"
-                                                class="btn-dark rounded-pill py-2 px-3 mt-4">Pesan</button>
-                                        </form>
-                                    @else
-                                        <a class="rounded-5 text-white" id="pay-button">Bayar</a>
+
+                                    @if($order->status == 'created')
+                                        @if ($order->cod === 'yes')
+                                            <form action={{ route('order-success', $order->id) }} method="get">
+                                                <button type="submit"
+                                                    class="btn-dark rounded-pill py-2 px-3 mt-4">Pesan</button>
+                                            </form>
+                                        @else
+                                            <a class="rounded-5 text-white" id="pay-button">Bayar</a>
+                                        @endif
                                     @endif
                                 </div>
                             </div>

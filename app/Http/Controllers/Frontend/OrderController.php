@@ -489,8 +489,12 @@ class OrderController extends Controller
         // Ubah status pembayaran menjadi 'PAID'
         if($orderId->cod == 'no'){
             $orderId->payment_status = 'PAID';
-            $orderId->save();
+            $orderId->status = 'confirmed';
+        } else {
+            $orderId->status = 'confirmed';
         }
+
+        $orderId->save();
 
         // URL untuk melihat detail pesanan
         $orderUrl = url('orders/' . $orderId->id);
